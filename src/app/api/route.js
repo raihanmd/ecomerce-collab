@@ -1,7 +1,7 @@
 const { NextResponse } = require("next/server");
 
 export async function GET() {
-  const mainPath = "https://ecomerce-api-raihanmd.vercel.app";
+  const mainPath = "https://ecomerce-collab-raihanmd.vercel.app";
   return NextResponse.json(
     {
       endpoints: {

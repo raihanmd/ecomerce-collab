@@ -5,7 +5,6 @@ import { getNanoid } from "@/utils/getNanoid";
 import { myResponse } from "@/utils/myResponse";
 import { addProduct } from "@/database/product/addProduct";
 import { getAllProducts } from "@/database/product/getAllProduct";
-import { myResponse } from "@/utils/myResponse";
 
 export async function GET(req) {
   try {
