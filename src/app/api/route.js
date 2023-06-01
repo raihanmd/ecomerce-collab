@@ -22,6 +22,10 @@ export async function GET() {
             path: `${mainPath}/api/order/{userName}`,
             description: "Get order information about {userName}: /api/order/{userName}",
           },
+          {
+            path: `${mainPath}/api/cart/{userName}`,
+            description: "Get cart information about {userName}: /api/order/{userName}",
+          },
         ],
         POST: [
           {
@@ -61,6 +65,16 @@ export async function GET() {
           {
             path: `${mainPath}/api/order`,
             description: "Create Order : /api/order",
+            formatBody: {
+              token: "Owner token",
+              idUser: "usr_001",
+              idProduct: "prd_001",
+              quantityProduct: 10,
+            },
+          },
+          {
+            path: `${mainPath}/api/cart`,
+            description: "Create cart : /api/cart",
             formatBody: {
               token: "Owner token",
               idUser: "usr_001",
