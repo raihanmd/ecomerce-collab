@@ -1,4 +1,4 @@
-import { Navbar } from "./components/navbar";
+// import { Navbar } from "./components/navbar";
 
 // const getProducts = async () => {
 //   const products = await fetch("https://ecomerce-api-raihanmd.vercel.app/api/products", { next: { revalidate: 60 } });
@@ -10,7 +10,7 @@ export default async function Home() {
 
   return (
     <main className="w-full">
-      <Navbar />
+      {/* <Navbar /> */}
       <div>
         Hello wor
         <ul>
