@@ -12,14 +12,14 @@ export async function POST(req) {
 
     if (!token || token !== process.env.OWNER_TOKEN) {
       const err = new Error("Forbidden.");
-      err.satusCode = 403;
+      err.statusCode = 403;
       err.payload = "Guest can't do the POST request.";
       throw err;
     }
 
     if (!firstName || !lastName || !userName || !password || !city) {
       const err = new Error("Forbidden.");
-      err.satusCode = 403;
+      err.statusCode = 403;
       err.payload = "Invalid format body JSON.";
       throw err;
     }

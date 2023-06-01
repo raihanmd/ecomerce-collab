@@ -5,6 +5,7 @@ import { getNanoid } from "@/utils/getNanoid";
 import { myResponse } from "@/utils/myResponse";
 import { addProduct } from "@/database/product/addProduct";
 import { getAllProducts } from "@/database/product/getAllProduct";
+import { getWalletById } from "@/database/wallet/getWalletById";
 
 export async function GET(req) {
   try {
@@ -21,8 +22,17 @@ export async function POST(req) {
 
     if (!token || token !== process.env.OWNER_TOKEN) {
       const err = new Error("Forbidden.");
-      err.satusCode = 403;
+      err.statusCode = 403;
       err.payload = "Guest can't do the POST request.";
+      throw err;
+    }
+
+    const userWallet = await getWalletById(idUser);
+
+    if (!userWallet) {
+      const err = new Error("Forbidden.");
+      err.statusCode = 403;
+      err.payload = "You must have the wallet first.";
       throw err;
     }
 
@@ -31,7 +41,7 @@ export async function POST(req) {
 
     if (!idUser || !nameProduct || !priceProduct || !categoryProduct || !descriptionProduct || !quantityProduct || !idProduct || !slugProduct) {
       const err = new Error("Forbidden.");
-      err.satusCode = 403;
+      err.statusCode = 403;
       err.payload = "Invalid format body JSON.";
       throw err;
     }
