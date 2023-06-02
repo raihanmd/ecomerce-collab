@@ -21,7 +21,7 @@ export async function POST(req) {
 
     const { firstName, lastName, userName, password, cityUser } = await req.json();
 
-    if (!firstName || !lastName || !userName || !password || !city) {
+    if (!firstName || !lastName || !userName || !password || !cityUser) {
       const err = new Error("Forbidden.");
       err.statusCode = 403;
       err.payload = "Invalid format body JSON.";
