@@ -4,5 +4,6 @@ const prefixId = {
   Categories: "cat_",
   Orders: "ord_",
   Cart: "crt_",
+  Wishlist: "wsh_",
 };
 module.exports = { prefixId };

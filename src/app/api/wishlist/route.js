@@ -1,12 +1,14 @@
-import bcrypt from "bcrypt";
 import { headers } from "next/headers";
 
-import { loginUser } from "@/database/user/loginUser";
+import { prefixId } from "@/const/prefixId";
+import { getNanoid } from "@/utils/getNanoid";
 import { myResponse } from "@/utils/myResponse";
+import { createWishlist } from "@/database/wishlist/createWishlist";
 
 export async function POST(req) {
   try {
     const headersList = headers();
+
     const APIKey = headersList.get("API-Key");
 
     if (!APIKey || APIKey !== process.env.API_KEY) {
@@ -16,27 +18,22 @@ export async function POST(req) {
       throw err;
     }
 
-    const { userName, password } = await req.json();
+    const { idUser, idProduct } = await req.json();
 
-    if (!userName || !password) {
+    if (!idUser || !idProduct) {
       const err = new Error("Forbidden.");
       err.statusCode = 403;
       err.payload = "Invalid format body JSON.";
       throw err;
     }
 
-    const userData = await loginUser(userName);
+    const idWishlist = prefixId.Wishlist + getNanoid();
 
-    const isValidUser = await bcrypt.compare(password, userData.password);
+    const newWishlist = { idWishlist, idUser, idProduct };
 
-    if (!isValidUser) {
-      const err = new Error("Unauthorized.");
-      err.statusCode = 401;
-      err.payload = "Fatal: invalid username or password.";
-      throw err;
-    }
+    await createWishlist(newWishlist);
 
-    return myResponse(200, { userValid: true }, "User valid for login.");
+    return myResponse(200, { isSucceed: 1 }, `Wishlist added successfully.`);
   } catch (err) {
     return myResponse(err.statusCode || 500, err.payload || "Internal server error.", err.message || "Internal server error.");
   }

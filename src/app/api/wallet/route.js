@@ -1,16 +1,21 @@
+import { headers } from "next/headers";
+
 import { myResponse } from "@/utils/myResponse";
 import { createWallet } from "@/database/wallet/createWallet";
 
 export async function POST(req) {
   try {
-    const { token, idUser } = await req.json();
+    const headersList = headers();
+    const APIKey = headersList.get("API-Key");
 
-    if (!token || token !== process.env.OWNER_TOKEN) {
+    if (!APIKey || APIKey !== process.env.API_KEY) {
       const err = new Error("Forbidden.");
       err.statusCode = 403;
       err.payload = "Guest can't do the POST request.";
       throw err;
     }
+
+    const { idUser } = await req.json();
 
     if (!idUser) {
       const err = new Error("Forbidden.");

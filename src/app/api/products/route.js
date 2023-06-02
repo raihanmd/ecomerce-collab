@@ -1,4 +1,5 @@
 import slugify from "slugify";
+import { headers } from "next/headers";
 
 import { prefixId } from "@/const/prefixId";
 import { getNanoid } from "@/utils/getNanoid";
@@ -18,14 +19,17 @@ export async function GET(req) {
 
 export async function POST(req) {
   try {
-    const { token, idUser, nameProduct, priceProduct, categoryProduct, descriptionProduct, quantityProduct } = await req.json();
+    const headersList = headers();
+    const APIKey = headersList.get("API-Key");
 
-    if (!token || token !== process.env.OWNER_TOKEN) {
+    if (!APIKey || APIKey !== process.env.API_KEY) {
       const err = new Error("Forbidden.");
       err.statusCode = 403;
       err.payload = "Guest can't do the POST request.";
       throw err;
     }
+
+    const { idUser, nameProduct, priceProduct, categoryProduct, descriptionProduct, quantityProduct } = await req.json();
 
     const userWallet = await getWalletById(idUser);
 

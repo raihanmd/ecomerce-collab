@@ -3,7 +3,8 @@ import { con } from "@/connection/db";
 export async function getCart(userName) {
   return await con
     .query(
-      `SELECT   p.id AS productId,
+      `SELECT   c.id AS cartId,
+                p.id AS productId,
                 p.name AS productName,
                 p.price AS productPrice,
                 c.quantity AS productQuantity

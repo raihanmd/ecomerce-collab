@@ -1,3 +1,5 @@
+import { headers } from "next/headers";
+
 import { prefixId } from "@/const/prefixId";
 import { createCart } from "@/database/cart/createCart";
 import { getCart } from "@/database/cart/getCart";
@@ -8,14 +10,18 @@ import { myResponse } from "@/utils/myResponse";
 
 export async function POST(req) {
   try {
-    const { token, idUser, idProduct, quantityProduct } = await req.json();
+    const headersList = headers();
 
-    if (!token || token !== process.env.OWNER_TOKEN) {
+    const APIKey = headersList.get("API-Key");
+
+    if (!APIKey || APIKey !== process.env.API_KEY) {
       const err = new Error("Forbidden.");
       err.statusCode = 403;
       err.payload = "Guest can't do the POST request.";
       throw err;
     }
+
+    const { idUser, idProduct, quantityProduct } = await req.json();
 
     if (!idUser || !idProduct || !quantityProduct) {
       const err = new Error("Forbidden.");

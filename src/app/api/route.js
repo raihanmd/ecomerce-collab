@@ -26,13 +26,19 @@ export async function GET() {
             path: `${mainPath}/api/cart/{userName}`,
             description: "Get cart information about {userName}: /api/order/{userName}",
           },
+          {
+            path: `${mainPath}/api/wishlist/{userName}`,
+            description: "Get wishlist information about {userName}: /api/order/{userName}",
+          },
         ],
         POST: [
           {
             path: `${mainPath}/api/login`,
             description: "Existing user login : /api/login",
+            header: {
+              "API-Key": "API-Key",
+            },
             formatBody: {
-              token: "Owner Token",
               userName: "Lorem",
               password: "Ipsum",
             },
@@ -40,8 +46,10 @@ export async function GET() {
           {
             path: `${mainPath}/api/register`,
             description: "Register new account: /api/register",
+            header: {
+              "API-Key": "API-Key",
+            },
             formatBody: {
-              token: "Owner Token",
               firstName: "Lorem",
               lastName: "Ipsum",
               userName: "dolor sit",
@@ -52,8 +60,10 @@ export async function GET() {
           {
             path: `${mainPath}/api/products`,
             description: "Add product : /api/products",
+            header: {
+              "API-Key": "API-Key",
+            },
             formatBody: {
-              token: "Owner token",
               idUser: "usr_001",
               nameProduct: "Lorem",
               priceProduct: 1000,
@@ -65,8 +75,10 @@ export async function GET() {
           {
             path: `${mainPath}/api/order`,
             description: "Create Order : /api/order",
+            header: {
+              "API-Key": "API-Key",
+            },
             formatBody: {
-              token: "Owner token",
               idUser: "usr_001",
               idProduct: "prd_001",
               quantityProduct: 10,
@@ -75,8 +87,10 @@ export async function GET() {
           {
             path: `${mainPath}/api/cart`,
             description: "Create cart : /api/cart",
+            header: {
+              "API-Key": "API-Key",
+            },
             formatBody: {
-              token: "Owner token",
               idUser: "usr_001",
               idProduct: "prd_001",
               quantityProduct: 10,
@@ -85,9 +99,33 @@ export async function GET() {
           {
             path: `${mainPath}/api/wallet`,
             description: "Create wallet for free Rp.1.000.000 balance : /api/wallet",
+            header: {
+              "API-Key": "API-Key",
+            },
             formatBody: {
-              token: "Owner token",
               idUser: "usr_001",
+            },
+          },
+          {
+            path: `${mainPath}/api/checkout`,
+            description: "Checkout the order : /api/checkout",
+            header: {
+              "API-Key": "API-Key",
+            },
+            formatBody: {
+              idUser: "usr_001",
+              idOrder: "ord_001",
+            },
+          },
+          {
+            path: `${mainPath}/api/wishlist`,
+            description: "Create wishlist : /api/wishlist",
+            header: {
+              "API-Key": "API-Key",
+            },
+            formatBody: {
+              idUser: "usr_001",
+              idProduct: "prd_001",
             },
           },
         ],
