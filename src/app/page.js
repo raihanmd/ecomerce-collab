@@ -6,18 +6,18 @@ const getProducts = async () => {
 };
 
 export default async function Home() {
-  const products = await getProducts();
+  // const products = await getProducts();
 
   return (
     <main className="w-full">
       {/* <Navbar /> */}
       <div>
         <ul>
-          {products.payload.map((p) => (
+          {/* {products.payload.map((p) => (
             <li>
               <button>{p.productName}</button>
             </li>
-          ))}
+          ))} */}
         </ul>
       </div>
     </main>

@@ -1,5 +1,5 @@
 YANG BELUM:
-DELETE cart
-DELETE wishlist
+UD cart
+UD wishlist
 CANCEL order
-Fitur reviews
+Fitur CRUD reviews
