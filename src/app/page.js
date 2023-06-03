@@ -11,6 +11,7 @@ export default async function Home() {
   return (
     <main className="w-full">
       {/* <Navbar /> */}
+      Hello world
       <div>
         <ul>
           {/* {products.payload.map((p) => (
