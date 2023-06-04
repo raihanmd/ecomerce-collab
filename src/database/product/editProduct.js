@@ -1,7 +1,7 @@
 import { con } from "@/connection/db";
 
-export async function addProduct(newProduct) {
-  const { idProduct, nameProduct, priceProduct, categoryProduct, descriptionProduct, quantityProduct, slugProduct, idUser } = newProduct;
+export async function editProduct(editedProduct) {
+  const { idUser, idProduct, nameProduct, priceProduct, categoryProduct, descriptionProduct, quantityProduct, slugProduct } = editedProduct;
   return await con
     .getConnection()
     .then(async (connection) => {
@@ -16,19 +16,24 @@ export async function addProduct(newProduct) {
         }
         await connection
           .query(
-            `INSERT INTO products 
-                (id, id_user, id_categories, name, slug, description, price, quantity)
-                  VALUES ('${idProduct}', '${idUser}', '${idCategory[0].id}', 
-                    '${nameProduct}', '${slugProduct}', '${descriptionProduct}', ${priceProduct}, ${quantityProduct})`
+            `UPDATE products 
+                SET id_categories = '${idCategory[0].id}', 
+                    name = '${nameProduct}', 
+                    slug = '${slugProduct}',
+                    description = '${descriptionProduct}', 
+                    price = ${priceProduct},
+                    quantity = ${quantityProduct}
+                WHERE id = '${idProduct}' AND id_user = '${idUser}'`
           )
           .then(([fields]) => {
             if (fields.affectedRows <= 0) {
               const err = new Error(`Internal server error.`);
               err.statusCode = 500;
-              err.payload = "Failed to insert data.";
+              err.payload = "Failed to update data, only accept updating your own product.";
               throw err;
             }
           });
+
         await connection.commit();
       } catch (err) {
         await connection.rollback();

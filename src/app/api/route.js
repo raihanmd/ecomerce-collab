@@ -30,6 +30,10 @@ export async function GET() {
             path: `${mainPath}/api/wishlist/{userName}`,
             description: "Get wishlist information about {userName}: /api/order/{userName}",
           },
+          {
+            path: `${mainPath}/api/reviews/{idProduct}`,
+            description: "Get reviews for product with id {idProduct}: /api/reviews/{idProduct}",
+          },
         ],
         POST: [
           {
@@ -126,6 +130,88 @@ export async function GET() {
             formatBody: {
               idUser: "usr_001",
               idProduct: "prd_001",
+            },
+          },
+          {
+            path: `${mainPath}/api/reviews`,
+            description: "Create review product : /api/reviews",
+            header: {
+              "API-Key": "API-Key",
+            },
+            formatBody: {
+              idUser: "usr_001",
+              idProduct: "prd_001",
+              ratingReviews: 5,
+              commentReviews: "This product is so beautiful",
+            },
+          },
+        ],
+        PUT: [
+          {
+            path: `${mainPath}/api/products`,
+            description: "Edit product : /api/products",
+            header: {
+              "API-Key": "API-Key",
+            },
+            formatBody: {
+              idUser: "usr_001",
+              idProduct: "prd_001",
+              nameProduct: "Lorem",
+              priceProduct: 1000,
+              categoryProduct: "Lain-lain",
+              descriptionProduct: "Dolor sit amet.",
+              quantityProduct: 100,
+            },
+          },
+          {
+            path: `${mainPath}/api/cart`,
+            description: "Edit cart : /api/cart",
+            header: {
+              "API-Key": "API-Key",
+            },
+            formatBody: {
+              idCart: "crt_001",
+              idUser: "usr_001",
+              idProduct: "prd_001",
+              quantityProduct: 10,
+            },
+          },
+          {
+            path: `${mainPath}/api/reviews`,
+            description: "Edit review product : /api/reviews",
+            header: {
+              "API-Key": "API-Key",
+            },
+            formatBody: {
+              idReviw: "rev_001",
+              idUser: "usr_001",
+              idProduct: "prd_001",
+              ratingReviews: 5,
+              commentReviews: "This product is so beautiful",
+            },
+          },
+        ],
+        DELETE: [
+          {
+            path: `${mainPath}/api/products`,
+            description: "Delete product : /api/products",
+            header: {
+              "API-Key": "API-Key",
+            },
+            formatBody: {
+              idUser: "usr_001",
+              idProduct: "prd_001",
+            },
+          },
+          {
+            path: `${mainPath}/api/cart`,
+            description: "Delete cart : /api/cart",
+            header: {
+              "API-Key": "API-Key",
+            },
+            formatBody: {
+              idUser: "usr_001",
+              idCart: "crt_001",
             },
           },
         ],

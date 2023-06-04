@@ -5,5 +5,6 @@ const prefixId = {
   Orders: "ord_",
   Cart: "crt_",
   Wishlist: "wsh_",
+  Reviews: "rev_",
 };
 module.exports = { prefixId };

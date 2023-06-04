@@ -7,16 +7,15 @@ export async function getAllProducts() {
                 p.name AS productName,
                 p.slug AS productSlug,
                 p.price AS productPrice,
-                pd.sold AS productSold,
+                p.sold AS productSold,
                 AVG(r.rating) AS productRating,
                 u.user_name AS ownedBy
           FROM products AS p 
-            INNER JOIN products_detail AS pd ON (pd.id_products = p.id)
-              INNER JOIN reviews AS r ON (r.id_products = p.id)
-                INNER JOIN user AS u ON (u.id = p.id_user)
-                  GROUP BY p.id, p.name, p.slug, p.price, pd.sold, u.user_name
-                    ORDER BY productSold DESC, productRating DESC
-                      LIMIT 50`
+            INNER JOIN reviews AS r ON (r.id_products = p.id)
+              INNER JOIN user AS u ON (u.id = p.id_user)
+                GROUP BY p.id, p.name, p.slug, p.price, p.sold, u.user_name
+                  ORDER BY productSold DESC, productRating DESC
+                    LIMIT 50`
     )
     .then(([rows]) => rows)
     .catch((err) => {

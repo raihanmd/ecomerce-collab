@@ -1,15 +1,15 @@
 import { headers } from "next/headers";
 
+import getUnixTimestamps from "@/utils/getUnixTimestamps";
 import { prefixId } from "@/const/prefixId";
 import { getNanoid } from "@/utils/getNanoid";
 import { myResponse } from "@/utils/myResponse";
-import { createWishlist } from "@/database/wishlist/createWishlist";
-import { deleteWishlist } from "@/database/wishlist/deleteWishlist";
+import { createReviews } from "@/database/reviews/createReviews";
+import { editReviews } from "@/database/reviews/editReviews";
 
 export async function POST(req) {
   try {
     const headersList = headers();
-
     const APIKey = headersList.get("API-Key");
 
     if (!APIKey || APIKey !== process.env.API_KEY) {
@@ -19,28 +19,29 @@ export async function POST(req) {
       throw err;
     }
 
-    const { idUser, idProduct } = await req.json();
+    const { idUser, idProduct, ratingReviews, commentReviews } = await req.json();
 
-    if (!idUser || !idProduct) {
+    if (!idUser || !idProduct || !ratingReviews || !commentReviews) {
       const err = new Error("Forbidden.");
       err.statusCode = 403;
       err.payload = "Invalid format body JSON.";
       throw err;
     }
 
-    const idWishlist = prefixId.Wishlist + getNanoid();
+    const idReviews = prefixId.Reviews + getNanoid(),
+      createdAt = getUnixTimestamps();
 
-    const newWishlist = { idWishlist, idUser, idProduct };
+    const newOrder = { idReviews, idUser, idProduct, ratingReviews, commentReviews, createdAt };
 
-    await createWishlist(newWishlist);
+    await createReviews(newOrder);
 
-    return myResponse(200, { isSucceed: 1 }, `Wishlist added successfully.`);
+    return myResponse(200, { isSucceed: 1 }, `Review added successfully.`);
   } catch (err) {
     return myResponse(err.statusCode || 500, err.payload || "Internal server error.", err.message || "Internal server error.");
   }
 }
 
-export async function DELETE(req) {
+export async function PUT(req) {
   try {
     const headersList = headers();
     const APIKey = headersList.get("API-Key");
@@ -48,24 +49,26 @@ export async function DELETE(req) {
     if (!APIKey || APIKey !== process.env.API_KEY) {
       const err = new Error("Forbidden.");
       err.statusCode = 403;
-      err.payload = "Guest can't do the DELETE request.";
+      err.payload = "Guest can't do the PUT request.";
       throw err;
     }
 
-    const { idWishlist, idUser } = await req.json();
+    const { idRewies, idUser, idProduct, ratingReviews, commentReviews } = await req.json();
 
-    if (!idWishlist || !idUser) {
+    if (!idRewies || !idUser || !idProduct || !ratingReviews || !commentReviews) {
       const err = new Error("Forbidden.");
       err.statusCode = 403;
       err.payload = "Invalid format body JSON.";
       throw err;
     }
 
-    const deletedWishlist = { idWishlist, idUser };
+    const updatedAt = getUnixTimestamps();
 
-    await deleteWishlist(deletedWishlist);
+    const editedReviews = { idRewies, idUser, idProduct, ratingReviews, commentReviews, updatedAt };
 
-    return myResponse(200, { isSucceed: 1 }, `Wishlist deleted successfully.`);
+    await editReviews(editedReviews);
+
+    return myResponse(200, { isSucceed: 1 }, `Product edited successfully.`);
   } catch (err) {
     return myResponse(err.statusCode || 500, err.payload || "Internal server error.", err.message || "Internal server error.");
   }
