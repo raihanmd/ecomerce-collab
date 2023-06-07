@@ -63,7 +63,7 @@ export async function createOrder({ idUser, idProduct, quantityProduct, idOrder,
 
         await connection
           .query(
-            `UPDATE products_detail
+            `UPDATE products
                 SET quantity = ${detailProduct[0].quantity - quantityProduct}
                   WHERE id_products = '${idProduct}'`
           )

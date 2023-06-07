@@ -3,19 +3,19 @@ import { con } from "@/connection/db";
 export async function getAllProducts() {
   return await con
     .query(
-      `SELECT   p.id AS productId,
-                p.name AS productName,
-                p.slug AS productSlug,
-                p.price AS productPrice,
-                p.sold AS productSold,
-                AVG(r.rating) AS productRating,
-                u.user_name AS ownedBy
-          FROM products AS p 
-            INNER JOIN reviews AS r ON (r.id_products = p.id)
-              INNER JOIN user AS u ON (u.id = p.id_user)
-                GROUP BY p.id, p.name, p.slug, p.price, p.sold, u.user_name
-                  ORDER BY productSold DESC, productRating DESC
-                    LIMIT 50`
+      `SELECT p.id AS productId,
+              p.name AS productName,
+              p.price AS productPrice,
+              p.quantity AS productQuantity,
+              AVG(r.rating) AS productRating,
+              COUNT(o.id) AS totalOrders
+        FROM products AS p
+          LEFT JOIN reviews AS r ON r.id_products = p.id
+            LEFT JOIN orders_detail AS od ON od.id_products = p.id
+              LEFT JOIN orders AS o ON o.id = od.id_orders
+                GROUP BY p.id, p.name, p.price, p.description, p.quantity
+                  ORDER BY totalOrders DESC, productRating DESC
+                    LIMIT 20;`
     )
     .then(([rows]) => rows)
     .catch((err) => {

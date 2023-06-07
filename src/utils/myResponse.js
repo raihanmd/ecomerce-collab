@@ -12,6 +12,13 @@ export const myResponse = (statusCode, payload, message) => {
         current: "",
       },
     },
-    { status: statusCode }
+    {
+      status: statusCode,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
+        "Cache-Control": "public, s-maxage=10, stale-while-revalidate=59",
+      },
+    }
   );
 };

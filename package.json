@@ -10,9 +10,15 @@
     "commit": "git add . && git commit -m 'update' && git push"
   },
   "dependencies": {
+    "@chakra-ui/next-js": "^2.1.4",
+    "@chakra-ui/react": "^2.7.0",
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/quicksand": "^5.0.2",
     "autoprefixer": "10.4.14",
     "bcrypt": "^5.1.0",
     "dotenv": "^16.0.3",
+    "framer-motion": "^10.12.16",
     "mysql2": "^3.3.3",
     "next": "13.4.4",
     "next-auth": "^4.22.1",
