@@ -1,6 +1,6 @@
 import "@/style/global.css";
-import Navbar from "./components/navbar";
-import { Providers } from "./providers";
+import Navbar from "@/app/components/navbar";
+import { Providers } from "@/app/providers";
 
 export const metadata = {
   title: "Lynx Shop",

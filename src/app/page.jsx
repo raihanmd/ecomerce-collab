@@ -1,4 +1,4 @@
-import ProductCard from "./components/productCard";
+import ProductCard from "@/app/components/productCard";
 
 export default async function page() {
   return (
