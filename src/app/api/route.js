@@ -34,6 +34,10 @@ export async function GET() {
             path: `${mainPath}/api/reviews/{idProduct}`,
             description: "Get reviews for product with id {idProduct}: /api/reviews/{idProduct}",
           },
+          {
+            path: `${mainPath}/api/category`,
+            description: "Get all categories: /api/category",
+          },
         ],
         POST: [
           {

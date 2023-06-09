@@ -2,7 +2,8 @@ import { extendTheme } from "@chakra-ui/react";
 
 const theme = extendTheme({
   fonts: {
-    body: `'Quicksand', sans-serif`,
+    heading: `'Open Sauce One', sans-serif`,
+    body: `'Fira Code', sans-serif`,
   },
 });
 

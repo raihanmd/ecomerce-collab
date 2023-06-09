@@ -1,11 +1,10 @@
-"use client";
-
-import { Box, Heading } from "@chakra-ui/react";
+import ProductCard from "./components/productCard";
 
 export default async function page() {
   return (
-    <Box>
-      <Heading>Hello world</Heading>
-    </Box>
+    <>
+      <ProductCard />
+      <p>Main Page</p>
+    </>
   );
 }

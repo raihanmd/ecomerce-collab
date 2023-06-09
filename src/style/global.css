@@ -1,0 +1,4 @@
+main.root {
+  max-width: var(--chakra-sizes-7xl);
+  margin: 0 auto;
+}
