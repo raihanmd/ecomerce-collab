@@ -1,52 +1,14 @@
-"use client";
+// "use client";
 
-import { useEffect, useReducer } from "react";
+import useSWR from "swr";
 import { Link, Popover, PopoverContent, PopoverTrigger, Stack, Text, Box } from "@chakra-ui/react";
 
 import color from "@/const/color";
 
-const CategoryAction = {
-  FETCHING: "FETCHING",
-  FINISHED: "FINISHED",
-  RESTART: "RESTART",
-};
-
-const InitialState = {
-  category: false,
-  isLoading: false,
-};
-
-const CategoryReducer = (state, action) => {
-  switch (action.type) {
-    case CategoryAction.FETCHING:
-      return { ...state, isLoading: true };
-      break;
-    case CategoryAction.FINISHED:
-      return { ...state, category: action.data, isLoading: false };
-      break;
-    case CategoryAction.RESTART:
-      return { ...state, category: false, isLoading: false };
-      break;
-  }
-};
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const DesktopNav = () => {
-  const [state, dispatch] = useReducer(CategoryReducer, InitialState);
-
-  useEffect(() => {
-    const getCategories = async () => {
-      let res = await fetch("/api/category", { next: { revalidate: 10 } });
-      res = await res.json();
-      dispatch({ type: CategoryAction.FINISHED, data: res.payload });
-      return;
-    };
-    dispatch({ type: CategoryAction.FETCHING });
-    getCategories();
-
-    return () => {
-      dispatch({ type: CategoryAction.RESTART });
-    };
-  }, []);
+  const { data, error, isLoading } = useSWR("/api/category", fetcher);
 
   const linkColor = "gray.600";
   const linkHoverColor = "gray.800";
@@ -71,7 +33,7 @@ const DesktopNav = () => {
               Categories
             </Text>
           </PopoverTrigger>
-          {state.isLoading ? (
+          {isLoading ? (
             <PopoverContent border={0} boxShadow={"lg"} bg={popoverContentBgColor} p={3} rounded={"xl"} minW={"xs"} color={color.MAIN_COLOR}>
               <Stack direction={"row"} align={"center"} color={color.MAIN_COLOR} py={2} px={3} rounded={"md"}>
                 <Text fontSize={"sm"} transition={"all .3s ease"} fontWeight={200}>
@@ -80,9 +42,9 @@ const DesktopNav = () => {
               </Stack>
             </PopoverContent>
           ) : null}
-          {state.category ? (
+          {data ? (
             <PopoverContent border={0} boxShadow={"lg"} bg={popoverContentBgColor} p={3} rounded={"xl"} minW={"xs"} color={color.MAIN_COLOR}>
-              {state.category.map((child) => (
+              {data.payload.map((child) => (
                 <DesktopSubNav key={child.name} {...child} />
               ))}
             </PopoverContent>
