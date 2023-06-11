@@ -2,3 +2,18 @@ main.root {
   max-width: var(--chakra-sizes-7xl);
   margin: 0 auto;
 }
+
+input[type="file"]::file-selector-button {
+  margin-right: 20px;
+  border: none;
+  background: var(--chakra-colors-black);
+  padding: 8px 13px;
+  border-radius: var(--chakra-radii-md);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background: var(--chakra-colors-gray-900);
+}

@@ -1,5 +1,6 @@
 import slugify from "slugify";
 import { headers } from "next/headers";
+import { ref, getDownloadURL } from "firebase/storage";
 
 import { prefixId } from "@/const/prefixId";
 import { getNanoid } from "@/utils/getNanoid";
@@ -9,11 +10,19 @@ import { getAllProducts } from "@/database/product/getAllProduct";
 import { getWalletById } from "@/database/wallet/getWalletById";
 import { deleteProduct } from "@/database/product/deleteProduct";
 import { editProduct } from "@/database/product/editProduct";
+import getUnixTimestamps from "@/utils/getUnixTimestamps";
+import { storage } from "@/connection/firebaseConfig";
 
 export async function GET(req) {
   try {
     const products = await getAllProducts();
-    return myResponse(200, products, "Data successfully retrieved.");
+    const fixedProducts = await Promise.all(
+      products.map(async (product) => {
+        const downloadUrl = await getDownloadURL(ref(storage, `images/${product.productImage}`));
+        return { ...product, productImage: downloadUrl };
+      })
+    );
+    return myResponse(200, fixedProducts, "Data successfully retrieved.");
   } catch (err) {
     return myResponse(err.statusCode || 500, err.payload || "Internal server error.", err.message || "Internal server error.");
   }
@@ -31,7 +40,7 @@ export async function POST(req) {
       throw err;
     }
 
-    const { idUser, nameProduct, priceProduct, categoryProduct, descriptionProduct, quantityProduct } = await req.json();
+    const { idUser, nameProduct, priceProduct, categoryProduct, descriptionProduct, quantityProduct, imageProduct } = await req.json();
 
     const userWallet = await getWalletById(idUser);
 
@@ -43,17 +52,20 @@ export async function POST(req) {
     }
 
     const idProduct = prefixId.Products + getNanoid(),
-      slugProduct = slugify(nameProduct, { lower: true });
+      slugProduct = slugify(nameProduct, { lower: true }),
+      createdAt = getUnixTimestamps();
 
-    if (!idUser || !nameProduct || !priceProduct || !categoryProduct || !descriptionProduct || !quantityProduct || !idProduct || !slugProduct) {
+    if (!idUser || !nameProduct || !priceProduct || !categoryProduct || !descriptionProduct || !quantityProduct || !idProduct || !slugProduct || !createdAt || !imageProduct) {
       const err = new Error("Forbidden.");
       err.statusCode = 403;
       err.payload = "Invalid format body JSON.";
       throw err;
     }
 
-    const newProduct = { idProduct, nameProduct, priceProduct, categoryProduct, descriptionProduct, quantityProduct, slugProduct, idUser };
+    const newProduct = { idProduct, nameProduct, priceProduct, categoryProduct, descriptionProduct, quantityProduct, slugProduct, idUser, createdAt, imageProduct };
+
     await addProduct(newProduct);
+
     return myResponse(200, { isSucceed: 1 }, `Product added successfully.`);
   } catch (err) {
     return myResponse(err.statusCode || 500, err.payload || "Internal server error.", err.message || "Internal server error.");

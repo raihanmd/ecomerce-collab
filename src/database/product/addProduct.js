@@ -1,7 +1,7 @@
 import { con } from "@/connection/db";
 
 export async function addProduct(newProduct) {
-  const { idProduct, nameProduct, priceProduct, categoryProduct, descriptionProduct, quantityProduct, slugProduct, idUser } = newProduct;
+  const { idProduct, nameProduct, priceProduct, categoryProduct, descriptionProduct, quantityProduct, slugProduct, idUser, createdAt, imageProduct } = newProduct;
   return await con
     .getConnection()
     .then(async (connection) => {
@@ -17,9 +17,9 @@ export async function addProduct(newProduct) {
         await connection
           .query(
             `INSERT INTO products 
-                (id, id_user, id_categories, name, slug, description, price, quantity)
+                (id, id_user, id_categories, name, slug, image, description, price, quantity, created_at)
                   VALUES ('${idProduct}', '${idUser}', '${idCategory[0].id}', 
-                    '${nameProduct}', '${slugProduct}', '${descriptionProduct}', ${priceProduct}, ${quantityProduct})`
+                    '${nameProduct}', '${slugProduct}', '${imageProduct}', '${descriptionProduct}', ${priceProduct}, ${quantityProduct}, ${createdAt})`
           )
           .then(([fields]) => {
             if (fields.affectedRows <= 0) {

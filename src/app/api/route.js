@@ -78,6 +78,7 @@ export async function GET() {
               categoryProduct: "Ipsum",
               descriptionProduct: "Dolor sit amet.",
               quantityProduct: 100,
+              imageProduct: "Image File.",
             },
           },
           {
