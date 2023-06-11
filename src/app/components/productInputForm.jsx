@@ -7,7 +7,7 @@ import color from "@/const/color";
 import { generateImageName } from "@/utils/generateImageName";
 import { uploadImage } from "@/firebase/uploadImage";
 
-const postproduct = async () => {
+const postproduct = async (newProduct) => {
   await fetch(`${process.env.MAIN_URL}/api/products`, {
     method: "POST",
     headers: {
@@ -28,10 +28,9 @@ export default function ProductInputForm() {
 
   const onSubmitProduct = async (data) => {
     const imageProduct = generateImageName(data.image[0].name);
-    if (uploadImage(data.image[0], imageProduct)) {
-      const newProduct = { idUser: "usr_001", nameProduct: data.name, priceProduct: data.price, categoryProduct: data.cat, descriptionProduct: data.desc, quantityProduct: data.qty, imageProduct };
-      await postproduct(newProduct);
-    }
+    await uploadImage(data.image[0], imageProduct);
+    const newProduct = { idUser: "usr_001", nameProduct: data.name, priceProduct: data.price, categoryProduct: data.cat, descriptionProduct: data.desc, quantityProduct: data.qty, imageProduct };
+    await postproduct(newProduct);
   };
 
   return (

@@ -1,11 +1,11 @@
 import { storage } from "@/connection/firebaseConfig";
 import { ref, uploadBytes } from "firebase/storage";
 
-export const uploadImage = (blobImage, imageProduct) => {
+export const uploadImage = async (blobImage, imageProduct) => {
   try {
     const imageRef = ref(storage, `images/${imageProduct}`);
-    uploadBytes(imageRef, blobImage, { contentType: "image/webp" })
-      .then((res) => true)
+    await uploadBytes(imageRef, blobImage)
+      .then((res) => res)
       .catch((err) => {
         throw err;
       });
