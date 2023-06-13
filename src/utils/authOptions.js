@@ -1,5 +1,6 @@
 import { fetchPOST } from "@/useFetch/fetchPOST";
 import GoogleProvider from "next-auth/providers/google";
+import slugify from "slugify";
 
 export const authOptions = {
   providers: [
@@ -12,7 +13,7 @@ export const authOptions = {
     async signIn(user, account, profile) {
       const { statusCode } = await fetchPOST("/api/login", { userGoogleId: user.user.id, userEmail: user.user.email });
       if (statusCode !== 200) {
-        const createUserResponse = await fetchPOST("/api/register", { userGoogleId: user.user.id, userName: user.user.name, userEmail: user.user.email });
+        const createUserResponse = await fetchPOST("/api/register", { userGoogleId: user.user.id, userName: slugify(user.user.name, { lower: true }), userEmail: user.user.email });
 
         if (createUserResponse.statusCode !== 201) return false;
       }

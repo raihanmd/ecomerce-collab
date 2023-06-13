@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar";
 import NextAuthSessionProvider from "./providers/sessionProvider";
 import { UserProvider } from "@/context/UserContext";
 import { fetchGET } from "@/useFetch/fetchGET";
+import slugify from "slugify";
 
 export const metadata = {
   title: "Lynx Shop",
@@ -18,7 +19,7 @@ export default async function RootLayout({ children }) {
   const session = await getServerSession(authOptions);
   const {
     payload: { userId },
-  } = await fetchGET(`/api/id/${session.user.name}`);
+  } = await fetchGET(`/api/id/${slugify(session.user.name, { lower: true })}`);
 
   if (!session) {
     redirect("/api/auth/signin");
