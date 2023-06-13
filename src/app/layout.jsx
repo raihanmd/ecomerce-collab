@@ -19,7 +19,7 @@ export default async function RootLayout({ children }) {
   const session = await getServerSession(authOptions);
   const {
     payload: { userId },
-  } = await fetchGET(`/api/id/${slugify(session?.user.name, { lower: true })}`);
+  } = await fetchGET(`/api/id/${slugify(toString(session?.user.name), { lower: true })}`);
 
   if (!session) {
     redirect("/api/auth/signin");
