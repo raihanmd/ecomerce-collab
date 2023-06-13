@@ -15,18 +15,18 @@ export async function POST(req) {
       throw err;
     }
 
-    const { idUser } = await req.json();
+    const { userId } = await req.json();
 
-    if (!idUser) {
+    if (!userId) {
       const err = new Error("Forbidden.");
       err.statusCode = 403;
       err.payload = "Invalid format body JSON.";
       throw err;
     }
 
-    const balanceUser = 1000000;
+    const userBalance = 1000000;
 
-    const newWallet = { idUser, balanceUser };
+    const newWallet = { userId, userBalance };
 
     await createWallet(newWallet);
 

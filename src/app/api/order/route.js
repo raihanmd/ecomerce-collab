@@ -18,19 +18,19 @@ export async function POST(req) {
       throw err;
     }
 
-    const { idUser, idProduct, quantityProduct } = await req.json();
+    const { userId, productId, productQuantity } = await req.json();
 
-    if (!idUser || !idProduct || !quantityProduct) {
+    if (!userId || !productId || !productQuantity) {
       const err = new Error("Forbidden.");
       err.statusCode = 403;
       err.payload = "Invalid format body JSON.";
       throw err;
     }
 
-    const idOrder = prefixId.Orders + getNanoid(),
+    const orderId = prefixId.Orders + getNanoid(),
       orderDate = getUnixTimestamps();
 
-    const newOrder = { idUser, idProduct, quantityProduct, idOrder, orderDate };
+    const newOrder = { userId, productId, productQuantity, orderId, orderDate };
 
     await createOrder(newOrder);
 

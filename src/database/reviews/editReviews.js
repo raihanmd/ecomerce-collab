@@ -1,6 +1,6 @@
 import { con } from "@/connection/db";
 
-export async function editReviews({ idRewies, idUser, idProduct, ratingReviews, commentReviews, updatedAt }) {
+export async function editReviews({ reviewsId, userId, productId, reviewsRating, reviewsComment, updatedAt }) {
   return await con
     .getConnection()
     .then(async (connection) => {
@@ -9,10 +9,10 @@ export async function editReviews({ idRewies, idUser, idProduct, ratingReviews, 
         await connection
           .query(
             `UPDATE reviews 
-                SET rating = ${ratingReviews}, 
-                    comment = '${commentReviews}', 
+                SET rating = ${reviewsRating}, 
+                    comment = '${reviewsComment}', 
                     updated_at = ${updatedAt}
-                WHERE id = '${idRewies}' AND id_user = '${idUser}' AND id_products = '${idProduct}'`
+                WHERE id = '${reviewsId}' AND id_user = '${userId}' AND id_products = '${productId}'`
           )
           .then(([fields]) => {
             if (fields.affectedRows <= 0) {

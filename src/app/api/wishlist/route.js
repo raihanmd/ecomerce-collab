@@ -19,18 +19,18 @@ export async function POST(req) {
       throw err;
     }
 
-    const { idUser, idProduct } = await req.json();
+    const { userId, productId } = await req.json();
 
-    if (!idUser || !idProduct) {
+    if (!userId || !productId) {
       const err = new Error("Forbidden.");
       err.statusCode = 403;
       err.payload = "Invalid format body JSON.";
       throw err;
     }
 
-    const idWishlist = prefixId.Wishlist + getNanoid();
+    const wishlistId = prefixId.Wishlist + getNanoid();
 
-    const newWishlist = { idWishlist, idUser, idProduct };
+    const newWishlist = { wishlistId, userId, productId };
 
     await createWishlist(newWishlist);
 
@@ -52,16 +52,16 @@ export async function DELETE(req) {
       throw err;
     }
 
-    const { idWishlist, idUser } = await req.json();
+    const { wishlistId, userId } = await req.json();
 
-    if (!idWishlist || !idUser) {
+    if (!wishlistId || !userId) {
       const err = new Error("Forbidden.");
       err.statusCode = 403;
       err.payload = "Invalid format body JSON.";
       throw err;
     }
 
-    const deletedWishlist = { idWishlist, idUser };
+    const deletedWishlist = { wishlistId, userId };
 
     await deleteWishlist(deletedWishlist);
 

@@ -1,6 +1,6 @@
 import { con } from "@/connection/db";
 
-export async function deleteCart({ idCart, idUser }) {
+export async function deleteCart({ cartId, userId }) {
   return await con
     .getConnection()
     .then(async (connection) => {
@@ -9,7 +9,7 @@ export async function deleteCart({ idCart, idUser }) {
         await connection
           .query(
             `DELETE FROM cart 
-                WHERE id = '${idCart}' AND id_user = '${idUser}'`
+                WHERE id = '${cartId}' AND id_user = '${userId}'`
           )
           .then(([fields]) => {
             if (fields.affectedRows <= 0) {

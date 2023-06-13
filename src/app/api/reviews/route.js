@@ -19,19 +19,19 @@ export async function POST(req) {
       throw err;
     }
 
-    const { idUser, idProduct, ratingReviews, commentReviews } = await req.json();
+    const { userId, productId, reviewsRating, reviewsComment } = await req.json();
 
-    if (!idUser || !idProduct || !ratingReviews || !commentReviews) {
+    if (!userId || !productId || !reviewsRating || !reviewsComment) {
       const err = new Error("Forbidden.");
       err.statusCode = 403;
       err.payload = "Invalid format body JSON.";
       throw err;
     }
 
-    const idReviews = prefixId.Reviews + getNanoid(),
+    const reviewsId = prefixId.Reviews + getNanoid(),
       createdAt = getUnixTimestamps();
 
-    const newOrder = { idReviews, idUser, idProduct, ratingReviews, commentReviews, createdAt };
+    const newOrder = { reviewsId, userId, productId, reviewsRating, reviewsComment, createdAt };
 
     await createReviews(newOrder);
 
@@ -53,9 +53,9 @@ export async function PUT(req) {
       throw err;
     }
 
-    const { idRewies, idUser, idProduct, ratingReviews, commentReviews } = await req.json();
+    const { reviewsId, userId, productId, reviewsRating, reviewsComment } = await req.json();
 
-    if (!idRewies || !idUser || !idProduct || !ratingReviews || !commentReviews) {
+    if (!reviewsId || !userId || !productId || !reviewsRating || !reviewsComment) {
       const err = new Error("Forbidden.");
       err.statusCode = 403;
       err.payload = "Invalid format body JSON.";
@@ -64,7 +64,7 @@ export async function PUT(req) {
 
     const updatedAt = getUnixTimestamps();
 
-    const editedReviews = { idRewies, idUser, idProduct, ratingReviews, commentReviews, updatedAt };
+    const editedReviews = { reviewsId, userId, productId, reviewsRating, reviewsComment, updatedAt };
 
     await editReviews(editedReviews);
 

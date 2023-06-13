@@ -7,7 +7,6 @@ export async function getAllProducts() {
               p.slug AS productSlug,
               p.name AS productName,
               p.price AS productPrice,
-              p.quantity AS productQuantity,
               AVG(r.rating) AS productRating,
               COUNT(o.id) AS totalOrders,
               p.image AS productImage,
@@ -18,7 +17,7 @@ export async function getAllProducts() {
             LEFT JOIN orders_detail AS od ON od.id_products = p.id
               LEFT JOIN orders AS o ON o.id = od.id_orders
                 INNER JOIN user AS u ON u.id = p.id_user
-                  GROUP BY u.id, p.id, p.name, p.price, p.description, p.quantity
+                  GROUP BY u.id, p.id, p.name, p.price, p.description
                     ORDER BY totalOrders DESC, productRating DESC, createdAt DESC
                       LIMIT 20;`
     )

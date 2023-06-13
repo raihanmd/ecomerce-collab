@@ -1,6 +1,6 @@
 import { con } from "@/connection/db";
 
-export async function getDetailProduct({ userName, slugProduct }) {
+export async function getDetailProduct({ userName, productSlug }) {
   return await con
     .query(
       `SELECT   p.id as productId, 
@@ -16,7 +16,7 @@ export async function getDetailProduct({ userName, slugProduct }) {
               LEFT JOIN reviews AS r ON (r.id_products = p.id)
                 LEFT JOIN orders_detail AS od ON od.id_products = p.id
                   LEFT JOIN orders AS o ON o.id = od.id_orders
-                    WHERE p.slug = '${slugProduct}' AND user.user_name = '${userName}'
+                    WHERE p.slug = '${productSlug}' AND user.user_name = '${userName}'
                       GROUP BY p.id, p.name, p.price, p.description, p.quantity, user.user_name`
     )
     .then(([rows]) => rows[0])

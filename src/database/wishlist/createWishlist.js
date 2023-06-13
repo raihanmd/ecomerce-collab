@@ -1,6 +1,6 @@
 import { con } from "@/connection/db";
 
-export async function createWishlist({ idWishlist, idUser, idProduct }) {
+export async function createWishlist({ wishlistId, userId, productId }) {
   return await con
     .getConnection()
     .then(async (connection) => {
@@ -10,7 +10,7 @@ export async function createWishlist({ idWishlist, idUser, idProduct }) {
           .query(
             `INSERT INTO wishlist
                 (id, id_user, id_products)
-                  VALUES ('${idWishlist}', '${idUser}', '${idProduct}')`
+                  VALUES ('${wishlistId}', '${userId}', '${productId}')`
           )
           .then(([fields]) => {
             if (fields.affectedRows <= 0) {

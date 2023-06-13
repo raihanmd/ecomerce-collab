@@ -1,6 +1,6 @@
 import { con } from "@/connection/db";
 
-export async function createReviews({ idReviews, idUser, idProduct, ratingReviews, commentReviews, createdAt }) {
+export async function createReviews({ reviewsId, userId, productId, reviewsRating, reviewsComment, createdAt }) {
   return await con
     .getConnection()
     .then(async (connection) => {
@@ -10,8 +10,8 @@ export async function createReviews({ idReviews, idUser, idProduct, ratingReview
           .query(
             `INSERT INTO reviews
                 (id, id_user, id_products, rating, comment, created_at)
-                  VALUES ('${idReviews}', '${idUser}', '${idProduct}', ${ratingReviews},
-                  '${commentReviews}', ${createdAt})`
+                  VALUES ('${reviewsId}', '${userId}', '${productId}', ${reviewsRating},
+                  '${reviewsComment}', ${createdAt})`
           )
           .then(([fields]) => {
             if (fields.affectedRows <= 0) {

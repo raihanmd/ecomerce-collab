@@ -1,15 +1,12 @@
 import ProductCard from "@/app/components/productCard";
-
-const getProducts = async () => {
-  return await (await fetch(`${process.env.MAIN_URL}/api/products`, { next: { revalidate: 10 } })).json();
-};
+import { fetchGET } from "@/useFetch/fetchGET";
 
 export default async function page() {
-  const products = await getProducts();
+  const products = await fetchGET("/api/products");
+
   return (
     <>
       <ProductCard products={products} />
-      Hello world
     </>
   );
 }

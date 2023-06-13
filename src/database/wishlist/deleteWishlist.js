@@ -1,6 +1,6 @@
 import { con } from "@/connection/db";
 
-export async function deleteWishlist({ idWishlist, idUser }) {
+export async function deleteWishlist({ wishlistId, userId }) {
   return await con
     .getConnection()
     .then(async (connection) => {
@@ -9,7 +9,7 @@ export async function deleteWishlist({ idWishlist, idUser }) {
         await connection
           .query(
             `DELETE FROM wishlist 
-                WHERE id = '${idWishlist}' AND id_user = '${idUser}'`
+                WHERE id = '${wishlistId}' AND id_user = '${userId}'`
           )
           .then(([fields]) => {
             if (fields.affectedRows <= 0) {

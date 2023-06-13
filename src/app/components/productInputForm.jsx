@@ -1,41 +1,55 @@
 "use client";
 
-import { Flex, Box, FormControl, FormLabel, Input, Stack, Button } from "@chakra-ui/react";
+import { Flex, Box, FormControl, FormLabel, Input, Stack, Button, Text } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 
-import color from "@/const/color";
-import { generateImageName } from "@/utils/generateImageName";
 import { uploadImage } from "@/firebase/uploadImage";
-
-const postproduct = async (newProduct) => {
-  await fetch(`${process.env.MAIN_URL}/api/products`, {
-    method: "POST",
-    headers: {
-      "API-Key": process.env.API_KEY,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(newProduct),
-  })
-    .then((res) => res.json())
-    .then((res) => res.message)
-    .catch((err) => {
-      throw err;
-    });
-};
+import { generateImageName } from "@/utils/generateImageName";
+import { fetchPOST } from "@/useFetch/fetchPOST";
+import { getImageURL } from "@/firebase/getImageURL";
+import { deleteImage } from "@/firebase/deleteImage";
+import color from "@/const/color";
+import { useUserContext } from "@/context/UserContext";
 
 export default function ProductInputForm() {
+  const user = useUserContext();
+
   const { register, handleSubmit } = useForm();
+  const [isError, setIsError] = useState(false);
 
   const onSubmitProduct = async (data) => {
     const imageProduct = generateImageName(data.image[0].name);
-    await uploadImage(data.image[0], imageProduct);
-    const newProduct = { idUser: "usr_001", nameProduct: data.name, priceProduct: data.price, categoryProduct: data.cat, descriptionProduct: data.desc, quantityProduct: data.qty, imageProduct };
-    await postproduct(newProduct);
+    try {
+      await uploadImage(data.image[0], imageProduct).catch((err) => {
+        throw err;
+      });
+
+      const newProduct = {
+        userId: user.id,
+        productName: data.name,
+        productPrice: data.price,
+        productCategory: data.cat,
+        productDescription: data.desc,
+        productQuantity: data.qty,
+        productImage: await getImageURL(imageProduct).catch((err) => {
+          throw err;
+        }),
+      };
+
+      await fetchPOST("/api/products", newProduct).catch((err) => {
+        throw err;
+      });
+    } catch (err) {
+      await deleteImage(imageProduct);
+      setIsError(true);
+    }
   };
 
   return (
-    <Flex minH={"100vh"} pt={"28"} justify={"center"}>
+    <Flex minH={"100vh"} pt={"10"} justify={"center"}>
       <Stack spacing={8} mx={"auto"} maxW={"lg"} px={6}>
+        {isError ? <Text>An error occured.</Text> : null}
         <Box rounded={"lg"} bg={"white"} boxShadow={"lg"} p={8}>
           <form onSubmit={handleSubmit(onSubmitProduct)}>
             <Stack spacing={4}>

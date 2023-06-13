@@ -1,6 +1,5 @@
 import slugify from "slugify";
 import { headers } from "next/headers";
-import { ref, getDownloadURL } from "firebase/storage";
 
 import { prefixId } from "@/const/prefixId";
 import { getNanoid } from "@/utils/getNanoid";
@@ -11,18 +10,11 @@ import { getWalletById } from "@/database/wallet/getWalletById";
 import { deleteProduct } from "@/database/product/deleteProduct";
 import { editProduct } from "@/database/product/editProduct";
 import getUnixTimestamps from "@/utils/getUnixTimestamps";
-import { storage } from "@/connection/firebaseConfig";
 
 export async function GET(req) {
   try {
     const products = await getAllProducts();
-    const fixedProducts = await Promise.all(
-      products.map(async (product) => {
-        const downloadUrl = await getDownloadURL(ref(storage, `images/${product.productImage}`));
-        return { ...product, productImage: downloadUrl };
-      })
-    );
-    return myResponse(200, fixedProducts, "Data successfully retrieved.");
+    return myResponse(200, products, "Data successfully retrieved.");
   } catch (err) {
     return myResponse(err.statusCode || 500, err.payload || "Internal server error.", err.message || "Internal server error.");
   }
@@ -40,9 +32,9 @@ export async function POST(req) {
       throw err;
     }
 
-    const { idUser, nameProduct, priceProduct, categoryProduct, descriptionProduct, quantityProduct, imageProduct } = await req.json();
+    const { userId, productName, productPrice, productCategory, productDescription, productQuantity, productImage } = await req.json();
 
-    const userWallet = await getWalletById(idUser);
+    const userWallet = await getWalletById(userId);
 
     if (!userWallet) {
       const err = new Error("Forbidden.");
@@ -51,18 +43,18 @@ export async function POST(req) {
       throw err;
     }
 
-    const idProduct = prefixId.Products + getNanoid(),
-      slugProduct = slugify(nameProduct, { lower: true }),
+    const productId = prefixId.Products + getNanoid(),
+      productSlug = slugify(productName, { lower: true }),
       createdAt = getUnixTimestamps();
 
-    if (!idUser || !nameProduct || !priceProduct || !categoryProduct || !descriptionProduct || !quantityProduct || !idProduct || !slugProduct || !createdAt || !imageProduct) {
+    if (!userId || !productName || !productPrice || !productCategory || !productDescription || !productQuantity || !productId || !productSlug || !createdAt || !productImage) {
       const err = new Error("Forbidden.");
       err.statusCode = 403;
       err.payload = "Invalid format body JSON.";
       throw err;
     }
 
-    const newProduct = { idProduct, nameProduct, priceProduct, categoryProduct, descriptionProduct, quantityProduct, slugProduct, idUser, createdAt, imageProduct };
+    const newProduct = { productId, productName, productPrice, productCategory, productDescription, productQuantity, productSlug, userId, createdAt, productImage };
 
     await addProduct(newProduct);
 
@@ -84,9 +76,9 @@ export async function PUT(req) {
       throw err;
     }
 
-    const { idUser, idProduct, nameProduct, priceProduct, categoryProduct, descriptionProduct, quantityProduct } = await req.json();
+    const { userId, productId, productName, productPrice, productCategory, productDescription, productQuantity } = await req.json();
 
-    const userWallet = await getWalletById(idUser);
+    const userWallet = await getWalletById(userId);
 
     if (!userWallet) {
       const err = new Error("Forbidden.");
@@ -95,16 +87,16 @@ export async function PUT(req) {
       throw err;
     }
 
-    const slugProduct = slugify(nameProduct, { lower: true });
+    const productSlug = slugify(productName, { lower: true });
 
-    if (!idUser || !nameProduct || !priceProduct || !categoryProduct || !descriptionProduct || !quantityProduct || !idProduct || !slugProduct) {
+    if (!userId || !productName || !productPrice || !productCategory || !productDescription || !productQuantity || !productId || !productSlug) {
       const err = new Error("Forbidden.");
       err.statusCode = 403;
       err.payload = "Invalid format body JSON.";
       throw err;
     }
 
-    const editedProduct = { idUser, idProduct, nameProduct, priceProduct, categoryProduct, descriptionProduct, quantityProduct, slugProduct };
+    const editedProduct = { userId, productId, productName, productPrice, productCategory, productDescription, productQuantity, productSlug };
     await editProduct(editedProduct);
 
     return myResponse(200, { isSucceed: 1 }, `Product edited successfully.`);
@@ -125,16 +117,16 @@ export async function DELETE(req) {
       throw err;
     }
 
-    const { idProduct, idUser } = await req.json();
+    const { productId, userId } = await req.json();
 
-    if (!idProduct || !idUser) {
+    if (!productId || !userId) {
       const err = new Error("Forbidden.");
       err.statusCode = 403;
       err.payload = "Invalid format body JSON.";
       throw err;
     }
 
-    const deletedProduct = { idProduct, idUser };
+    const deletedProduct = { productId, userId };
 
     await deleteProduct(deletedProduct);
 

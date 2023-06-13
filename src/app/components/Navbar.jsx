@@ -3,18 +3,21 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
-import { Box, Flex, Text, Button, Stack, Input, InputGroup, InputRightAddon } from "@chakra-ui/react";
+import { Box, Flex, Text, Button, Stack, Input, InputGroup, InputRightAddon, Menu, Avatar, MenuList, MenuItem, MenuDivider, MenuButton } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 
 import color from "@/const/color";
 import logoBrand from "@/images/lynxshop.webp";
 import DesktopNav from "./desktopNav";
+import { useUserContext } from "@/context/UserContext";
 
 const searchProduct = (product) => {
   console.log(product);
 };
 
 export default function Navbar() {
+  const user = useUserContext();
+
   const [isInputFocused, setInputFocused] = useState(false);
   const queryRef = useRef();
 
@@ -66,23 +69,16 @@ export default function Navbar() {
         </Flex>
 
         <Stack flex={{ base: 1, md: 0 }} justify={"flex-end"} direction={"row"} spacing={6}>
-          <Button as={"a"} fontSize={"sm"} fontWeight={400} variant={"link"} href={"#"}>
-            Sign In
-          </Button>
-          <Button
-            as={"a"}
-            display={{ base: "none", md: "inline-flex" }}
-            fontSize={"sm"}
-            fontWeight={600}
-            color={"white"}
-            bg={color.MAIN_COLOR}
-            href={"#"}
-            _hover={{
-              bg: "gray.900",
-            }}
-          >
-            Sign Up
-          </Button>
+          <Menu>
+            <MenuButton as={Button} rounded={"full"} variant={"link"} cursor={"pointer"} minW={0}>
+              <Avatar size={"sm"} src={user.image} />
+            </MenuButton>
+            <MenuList color={"black"}>
+              <MenuItem>Signed as {user.name}</MenuItem>
+              <MenuDivider />
+              <MenuItem>Settings</MenuItem>
+            </MenuList>
+          </Menu>
         </Stack>
       </Flex>
     </Box>

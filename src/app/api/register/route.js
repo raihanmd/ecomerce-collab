@@ -1,10 +1,8 @@
-import bcrypt from "bcrypt";
 import { headers } from "next/headers";
 
 import { prefixId } from "@/const/prefixId";
 import { myResponse } from "@/utils/myResponse";
 import { getNanoid } from "@/utils/getNanoid";
-import { getErrMessage, passwordIsValid } from "@/utils/passwordValid";
 import { registerUser } from "@/database/user/registerUser";
 
 export async function POST(req) {
@@ -19,26 +17,17 @@ export async function POST(req) {
       throw err;
     }
 
-    const { firstName, lastName, userName, password, cityUser } = await req.json();
+    const { userGoogleId, userEmail, userName } = await req.json();
 
-    if (!firstName || !lastName || !userName || !password || !cityUser) {
+    if (!userEmail || !userName || !userGoogleId) {
       const err = new Error("Forbidden.");
       err.statusCode = 403;
       err.payload = "Invalid format body JSON.";
       throw err;
     }
 
-    if (!passwordIsValid(password)) {
-      const errorValidate = getErrMessage(password);
-      const err = new Error("Forbidden.");
-      err.statusCode = 403;
-      err.payload = errorValidate.map((err) => err.message);
-      throw err;
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 13);
-    const idUser = prefixId.User + getNanoid();
-    const newUser = { idUser, firstName, lastName, userName: userName.toLowerCase(), hashedPassword, cityUser };
+    const userId = prefixId.User + getNanoid();
+    const newUser = { userId, userName, userEmail, userGoogleId };
     await registerUser(newUser);
     return myResponse(201, { isSucceed: 1 }, "Data added successfully.");
   } catch (err) {

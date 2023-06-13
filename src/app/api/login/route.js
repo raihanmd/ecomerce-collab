@@ -16,20 +16,20 @@ export async function POST(req) {
       throw err;
     }
 
-    const { userName, password } = await req.json();
+    const { userGoogleId, userEmail } = await req.json();
 
-    if (!userName || !password) {
+    if (!userGoogleId || !userEmail) {
       const err = new Error("Forbidden.");
       err.statusCode = 403;
       err.payload = "Invalid format body JSON.";
       throw err;
     }
 
-    const userData = await loginUser(userName);
+    const userData = { userGoogleId, userEmail };
 
-    const isValidUser = await bcrypt.compare(password, userData.password);
+    const validUser = await loginUser(userData);
 
-    if (!isValidUser) {
+    if (validUser === undefined) {
       const err = new Error("Unauthorized.");
       err.statusCode = 401;
       err.payload = "Fatal: invalid username or password.";

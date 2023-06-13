@@ -1,19 +1,41 @@
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+
 import "@/style/global.css";
+import { authOptions } from "@/utils/authOptions";
 import { Providers } from "./providers";
 import Navbar from "./components/Navbar";
+import NextAuthSessionProvider from "./providers/sessionProvider";
+import { UserProvider } from "@/context/UserContext";
+import { fetchGET } from "@/useFetch/fetchGET";
 
 export const metadata = {
   title: "Lynx Shop",
   description: "E-comerce made by raihanmd.",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const session = await getServerSession(authOptions);
+  const {
+    payload: { userId },
+  } = await fetchGET(`/api/id/${session.user.name}`);
+
+  if (!session) {
+    redirect("/api/auth/signin");
+  }
+
+  session.user.id = userId;
+
   return (
     <html lang="en">
       <body>
         <Providers>
-          <Navbar />
-          <main className="root">{children}</main>
+          <NextAuthSessionProvider>
+            <UserProvider user={session?.user}>
+              <Navbar />
+              <main className="root">{children}</main>
+            </UserProvider>
+          </NextAuthSessionProvider>
         </Providers>
       </body>
     </html>

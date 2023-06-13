@@ -1,15 +1,14 @@
 import { con } from "@/connection/db";
 
-export async function addProduct(newProduct) {
-  const { idProduct, nameProduct, priceProduct, categoryProduct, descriptionProduct, quantityProduct, slugProduct, idUser, createdAt, imageProduct } = newProduct;
+export async function addProduct({ productId, productName, productPrice, productCategory, productDescription, productQuantity, productSlug, userId, createdAt, productImage }) {
   return await con
     .getConnection()
     .then(async (connection) => {
       connection.beginTransaction();
       try {
-        const [idCategory = rows] = await connection.query(`SELECT id FROM categories WHERE name = '${categoryProduct}'`);
+        const [idCategory = rows] = await connection.query(`SELECT id FROM categories WHERE name = '${productCategory}'`);
         if (idCategory.length <= 0) {
-          const err = new Error(`Invalid category name (${categoryProduct}).`);
+          const err = new Error(`Invalid category name (${productCategory}).`);
           err.statusCode = 404;
           err.payload = "Category not found.";
           throw err;
@@ -18,8 +17,8 @@ export async function addProduct(newProduct) {
           .query(
             `INSERT INTO products 
                 (id, id_user, id_categories, name, slug, image, description, price, quantity, created_at)
-                  VALUES ('${idProduct}', '${idUser}', '${idCategory[0].id}', 
-                    '${nameProduct}', '${slugProduct}', '${imageProduct}', '${descriptionProduct}', ${priceProduct}, ${quantityProduct}, ${createdAt})`
+                  VALUES ('${productId}', '${userId}', '${idCategory[0].id}', 
+                    '${productName}', '${productSlug}', '${productImage}', '${productDescription}', ${productPrice}, ${productQuantity}, ${createdAt})`
           )
           .then(([fields]) => {
             if (fields.affectedRows <= 0) {

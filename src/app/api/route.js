@@ -31,8 +31,8 @@ export async function GET() {
             description: "Get wishlist information about {userName}: /api/order/{userName}",
           },
           {
-            path: `${mainPath}/api/reviews/{idProduct}`,
-            description: "Get reviews for product with id {idProduct}: /api/reviews/{idProduct}",
+            path: `${mainPath}/api/reviews/{productId}`,
+            description: "Get reviews for product with id {productId}: /api/reviews/{productId}",
           },
           {
             path: `${mainPath}/api/category`,
@@ -62,7 +62,7 @@ export async function GET() {
               lastName: "Ipsum",
               userName: "dolor sit",
               password: "amet",
-              cityUser: "consectetur",
+              userCity: "consectetur",
             },
           },
           {
@@ -72,13 +72,13 @@ export async function GET() {
               "API-Key": "API-Key",
             },
             formatBody: {
-              idUser: "usr_001",
-              nameProduct: "Lorem",
-              priceProduct: 1000,
-              categoryProduct: "Ipsum",
-              descriptionProduct: "Dolor sit amet.",
-              quantityProduct: 100,
-              imageProduct: "Image File.",
+              userId: "usr_001",
+              productName: "Lorem",
+              productPrice: 1000,
+              productCategory: "Ipsum",
+              productDescription: "Dolor sit amet.",
+              productQuantity: 100,
+              productImage: "Image File.",
             },
           },
           {
@@ -88,9 +88,9 @@ export async function GET() {
               "API-Key": "API-Key",
             },
             formatBody: {
-              idUser: "usr_001",
-              idProduct: "prd_001",
-              quantityProduct: 10,
+              userId: "usr_001",
+              productId: "prd_001",
+              productQuantity: 10,
             },
           },
           {
@@ -100,9 +100,9 @@ export async function GET() {
               "API-Key": "API-Key",
             },
             formatBody: {
-              idUser: "usr_001",
-              idProduct: "prd_001",
-              quantityProduct: 10,
+              userId: "usr_001",
+              productId: "prd_001",
+              productQuantity: 10,
             },
           },
           {
@@ -112,7 +112,7 @@ export async function GET() {
               "API-Key": "API-Key",
             },
             formatBody: {
-              idUser: "usr_001",
+              userId: "usr_001",
             },
           },
           {
@@ -122,8 +122,8 @@ export async function GET() {
               "API-Key": "API-Key",
             },
             formatBody: {
-              idUser: "usr_001",
-              idOrder: "ord_001",
+              userId: "usr_001",
+              orderId: "ord_001",
             },
           },
           {
@@ -133,8 +133,8 @@ export async function GET() {
               "API-Key": "API-Key",
             },
             formatBody: {
-              idUser: "usr_001",
-              idProduct: "prd_001",
+              userId: "usr_001",
+              productId: "prd_001",
             },
           },
           {
@@ -144,10 +144,10 @@ export async function GET() {
               "API-Key": "API-Key",
             },
             formatBody: {
-              idUser: "usr_001",
-              idProduct: "prd_001",
-              ratingReviews: 5,
-              commentReviews: "This product is so beautiful",
+              userId: "usr_001",
+              productId: "prd_001",
+              reviewsRating: 5,
+              reviewsComment: "This product is so beautiful",
             },
           },
         ],
@@ -159,13 +159,13 @@ export async function GET() {
               "API-Key": "API-Key",
             },
             formatBody: {
-              idUser: "usr_001",
-              idProduct: "prd_001",
-              nameProduct: "Lorem",
-              priceProduct: 1000,
-              categoryProduct: "Lain-lain",
-              descriptionProduct: "Dolor sit amet.",
-              quantityProduct: 100,
+              userId: "usr_001",
+              productId: "prd_001",
+              productName: "Lorem",
+              productPrice: 1000,
+              productCategory: "Lain-lain",
+              productDescription: "Dolor sit amet.",
+              productQuantity: 100,
             },
           },
           {
@@ -175,10 +175,10 @@ export async function GET() {
               "API-Key": "API-Key",
             },
             formatBody: {
-              idCart: "crt_001",
-              idUser: "usr_001",
-              idProduct: "prd_001",
-              quantityProduct: 10,
+              cartId: "crt_001",
+              userId: "usr_001",
+              productId: "prd_001",
+              productQuantity: 10,
             },
           },
           {
@@ -188,11 +188,11 @@ export async function GET() {
               "API-Key": "API-Key",
             },
             formatBody: {
-              idReviw: "rev_001",
-              idUser: "usr_001",
-              idProduct: "prd_001",
-              ratingReviews: 5,
-              commentReviews: "This product is so beautiful",
+              reviewsId: "rev_001",
+              userId: "usr_001",
+              productId: "prd_001",
+              reviewsRating: 5,
+              reviewsComment: "This product is so beautiful",
             },
           },
         ],
@@ -204,8 +204,8 @@ export async function GET() {
               "API-Key": "API-Key",
             },
             formatBody: {
-              idUser: "usr_001",
-              idProduct: "prd_001",
+              userId: "usr_001",
+              productId: "prd_001",
             },
           },
           {
@@ -215,8 +215,8 @@ export async function GET() {
               "API-Key": "API-Key",
             },
             formatBody: {
-              idUser: "usr_001",
-              idCart: "crt_001",
+              userId: "usr_001",
+              cartId: "crt_001",
             },
           },
         ],
