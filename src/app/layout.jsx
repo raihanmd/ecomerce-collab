@@ -5,7 +5,7 @@ import "@/style/global.css";
 import { authOptions } from "@/utils/authOptions";
 import { Providers } from "./providers";
 import Navbar from "./components/Navbar";
-import NextAuthSessionProvider from "./providers/sessionProvider";
+import NextAuthSessionProvider from "../providers/sessionProvider";
 import { UserProvider } from "@/context/UserContext";
 import { fetchGET } from "@/useFetch/fetchGET";
 import slugify from "slugify";
