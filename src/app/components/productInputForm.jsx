@@ -1,16 +1,16 @@
 "use client";
 
-import { Flex, Box, FormControl, FormLabel, Input, Stack, Button, Text } from "@chakra-ui/react";
+import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { Flex, Box, FormControl, FormLabel, Input, Stack, Button, Text } from "@chakra-ui/react";
 
+import color from "@/const/color";
 import { uploadImage } from "@/firebase/uploadImage";
-import { generateImageName } from "@/utils/generateImageName";
-import { fetchPOST } from "@/useFetch/fetchPOST";
 import { getImageURL } from "@/firebase/getImageURL";
 import { deleteImage } from "@/firebase/deleteImage";
-import color from "@/const/color";
 import { useUserContext } from "@/context/UserContext";
+import { generateImageName } from "@/utils/generateImageName";
 
 export default function ProductInputForm() {
   const user = useUserContext();
@@ -37,9 +37,17 @@ export default function ProductInputForm() {
         }),
       };
 
-      await fetchPOST("/api/products", newProduct).catch((err) => {
-        throw err;
-      });
+      await axios
+        .post("/api/products", newProduct, {
+          headers: {
+            "API-Key": "JHsduh78^823njshdUYSdnwu7",
+          },
+        })
+        .then((res) => (window.location.href = "/"))
+        .catch((err) => {
+          console.log(err);
+          throw err;
+        });
     } catch (err) {
       await deleteImage(imageProduct);
       setIsError(true);

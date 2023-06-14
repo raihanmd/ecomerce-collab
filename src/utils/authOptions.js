@@ -21,4 +21,8 @@ export const authOptions = {
       return true;
     },
   },
+  theme: {
+    colorScheme: "light",
+    logo: "https://firebasestorage.googleapis.com/v0/b/ecomerce-bc524.appspot.com/o/logo%2Flynxshop.webp?alt=media&token=6e522069-86f6-49dc-853e-3f0dc0d879c4",
+  },
 };

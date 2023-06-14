@@ -17,13 +17,12 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
   const session = await getServerSession(authOptions);
+
+  if (!session) redirect("/api/auth/signin");
+
   const {
     payload: { userId },
-  } = await fetchGET(`/api/id/${slugify(toString(session?.user.name), { lower: true })}`);
-
-  if (!session) {
-    redirect("/api/auth/signin");
-  }
+  } = await fetchGET(`/api/id/${slugify(session.user.name, { lower: true })}`);
 
   session.user.id = userId;
 
@@ -32,7 +31,7 @@ export default async function RootLayout({ children }) {
       <body>
         <Providers>
           <NextAuthSessionProvider>
-            <UserProvider user={session?.user}>
+            <UserProvider user={session.user}>
               <Navbar />
               <main className="root">{children}</main>
             </UserProvider>

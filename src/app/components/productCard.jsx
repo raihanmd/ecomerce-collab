@@ -30,7 +30,7 @@ function ProductCard({ products }) {
   return (
     <Flex mt={10} w={"full"} justifyContent="center" direction={{ base: "column", md: "row" }} flexWrap={"wrap"} gap={"2"}>
       {products.payload.map((product) => (
-        <Link href={`/${product.ownedBy}/${product.productSlug}`}>
+        <Link href={`/${product.ownedBy}/${product.productSlug}`} key={product.productId}>
           <Box bg={"white"} w={"40"} h={"auto"} rounded="sm" shadow="sm" position="relative" transition={"all 100ms ease"} _hover={{ border: "1px solid black", transform: "translateY(-5px)", shadow: "lg" }}>
             {productIsNew(product.createdAt) && (
               <Badge position="absolute" top={2} right={2} rounded="full" px="2" fontSize="0.8em" colorScheme="blue">
