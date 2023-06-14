@@ -17,3 +17,13 @@ input[type="file"]::file-selector-button {
 input[type="file"]::file-selector-button:hover {
   background: var(--chakra-colors-gray-900);
 }
+
+.card-product {
+  flex: none;
+}
+
+@media screen and (max-width: 480px) {
+  .card-product {
+    flex: 1 1 160px;
+  }
+}
