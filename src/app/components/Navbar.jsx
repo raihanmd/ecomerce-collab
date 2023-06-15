@@ -25,7 +25,7 @@ export default function Navbar() {
   const queryRef = useRef();
 
   const handleLogout = async () => {
-    await signOut({ redirect: false, callbackUrl: "/" });
+    await signOut({ callbackUrl: "/" });
   };
 
   return (
