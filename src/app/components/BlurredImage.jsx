@@ -15,7 +15,23 @@ const BlurredImage = ({ imageUrl, blurhash }) => {
     };
   }, [blurhash]);
 
-  return <>{!showBlur && blurhash ? <Blurhash hash={blurhash} width="100%" height="192px" /> : <Image loading="lazy" src={imageUrl} alt={`Picture of ${imageUrl}`} roundedTop="sm" w="full" h="48" objectFit="cover" />}</>;
+  return (
+    <>
+      {!showBlur && blurhash ? (
+        <div
+          style={{
+            width: "100%",
+            height: "192px",
+            background: "#e2e8f0",
+          }}
+        >
+          <Blurhash hash={blurhash} width="100%" height="100%" />
+        </div>
+      ) : (
+        <Image loading="lazy" src={imageUrl} alt={`Picture of ${imageUrl}`} roundedTop="sm" w="full" h="48" objectFit="cover" />
+      )}
+    </>
+  );
 };
 
 export default BlurredImage;
