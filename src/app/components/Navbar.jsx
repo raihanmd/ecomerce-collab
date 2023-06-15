@@ -2,9 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState } from "react";
-import { Box, Flex, Text, Button, Stack, Input, InputGroup, InputRightAddon, Menu, Avatar, MenuList, MenuItem, MenuDivider, MenuButton } from "@chakra-ui/react";
+import { BiLogOut } from "react-icons/bi";
+import { IoLogInOutline } from "react-icons/io";
+import { signOut } from "next-auth/react";
 import { SearchIcon } from "@chakra-ui/icons";
+import { useRef, useState } from "react";
+import { Box, Flex, Text, Button, Input, InputGroup, InputRightAddon, Menu, Avatar, MenuList, MenuItem, MenuDivider, MenuButton, Icon } from "@chakra-ui/react";
 
 import color from "@/const/color";
 import logoBrand from "@/images/lynxshop.webp";
@@ -20,6 +23,10 @@ export default function Navbar() {
 
   const [isInputFocused, setInputFocused] = useState(false);
   const queryRef = useRef();
+
+  const handleLogout = async () => {
+    await signOut({ redirect: false, callbackUrl: "/" });
+  };
 
   return (
     <Box boxShadow={"md"}>
@@ -69,35 +76,33 @@ export default function Navbar() {
         </Flex>
 
         {user ? (
-          <Stack flex={{ base: 1, md: 0 }} justify={"flex-end"} direction={"row"} spacing={6}>
-            <Menu>
-              <MenuButton as={Button} rounded={"full"} variant={"link"} cursor={"pointer"} minW={0}>
-                <Avatar size={"sm"} src={user.image} />
-              </MenuButton>
-              <MenuList color={"black"}>
-                <MenuItem>Signed as {user.name}</MenuItem>
-                <MenuDivider />
-                <MenuItem>Settings</MenuItem>
-              </MenuList>
-            </Menu>
-          </Stack>
+          <Menu>
+            <MenuButton as={Button} rounded={"full"} variant={"link"} cursor={"pointer"} minW={0}>
+              <Avatar size={"sm"} src={user.image} />
+            </MenuButton>
+            <MenuList color={"black"}>
+              <MenuItem>Signed as {user.name}</MenuItem>
+              <MenuDivider />
+              <MenuItem>Settings</MenuItem>
+              <MenuItem onClick={handleLogout}>
+                Log out <Icon as={BiLogOut} />
+              </MenuItem>
+            </MenuList>
+          </Menu>
         ) : (
-          <Stack flex={{ base: 1, md: 0 }} justify={"flex-end"} direction={"row"} spacing={6}>
-            <Button
-              as={"a"}
-              display={{ base: "none", md: "inline-flex" }}
-              fontSize={"sm"}
-              fontWeight={600}
-              color={"white"}
-              bg={color.MAIN_COLOR}
-              href={"/api/auth/signin"}
-              _hover={{
-                bg: "gray.800",
-              }}
-            >
-              Sign Up / Sign In
-            </Button>
-          </Stack>
+          <Button
+            as={"a"}
+            fontSize={"sm"}
+            fontWeight={600}
+            color={"white"}
+            bg={color.MAIN_COLOR}
+            href={"/api/auth/signin"}
+            _hover={{
+              bg: "gray.800",
+            }}
+          >
+            Log In
+          </Button>
         )}
       </Flex>
     </Box>
