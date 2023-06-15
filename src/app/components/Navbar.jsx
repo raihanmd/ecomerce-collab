@@ -68,18 +68,37 @@ export default function Navbar() {
           </form>
         </Flex>
 
-        <Stack flex={{ base: 1, md: 0 }} justify={"flex-end"} direction={"row"} spacing={6}>
-          <Menu>
-            <MenuButton as={Button} rounded={"full"} variant={"link"} cursor={"pointer"} minW={0}>
-              <Avatar size={"sm"} src={user.image} />
-            </MenuButton>
-            <MenuList color={"black"}>
-              <MenuItem>Signed as {user.name}</MenuItem>
-              <MenuDivider />
-              <MenuItem>Settings</MenuItem>
-            </MenuList>
-          </Menu>
-        </Stack>
+        {user ? (
+          <Stack flex={{ base: 1, md: 0 }} justify={"flex-end"} direction={"row"} spacing={6}>
+            <Menu>
+              <MenuButton as={Button} rounded={"full"} variant={"link"} cursor={"pointer"} minW={0}>
+                <Avatar size={"sm"} src={user.image} />
+              </MenuButton>
+              <MenuList color={"black"}>
+                <MenuItem>Signed as {user.name}</MenuItem>
+                <MenuDivider />
+                <MenuItem>Settings</MenuItem>
+              </MenuList>
+            </Menu>
+          </Stack>
+        ) : (
+          <Stack flex={{ base: 1, md: 0 }} justify={"flex-end"} direction={"row"} spacing={6}>
+            <Button
+              as={"a"}
+              display={{ base: "none", md: "inline-flex" }}
+              fontSize={"sm"}
+              fontWeight={600}
+              color={"white"}
+              bg={color.MAIN_COLOR}
+              href={"/api/auth/signin"}
+              _hover={{
+                bg: "gray.800",
+              }}
+            >
+              Sign Up / Sign In
+            </Button>
+          </Stack>
+        )}
       </Flex>
     </Box>
   );

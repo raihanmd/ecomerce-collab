@@ -17,10 +17,13 @@ export default function ProductInputForm() {
 
   const { register, handleSubmit } = useForm();
   const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmitProduct = async (data) => {
     const imageProduct = generateImageName(data.image[0].name);
     try {
+      setIsLoading(true);
+
       await uploadImage(data.image[0], imageProduct).catch((err) => {
         throw err;
       });
@@ -51,6 +54,7 @@ export default function ProductInputForm() {
     } catch (err) {
       await deleteImage(imageProduct);
       setIsError(true);
+      setIsLoading(false);
     }
   };
 
@@ -87,8 +91,9 @@ export default function ProductInputForm() {
               </FormControl>
               <Stack spacing={10} pt={2}>
                 <Button
+                  isLoading={isLoading ? true : false}
+                  loadingText={"Adding product..."}
                   type={"submit"}
-                  loadingText="Submitting"
                   size="lg"
                   bg={color.MAIN_COLOR}
                   color={"white"}

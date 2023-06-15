@@ -1,6 +1,6 @@
 "use client";
 
-import { Flex, Box, Image, Badge, Text } from "@chakra-ui/react";
+import { Flex, Box, Badge, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 import toRupiah from "@develoka/angka-rupiah-js";
@@ -40,7 +40,6 @@ function ProductCard({ products }) {
             )}
 
             <BlurredImage imageUrl={product.productImage} blurhash={product.productBlurhash} />
-            {/* <Image loading="lazy" src={product.productImage} alt={`Picture of ${product.productImage}`} roundedTop="sm" w="full" h="48" objectFit="cover" /> */}
 
             <Box p={"2"}>
               <Flex direction={"column"} justifyContent="space-between" alignContent="center" gap={"2"} h={"5.5em"}>
