@@ -1,6 +1,6 @@
 import { con } from "@/connection/db";
 
-export async function addProduct({ productId, productName, productPrice, productCategory, productDescription, productQuantity, productSlug, userId, createdAt, productImage }) {
+export async function addProduct({ productId, productName, productPrice, productCategory, productDescription, productQuantity, productSlug, userId, createdAt, productImage, blurhash }) {
   return await con
     .getConnection()
     .then(async (connection) => {
@@ -16,9 +16,9 @@ export async function addProduct({ productId, productName, productPrice, product
         await connection
           .query(
             `INSERT INTO products 
-                (id, id_user, id_categories, name, slug, image, description, price, quantity, created_at)
+                (id, id_user, id_categories, name, slug, image, blurhash, description, price, quantity, created_at)
                   VALUES ('${productId}', '${userId}', '${idCategory[0].id}', 
-                    '${productName}', '${productSlug}', '${productImage}', '${productDescription}', ${productPrice}, ${productQuantity}, ${createdAt})`
+                    '${productName}', '${productSlug}', '${productImage}', '${blurhash}', '${productDescription}', ${productPrice}, ${productQuantity}, ${createdAt})`
           )
           .then(([fields]) => {
             if (fields.affectedRows <= 0) {

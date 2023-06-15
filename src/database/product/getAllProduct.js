@@ -10,6 +10,7 @@ export async function getAllProducts() {
               AVG(r.rating) AS productRating,
               COUNT(o.id) AS totalOrders,
               p.image AS productImage,
+              p.blurhash AS productBlurhash,
               u.user_name AS ownedBy,
               p.created_at AS createdAt
         FROM products AS p

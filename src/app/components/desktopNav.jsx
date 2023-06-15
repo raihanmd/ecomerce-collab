@@ -1,5 +1,3 @@
-// "use client";
-
 import useSWR from "swr";
 import { Link, Popover, PopoverContent, PopoverTrigger, Stack, Text, Box } from "@chakra-ui/react";
 

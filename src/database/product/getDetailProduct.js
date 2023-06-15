@@ -6,6 +6,8 @@ export async function getDetailProduct({ userName, productSlug }) {
       `SELECT   p.id as productId, 
                 p.name as productName,
                 p.price as productPrice,
+                p.image AS productImage,
+                p.blurhash AS productBlurhash,
                 p.description as productDescription,
                 p.quantity as productQuantity,
                 user.user_name as ownedBy,

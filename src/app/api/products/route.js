@@ -10,6 +10,7 @@ import { getWalletById } from "@/database/wallet/getWalletById";
 import { deleteProduct } from "@/database/product/deleteProduct";
 import { editProduct } from "@/database/product/editProduct";
 import getUnixTimestamps from "@/utils/getUnixTimestamps";
+import { encodeImageToBlurhash } from "@/utils/encodeImageToBlurhash";
 
 export async function GET(req) {
   try {
@@ -54,7 +55,9 @@ export async function POST(req) {
       throw err;
     }
 
-    const newProduct = { productId, productName, productPrice, productCategory, productDescription, productQuantity, productSlug, userId, createdAt, productImage };
+    const blurhash = await encodeImageToBlurhash(productImage);
+
+    const newProduct = { productId, productName, productPrice, productCategory, productDescription, productQuantity, productSlug, userId, createdAt, productImage, blurhash };
 
     await addProduct(newProduct);
 

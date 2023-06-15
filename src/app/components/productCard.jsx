@@ -6,6 +6,7 @@ import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 import toRupiah from "@develoka/angka-rupiah-js";
 
 import { productIsNew } from "@/utils/productIsNew";
+import BlurredImage from "./BlurredImage";
 
 function Rating({ rating }) {
   return (
@@ -38,7 +39,9 @@ function ProductCard({ products }) {
               </Badge>
             )}
 
-            <Image src={product.productImage} alt={`Picture of ${product.productName}`} roundedTop="sm" w={"full"} h={"48"} objectFit={"cover"} />
+            <BlurredImage imageUrl={product.productImage} blurhash={product.productBlurhash} />
+            {/* <Image loading="lazy" src={product.productImage} alt={`Picture of ${product.productImage}`} roundedTop="sm" w="full" h="48" objectFit="cover" /> */}
+
             <Box p={"2"}>
               <Flex direction={"column"} justifyContent="space-between" alignContent="center" gap={"2"} h={"5.5em"}>
                 <Flex direction={"column"} gap={"1"}>
