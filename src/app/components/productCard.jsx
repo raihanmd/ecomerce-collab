@@ -32,7 +32,7 @@ function ProductCard({ products }) {
     <Flex mt={"2"} w={"full"} justifyContent="center" direction={"row"} alignContent={"start"} flexWrap={"wrap"} gap={"2"} px={"2"}>
       {products.payload.map((product) => (
         <Link href={`/${product.ownedBy}/${product.productSlug}`} key={product.productId} className={"card-product"}>
-          <Box bg={"white"} w={{ base: "full", sm: "48" }} h={"auto"} rounded="sm" shadow="sm" position="relative" transition={"all 100ms ease"} _hover={{ border: "1px solid black", transform: "translateY(-5px)", shadow: "lg" }}>
+          <Box bg={"white"} w={{ base: "full", sm: "48" }} h={"auto"} rounded="sm" shadow="sm" position="relative" transition={"all 100ms ease"} _hover={{ transform: "translateY(-5px)", shadow: "lg" }}>
             {productIsNew(product.createdAt) && (
               <Badge position="absolute" top={2} right={2} rounded="full" px="2" fontSize="0.8em" colorScheme="blue">
                 Baru

@@ -3,7 +3,7 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { Flex, Box, FormControl, FormLabel, Input, Stack, Button, Text } from "@chakra-ui/react";
+import { Flex, Box, FormControl, FormLabel, Input, Stack, Button, Text, useToast, Alert, AlertIcon, AlertTitle } from "@chakra-ui/react";
 
 import color from "@/const/color";
 import { uploadImage } from "@/firebase/uploadImage";
@@ -15,9 +15,13 @@ import { generateImageName } from "@/utils/generateImageName";
 export default function ProductInputForm() {
   const user = useUserContext();
 
+  if (!user) return (window.location.href = "/api/auth/signin");
+
   const { register, handleSubmit } = useForm();
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const toast = useToast();
 
   const onSubmitProduct = async (data) => {
     const imageProduct = generateImageName(data.image[0].name);
@@ -46,12 +50,23 @@ export default function ProductInputForm() {
             "API-Key": "JHsduh78^823njshdUYSdnwu7",
           },
         })
-        .then((res) => (window.location.href = "/"))
+        .then((res) => {
+          toast({
+            title: "Product added successfully.",
+            status: "success",
+            isClosable: true,
+          });
+          return (window.location.href = "/");
+        })
         .catch((err) => {
-          console.log(err);
           throw err;
         });
     } catch (err) {
+      toast({
+        title: "Product failed to  add.",
+        status: "error",
+        isClosable: true,
+      });
       await deleteImage(imageProduct);
       setIsError(true);
       setIsLoading(false);
@@ -61,7 +76,12 @@ export default function ProductInputForm() {
   return (
     <Flex minH={"100vh"} pt={"10"} justify={"center"}>
       <Stack spacing={8} mx={"auto"} maxW={"lg"} px={6}>
-        {isError ? <Text>An error occured.</Text> : null}
+        {isError ? (
+          <Alert status="error">
+            <AlertIcon />
+            <AlertTitle>An error has ocured.</AlertTitle>
+          </Alert>
+        ) : null}
         <Box rounded={"lg"} bg={"white"} boxShadow={"lg"} p={8}>
           <form onSubmit={handleSubmit(onSubmitProduct)}>
             <Stack spacing={4}>
