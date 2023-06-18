@@ -15,7 +15,7 @@ import { generateImageName } from "@/utils/generateImageName";
 export default function ProductInputForm() {
   const user = useUserContext();
 
-  if (!user) return (window.location.href = "/api/auth/signin");
+  if (!user) window.location.href = "/api/auth/signin";
 
   const { register, handleSubmit } = useForm();
   const [isError, setIsError] = useState(false);

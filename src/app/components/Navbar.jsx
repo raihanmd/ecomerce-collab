@@ -78,7 +78,7 @@ export default function Navbar() {
         {user ? (
           <Menu>
             <MenuButton as={Button} rounded={"full"} variant={"link"} cursor={"pointer"} minW={0}>
-              <Avatar size={"sm"} src={user.image} />
+              <Avatar size={"sm"} src={user.image} alt={`Picture of ${user.name}`} />
             </MenuButton>
             <MenuList color={"black"}>
               <MenuItem>Signed as {user.name}</MenuItem>
