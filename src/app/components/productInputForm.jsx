@@ -53,6 +53,7 @@ export default function ProductInputForm() {
         .then((res) => {
           toast({
             title: "Product added successfully.",
+            position: "top-right",
             status: "success",
             isClosable: true,
           });
@@ -63,7 +64,8 @@ export default function ProductInputForm() {
         });
     } catch (err) {
       toast({
-        title: "Product failed to  add.",
+        title: "Product added failed.",
+        position: "top-right",
         status: "error",
         isClosable: true,
       });
