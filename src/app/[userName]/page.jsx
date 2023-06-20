@@ -1,15 +1,14 @@
-"use client";
+import { Suspense } from "react";
 
-import useSWR from "swr";
+import LoadingUserPage from "./loading";
+import { fetchGET } from "@/useFetch/fetchGET";
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
-
-export default function page({ params }) {
-  const { data, error, isLoading } = useSWR(`/api/${params.userName}`, fetcher);
+export default async function page({ params }) {
+  const userPage = await fetchGET(`/api/${params.userName}`);
 
   return (
-    <>
-      {params.userName}
-    </>
+    <Suspense fallback={<LoadingUserPage />}>
+      <>{JSON.stringify(userPage)}</>
+    </Suspense>
   );
 }

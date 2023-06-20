@@ -3,7 +3,8 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { Flex, Box, FormControl, FormLabel, Input, Stack, Button, Text, useToast, Alert, AlertIcon, AlertTitle } from "@chakra-ui/react";
+import { redirect } from "next/navigation";
+import { Flex, Box, FormControl, FormLabel, Input, Stack, Button, Text, useToast, Alert, AlertIcon, AlertTitle, Select } from "@chakra-ui/react";
 
 import color from "@/const/color";
 import { uploadImage } from "@/firebase/uploadImage";
@@ -11,17 +12,19 @@ import { getImageURL } from "@/firebase/getImageURL";
 import { deleteImage } from "@/firebase/deleteImage";
 import { useUserContext } from "@/context/UserContext";
 import { generateImageName } from "@/utils/generateImageName";
+import { useCategoriesContext } from "@/context/CategoriesContext";
 
 export default function ProductInputForm() {
+  const categories = useCategoriesContext();
   const user = useUserContext();
 
-  if (!user) window.location.href = "/api/auth/signin";
+  if (!user) return redirect("/api/auth/signin");
+
+  const toast = useToast();
 
   const { register, handleSubmit } = useForm();
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  const toast = useToast();
 
   const onSubmitProduct = async (data) => {
     const imageProduct = generateImageName(data.image[0].name);
@@ -97,7 +100,11 @@ export default function ProductInputForm() {
               </FormControl>
               <FormControl id="category" isRequired>
                 <FormLabel>Category Product</FormLabel>
-                <Input {...register("cat")} type="text" name="cat" />
+                <Select {...register("cat")} placeholder="Select Category" name="cat">
+                  {categories.map((category) => (
+                    <option value={category.name}>{category.name}</option>
+                  ))}
+                </Select>
               </FormControl>
               <FormControl id="price" isRequired>
                 <FormLabel>Price Product</FormLabel>

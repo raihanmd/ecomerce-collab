@@ -1,6 +1,6 @@
 "use client";
 
-import { Flex, Box, Image, Badge, Text, Skeleton } from "@chakra-ui/react";
+import { Flex, Box, Image, Text, Skeleton } from "@chakra-ui/react";
 
 function Loading() {
   return (

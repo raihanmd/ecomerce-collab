@@ -17,7 +17,6 @@ export const authOptions = {
 
         if (createUserResponse.statusCode !== 201) return false;
       }
-
       return true;
     },
   },

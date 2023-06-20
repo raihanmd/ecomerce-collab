@@ -19,8 +19,8 @@ export async function getAllProducts() {
               LEFT JOIN orders AS o ON o.id = od.id_orders
                 INNER JOIN user AS u ON u.id = p.id_user
                   GROUP BY u.id, p.id, p.name, p.price, p.description
-                    ORDER BY totalOrders DESC, productRating DESC, createdAt DESC
-                      LIMIT 20;`
+                    ORDER BY RAND()
+                      LIMIT 24;`
     )
     .then(([rows]) => rows)
     .catch((err) => {

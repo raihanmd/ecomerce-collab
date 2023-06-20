@@ -1,16 +1,13 @@
-import useSWR from "swr";
+import { Suspense } from "react";
 import { Link, Popover, PopoverContent, PopoverTrigger, Stack, Text, Box } from "@chakra-ui/react";
 
 import color from "@/const/color";
-
-const fetcher = (url) => fetch(url).then((res) => res.json());
+import { useCategoriesContext } from "@/context/CategoriesContext";
 
 const DesktopNav = () => {
-  const { data, error, isLoading } = useSWR("/api/category", fetcher);
+  const categories = useCategoriesContext();
 
-  const linkColor = "gray.600";
-  const linkHoverColor = "gray.800";
-  const popoverContentBgColor = "white";
+  console.log(categories);
 
   return (
     <Stack direction={"row"} spacing={4} align={"center"}>
@@ -21,32 +18,23 @@ const DesktopNav = () => {
               p={2}
               fontSize={"sm"}
               fontWeight={500}
-              color={linkColor}
+              color={"gray.600"}
               _hover={{
                 cursor: "pointer",
                 textDecoration: "none",
-                color: linkHoverColor,
+                color: "gray.800",
               }}
             >
               Categories
             </Text>
           </PopoverTrigger>
-          {isLoading ? (
-            <PopoverContent border={0} boxShadow={"lg"} bg={popoverContentBgColor} p={3} rounded={"xl"} minW={"xs"} color={color.MAIN_COLOR}>
-              <Stack direction={"row"} align={"center"} color={color.MAIN_COLOR} py={2} px={3} rounded={"md"}>
-                <Text fontSize={"sm"} transition={"all .3s ease"} fontWeight={200}>
-                  Loading...
-                </Text>
-              </Stack>
-            </PopoverContent>
-          ) : null}
-          {data ? (
-            <PopoverContent border={0} boxShadow={"lg"} bg={popoverContentBgColor} p={3} rounded={"xl"} minW={"xs"} color={color.MAIN_COLOR}>
-              {data.payload.map((child) => (
-                <DesktopSubNav key={child.name} {...child} />
+          <Suspense fallback={<LoadingPopoverCategories />}>
+            <PopoverContent border={0} boxShadow={"lg"} bg={"white"} p={3} rounded={"xl"} minW={"xs"} color={color.MAIN_COLOR}>
+              {categories.map((category) => (
+                <DesktopSubNav key={category.name} {...category} />
               ))}
             </PopoverContent>
-          ) : null}
+          </Suspense>
         </Popover>
       </Box>
     </Stack>
@@ -62,6 +50,18 @@ const DesktopSubNav = ({ name }) => {
         </Text>
       </Stack>
     </Link>
+  );
+};
+
+const LoadingPopoverCategories = () => {
+  return (
+    <PopoverContent border={0} boxShadow={"lg"} bg={"white"} p={3} rounded={"xl"} minW={"xs"} color={color.MAIN_COLOR}>
+      <Stack direction={"row"} align={"center"} color={color.MAIN_COLOR} py={2} px={3} rounded={"md"}>
+        <Text fontSize={"sm"} transition={"all .3s ease"} fontWeight={200}>
+          Loading...
+        </Text>
+      </Stack>
+    </PopoverContent>
   );
 };
 
