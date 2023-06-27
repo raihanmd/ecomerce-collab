@@ -82,6 +82,9 @@ export default function Navbar() {
             </MenuButton>
             <MenuList color={"black"}>
               <MenuItem>Signed as {user.name}</MenuItem>
+              <MenuItem as={Link} href={"/new-product"}>
+                Add new product
+              </MenuItem>
               <MenuDivider />
               <MenuItem>Settings</MenuItem>
               <MenuItem onClick={handleLogout}>

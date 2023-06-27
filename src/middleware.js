@@ -12,7 +12,7 @@ export async function middleware(request) {
     return myResponse(400, "Bad request.", "Bad request.");
   }
 
-  if (request.nextUrl.pathname.startsWith("/api") && request.method === "POST") {
+  if (request.nextUrl.pathname.startsWith("/api") && !request.nextUrl.pathname.startsWith("/api/auth") && request.method === "POST") {
     if (request.headers.get("API-Key") !== process.env.API_KEY) {
       return myResponse(403, "Guest can't do the POST request.", "Forbidden.");
     }
