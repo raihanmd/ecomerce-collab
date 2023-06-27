@@ -1,5 +1,3 @@
-import { headers } from "next/headers";
-
 import { prefixId } from "@/const/prefixId";
 import { createCart } from "@/database/cart/createCart";
 import { getCart } from "@/database/cart/getCart";
@@ -12,17 +10,6 @@ import { deleteCart } from "@/database/cart/deleteCart";
 
 export async function POST(req) {
   try {
-    const headersList = headers();
-
-    const APIKey = headersList.get("API-Key");
-
-    if (!APIKey || APIKey !== process.env.API_KEY) {
-      const err = new Error("Forbidden.");
-      err.statusCode = 403;
-      err.payload = "Guest can't do the POST request.";
-      throw err;
-    }
-
     const { idUser, idProduct, quantityProduct } = await req.json();
 
     if (!idUser || !idProduct || !quantityProduct) {
@@ -57,16 +44,6 @@ export async function POST(req) {
 
 export async function PUT(req) {
   try {
-    const headersList = headers();
-    const APIKey = headersList.get("API-Key");
-
-    if (!APIKey || APIKey !== process.env.API_KEY) {
-      const err = new Error("Forbidden.");
-      err.statusCode = 403;
-      err.payload = "Guest can't do the PUT request.";
-      throw err;
-    }
-
     const { idCart, idUser, idProduct, quantityProduct } = await req.json();
 
     if (!idCart || !idUser || !idProduct || !quantityProduct) {
@@ -87,16 +64,6 @@ export async function PUT(req) {
 
 export async function DELETE(req) {
   try {
-    const headersList = headers();
-    const APIKey = headersList.get("API-Key");
-
-    if (!APIKey || APIKey !== process.env.API_KEY) {
-      const err = new Error("Forbidden.");
-      err.statusCode = 403;
-      err.payload = "Guest can't do the DELETE request.";
-      throw err;
-    }
-
     const { idCart, idUser } = await req.json();
 
     if (!idCart || !idUser) {

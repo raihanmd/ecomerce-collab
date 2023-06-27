@@ -2,6 +2,7 @@ import slugify from "slugify";
 import { getServerSession } from "next-auth";
 
 import Navbar from "./Navbar";
+import Breadcumb from "./breadcumb";
 import { fetchGET } from "@/useFetch/fetchGET";
 import { authOptions } from "@/utils/authOptions";
 import { UserProvider } from "@/context/UserContext";
@@ -14,8 +15,7 @@ export default async function AuthCheck({ children }) {
   if (!session) {
     return (
       <CategoriesProvider categories={categories.payload}>
-        <Navbar />
-        <main className="root">{children}</main>
+        <MainContent children={children} />
       </CategoriesProvider>
     );
   }
@@ -29,9 +29,20 @@ export default async function AuthCheck({ children }) {
   return (
     <CategoriesProvider categories={categories.payload}>
       <UserProvider user={session.user}>
-        <Navbar />
-        <main className="root">{children}</main>
+        <MainContent children={children} />
       </UserProvider>
     </CategoriesProvider>
   );
 }
+
+const MainContent = ({ children }) => {
+  return (
+    <>
+      <Navbar />
+      <main className="root">
+        <Breadcumb />
+        {children}
+      </main>
+    </>
+  );
+};

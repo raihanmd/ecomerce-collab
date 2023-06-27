@@ -7,8 +7,6 @@ import { useCategoriesContext } from "@/context/CategoriesContext";
 const DesktopNav = () => {
   const categories = useCategoriesContext();
 
-  console.log(categories);
-
   return (
     <Stack direction={"row"} spacing={4} align={"center"}>
       <Box key={"Categories"}>

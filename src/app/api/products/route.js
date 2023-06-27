@@ -1,5 +1,4 @@
 import slugify from "slugify";
-import { headers } from "next/headers";
 
 import { prefixId } from "@/const/prefixId";
 import { getNanoid } from "@/utils/getNanoid";
@@ -23,16 +22,6 @@ export async function GET(req) {
 
 export async function POST(req) {
   try {
-    const headersList = headers();
-    const APIKey = headersList.get("API-Key");
-
-    if (!APIKey || APIKey !== process.env.API_KEY) {
-      const err = new Error("Forbidden.");
-      err.statusCode = 403;
-      err.payload = "Guest can't do the POST request.";
-      throw err;
-    }
-
     const { userId, productName, productPrice, productCategory, productDescription, productQuantity, productImage } = await req.json();
 
     const userWallet = await getWalletById(userId);
@@ -69,16 +58,6 @@ export async function POST(req) {
 
 export async function PUT(req) {
   try {
-    const headersList = headers();
-    const APIKey = headersList.get("API-Key");
-
-    if (!APIKey || APIKey !== process.env.API_KEY) {
-      const err = new Error("Forbidden.");
-      err.statusCode = 403;
-      err.payload = "Guest can't do the PUT request.";
-      throw err;
-    }
-
     const { userId, productId, productName, productPrice, productCategory, productDescription, productQuantity } = await req.json();
 
     const userWallet = await getWalletById(userId);
@@ -110,16 +89,6 @@ export async function PUT(req) {
 
 export async function DELETE(req) {
   try {
-    const headersList = headers();
-    const APIKey = headersList.get("API-Key");
-
-    if (!APIKey || APIKey !== process.env.API_KEY) {
-      const err = new Error("Forbidden.");
-      err.statusCode = 403;
-      err.payload = "Guest can't do the DELETE request.";
-      throw err;
-    }
-
     const { productId, userId } = await req.json();
 
     if (!productId || !userId) {

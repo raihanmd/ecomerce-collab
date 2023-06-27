@@ -1,5 +1,3 @@
-import { headers } from "next/headers";
-
 import getUnixTimestamps from "@/utils/getUnixTimestamps";
 import { prefixId } from "@/const/prefixId";
 import { getNanoid } from "@/utils/getNanoid";
@@ -8,16 +6,6 @@ import { createOrder } from "@/database/order/createOrder";
 
 export async function POST(req) {
   try {
-    const headersList = headers();
-    const APIKey = headersList.get("API-Key");
-
-    if (!APIKey || APIKey !== process.env.API_KEY) {
-      const err = new Error("Forbidden.");
-      err.statusCode = 403;
-      err.payload = "Guest can't do the POST request.";
-      throw err;
-    }
-
     const { userId, productId, productQuantity } = await req.json();
 
     if (!userId || !productId || !productQuantity) {

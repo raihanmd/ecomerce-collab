@@ -1,20 +1,8 @@
-import { headers } from "next/headers";
-
 import { myResponse } from "@/utils/myResponse";
 import { createWallet } from "@/database/wallet/createWallet";
 
 export async function POST(req) {
   try {
-    const headersList = headers();
-    const APIKey = headersList.get("API-Key");
-
-    if (!APIKey || APIKey !== process.env.API_KEY) {
-      const err = new Error("Forbidden.");
-      err.statusCode = 403;
-      err.payload = "Guest can't do the POST request.";
-      throw err;
-    }
-
     const { userId } = await req.json();
 
     if (!userId) {

@@ -1,5 +1,3 @@
-import { headers } from "next/headers";
-
 import { prefixId } from "@/const/prefixId";
 import { getNanoid } from "@/utils/getNanoid";
 import { myResponse } from "@/utils/myResponse";
@@ -8,17 +6,6 @@ import { deleteWishlist } from "@/database/wishlist/deleteWishlist";
 
 export async function POST(req) {
   try {
-    const headersList = headers();
-
-    const APIKey = headersList.get("API-Key");
-
-    if (!APIKey || APIKey !== process.env.API_KEY) {
-      const err = new Error("Forbidden.");
-      err.statusCode = 403;
-      err.payload = "Guest can't do the POST request.";
-      throw err;
-    }
-
     const { userId, productId } = await req.json();
 
     if (!userId || !productId) {
@@ -42,16 +29,6 @@ export async function POST(req) {
 
 export async function DELETE(req) {
   try {
-    const headersList = headers();
-    const APIKey = headersList.get("API-Key");
-
-    if (!APIKey || APIKey !== process.env.API_KEY) {
-      const err = new Error("Forbidden.");
-      err.statusCode = 403;
-      err.payload = "Guest can't do the DELETE request.";
-      throw err;
-    }
-
     const { wishlistId, userId } = await req.json();
 
     if (!wishlistId || !userId) {
