@@ -1,34 +1,13 @@
-"use client";
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+ "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+ width="1203.000000pt" height="1203.000000pt" viewBox="0 0 1203.000000 1203.000000"
+ preserveAspectRatio="xMidYMid meet">
 
-import { Flex } from "@chakra-ui/react";
-import { motion } from "framer-motion";
-
-const svgVariants = {
-  start: {
-    opacity: 0,
-    pathLength: 0,
-  },
-  finished: {
-    opacity: 1,
-    pathLength: 1,
-    transition: {
-      duration: 1,
-      repeat: Infinity,
-      ease: "easeInOut",
-      repeatType: "loop",
-      repeatDelay: 1,
-    },
-  },
-};
-
-function Loading() {
-  return (
-    <>
-      <Flex h={"100vh"} w={"full"} justify={"center"} align={"center"} p={10}>
-        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 1203.000000 1203.000000" preserveAspectRatio="xMidYMid meet">
-          <motion.g variants={svgVariants} initial="start" animate="finished" transform="translate(0.000000,1203.000000) scale(0.100000,-0.100000)" fill="black" stroke="none">
-            <path
-              d="M5655 12020 c-1465 -99 -2804 -692 -3844 -1705 -1151 -1122 -1811
+<g transform="translate(0.000000,1203.000000) scale(0.100000,-0.100000)"
+fill="#000000" stroke="none">
+<path d="M5655 12020 c-1465 -99 -2804 -692 -3844 -1705 -1151 -1122 -1811
 -2687 -1811 -4300 0 -1178 351 -2339 1005 -3326 1017 -1533 2667 -2507 4520
 -2669 329 -29 787 -22 1134 16 1707 186 3251 1087 4245 2477 634 887 1009
 1910 1108 3027 16 189 16 761 0 950 -94 1050 -421 1995 -988 2851 -230 348
@@ -49,13 +28,6 @@ c697 0 2367 29 2639 46 l98 6 -5 -59 c-3 -32 -8 -120 -12 -195 l-6 -138 -1753
 18 286 39 501 97 671 182 123 62 168 94 258 179 197 190 294 441 308 801 12
 323 -64 594 -231 816 -212 281 -577 494 -1345 784 -427 161 -722 298 -951 440
 -485 302 -703 652 -727 1165 -20 436 125 813 421 1098 134 128 260 216 431
-302 216 107 447 174 695 199 112 12 621 6 800 -9z"
-            />
-          </motion.g>
-        </svg>
-      </Flex>
-    </>
-  );
-}
-
-export default Loading;
+302 216 107 447 174 695 199 112 12 621 6 800 -9z"/>
+</g>
+</svg>

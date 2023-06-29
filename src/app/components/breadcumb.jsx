@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import unslugify from "@/utils/unslugify";
 import { usePathname } from "next/navigation";
 
 import { ChevronRightIcon } from "@chakra-ui/icons";
@@ -21,7 +22,7 @@ export default function Breadcumb() {
           </BreadcrumbItem>
           {filteredPath.map((path, index) => (
             <BreadcrumbItem key={index} isCurrentPage={index === filteredPath.length - 1}>
-              <BreadcrumbLink href={`/${path}`}>{path}</BreadcrumbLink>
+              <BreadcrumbLink href={`/${path}`}>{unslugify(path)}</BreadcrumbLink>
             </BreadcrumbItem>
           ))}
         </Breadcrumb>

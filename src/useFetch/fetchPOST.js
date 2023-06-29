@@ -1,5 +1,5 @@
-export const fetchPOST = async (url, data) => {
-  return await fetch(process.env.MAIN_URL + url, {
+export const fetchPOST = async (url, data, options) => {
+  return await fetch(options?.component === "client" ? url : process.env.MAIN_URL + url, {
     method: "POST",
     headers: {
       "API-Key": process.env.API_KEY,

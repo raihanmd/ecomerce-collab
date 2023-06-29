@@ -3,8 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BiLogOut } from "react-icons/bi";
-import { IoLogInOutline } from "react-icons/io";
 import { signOut } from "next-auth/react";
+import { VscAccount } from "react-icons/vsc";
+import { LuSettings } from "react-icons/lu";
+import { GrAddCircle } from "react-icons/gr";
 import { SearchIcon } from "@chakra-ui/icons";
 import { useRef, useState } from "react";
 import { Box, Flex, Text, Button, Input, InputGroup, InputRightAddon, Menu, Avatar, MenuList, MenuItem, MenuDivider, MenuButton, Icon } from "@chakra-ui/react";
@@ -29,7 +31,7 @@ export default function Navbar() {
   };
 
   return (
-    <Box boxShadow={"md"}>
+    <Box boxShadow={"md"} position={"sticky"} top={"0"} zIndex={"100"}>
       <Flex bg={"white"} mx={"auto"} color={"white"} minH={"60px"} py={{ base: 4 }} px={{ base: 4, md: 20 }} borderBottom={1} borderStyle={"solid"} borderColor={"gray.200"} align={"center"}>
         <Flex justify={{ base: "center", md: "start" }} align={"center"} width={"full"} px={4} gap={2}>
           <Link href={"/"}>
@@ -81,14 +83,19 @@ export default function Navbar() {
               <Avatar size={"sm"} src={user.image} alt={`Picture of ${user.name}`} />
             </MenuButton>
             <MenuList color={"black"}>
-              <MenuItem>Signed as {user.name}</MenuItem>
-              <MenuItem as={Link} href={"/new-product"}>
-                Add new product
-              </MenuItem>
+              {MENU_ITEM.map((item) => (
+                <MenuItem as={Link} href={item.href}>
+                  <Flex w={"full"} justify={"space-between"} align={"center"}>
+                    {item.label}
+                    <Icon fontSize={"lg"} as={item.icon} />
+                  </Flex>
+                </MenuItem>
+              ))}
               <MenuDivider />
-              <MenuItem>Settings</MenuItem>
               <MenuItem onClick={handleLogout}>
-                Log out <Icon as={BiLogOut} />
+                <Flex w={"full"} justify={"space-between"} align={"center"}>
+                  Log out <Icon fontSize={"lg"} as={BiLogOut} />
+                </Flex>
               </MenuItem>
             </MenuList>
           </Menu>
@@ -111,3 +118,21 @@ export default function Navbar() {
     </Box>
   );
 }
+
+const MENU_ITEM = [
+  {
+    label: "My Account",
+    icon: VscAccount,
+    href: "/account",
+  },
+  {
+    label: "Add product",
+    icon: GrAddCircle,
+    href: "/new-product",
+  },
+  {
+    label: "Setting",
+    icon: LuSettings,
+    href: "/setting",
+  },
+];

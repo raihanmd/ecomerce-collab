@@ -2,7 +2,6 @@ import slugify from "slugify";
 import { getServerSession } from "next-auth";
 
 import Navbar from "./Navbar";
-import Breadcumb from "./breadcumb";
 import { fetchGET } from "@/useFetch/fetchGET";
 import { authOptions } from "@/utils/authOptions";
 import { UserProvider } from "@/context/UserContext";
@@ -22,7 +21,7 @@ export default async function AuthCheck({ children }) {
 
   const {
     payload: { userId },
-  } = await fetchGET(`/api/id/${slugify(session.user.name, { lower: true })}`);
+  } = await fetchGET(`/api/id/${slugify(session.user.name, { lower: true })}`, { component: "server" });
 
   session.user.id = userId;
 
@@ -39,10 +38,7 @@ const MainContent = ({ children }) => {
   return (
     <>
       <Navbar />
-      <main className="root">
-        <Breadcumb />
-        {children}
-      </main>
+      <main className="root">{children}</main>
     </>
   );
 };

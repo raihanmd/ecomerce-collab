@@ -1,3 +1,3 @@
-export const fetchGET = async (url) => {
-  return await (await fetch(process.env.MAIN_URL + url, { next: { revalidate: 10 } })).json();
+export const fetchGET = async (url, options) => {
+  return await (await fetch(options?.component === "client" ? url : process.env.MAIN_URL + url, { next: { revalidate: 10 } })).json();
 };

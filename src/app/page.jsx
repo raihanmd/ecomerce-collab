@@ -1,15 +1,17 @@
 import { Suspense } from "react";
 
-import Loading from "./loading";
 import ProductCard from "@/app/components/productCard";
 import { fetchGET } from "@/useFetch/fetchGET";
+import LoadingProduct from "./components/loadingProduct";
 
 export default async function page() {
-  const products = await fetchGET("/api/products");
+  const products = await fetchGET("/api/products", { component: "server" });
 
   return (
-    <Suspense fallback={<Loading />}>
-      <ProductCard products={products} />
-    </Suspense>
+    <>
+      <Suspense fallback={<LoadingProduct />}>
+        <ProductCard products={products} />
+      </Suspense>
+    </>
   );
 }
