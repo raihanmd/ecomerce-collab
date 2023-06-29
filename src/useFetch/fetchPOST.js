@@ -3,7 +3,7 @@ export const fetchPOST = async (url, data, options) => {
     const res = await fetch(options?.component === "client" ? url : process.env.MAIN_URL + url, {
       method: "POST",
       headers: {
-        "API-Key": process.env.API_KEY,
+        "API-Key": "JHsduh78^823njshdUYSdnwu7",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),

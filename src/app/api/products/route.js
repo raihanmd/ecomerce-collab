@@ -9,7 +9,6 @@ import { getWalletById } from "@/database/wallet/getWalletById";
 import { deleteProduct } from "@/database/product/deleteProduct";
 import { editProduct } from "@/database/product/editProduct";
 import getUnixTimestamps from "@/utils/getUnixTimestamps";
-import { encodeImageToBlurhash } from "@/utils/encodeImageToBlurhash";
 
 export async function GET(req) {
   try {
@@ -22,7 +21,7 @@ export async function GET(req) {
 
 export async function POST(req) {
   try {
-    const { userId, productName, productPrice, productCategory, productDescription, productQuantity, productImage } = await req.json();
+    const { userId, productName, productPrice, productCategory, productDescription, productQuantity, productImage, blurhash } = await req.json();
 
     const userWallet = await getWalletById(userId);
 
@@ -37,14 +36,12 @@ export async function POST(req) {
       productSlug = slugify(productName, { lower: true }),
       createdAt = getUnixTimestamps();
 
-    if (!userId || !productName || !productPrice || !productCategory || !productDescription || !productQuantity || !productId || !productSlug || !createdAt || !productImage) {
+    if (!userId || !productName || !productPrice || !productCategory || !productDescription || !productQuantity || !productId || !productSlug || !createdAt || !productImage || !blurhash) {
       const err = new Error("Forbidden.");
       err.statusCode = 403;
       err.payload = "Invalid format body JSON.";
       throw err;
     }
-
-    const blurhash = await encodeImageToBlurhash(productImage);
 
     const newProduct = { productId, productName, productPrice, productCategory, productDescription, productQuantity, productSlug, userId, createdAt, productImage, blurhash };
 

@@ -1,18 +1,19 @@
 "use client";
 
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { redirect } from "next/navigation";
 import { Flex, Box, FormControl, FormLabel, Input, Stack, Button, Text, useToast, Alert, AlertIcon, AlertTitle, Select } from "@chakra-ui/react";
 
 import color from "@/const/color";
+import { fetchPOST } from "@/useFetch/fetchPOST";
 import { uploadImage } from "@/firebase/uploadImage";
 import { getImageURL } from "@/firebase/getImageURL";
 import { deleteImage } from "@/firebase/deleteImage";
 import { useUserContext } from "@/context/UserContext";
 import { generateImageName } from "@/utils/generateImageName";
 import { useCategoriesContext } from "@/context/CategoriesContext";
+import getUnixTimestamps from "@/utils/getUnixTimestamps";
 
 export default function ProductInputForm() {
   const categories = useCategoriesContext();
@@ -35,6 +36,14 @@ export default function ProductInputForm() {
         throw err;
       });
 
+      const productImage = await getImageURL(imageProduct).catch((err) => {
+        throw err;
+      });
+
+      const response = await fetchPOST("/api/blurhash", productImage, { component: "client" });
+
+      if (response.statusCode !== 200) throw response;
+
       const newProduct = {
         userId: user.id,
         productName: data.name,
@@ -42,30 +51,25 @@ export default function ProductInputForm() {
         productCategory: data.cat,
         productDescription: data.desc,
         productQuantity: data.qty,
-        productImage: await getImageURL(imageProduct).catch((err) => {
-          throw err;
-        }),
+        productImage,
+        blurhash: response.blurhash,
       };
+      console.log(getUnixTimestamps());
+      const { statusCode } = await fetchPOST("/api/products", newProduct, { component: "client" });
 
-      await axios
-        .post("/api/products", newProduct, {
-          headers: {
-            "API-Key": "JHsduh78^823njshdUYSdnwu7",
-          },
-        })
-        .then((res) => {
-          toast({
-            title: "Product added successfully.",
-            position: "top-right",
-            status: "success",
-            isClosable: true,
-          });
-          return (window.location.href = "/");
-        })
-        .catch((err) => {
-          throw err;
-        });
+      if (statusCode !== 200) throw new Error();
+
+      if (statusCode === 200) console.log(getUnixTimestamps());
+      toast({
+        title: "Product added successfully.",
+        position: "top-right",
+        status: "success",
+        isClosable: true,
+      });
+
+      return (window.location.href = "/");
     } catch (err) {
+      console.log(err);
       toast({
         title: "Product added failed.",
         position: "top-right",

@@ -9,7 +9,6 @@ export async function middleware(request) {
   const origin = request.headers.get("origin");
 
   if (origin && !allowedOrigins.includes(origin)) {
-    console.log(origin);
     return myResponse(400, "Bad request.", "Bad request.");
   }
 
