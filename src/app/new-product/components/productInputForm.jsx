@@ -40,9 +40,9 @@ export default function ProductInputForm() {
         throw err;
       });
 
-      const response = await fetchPOST("/api/blurhash", productImage, { component: "client" });
+      const response = await fetchPOST("/api/blurhash", { productImage }, { component: "client" });
 
-      if (response.statusCode !== 200) throw response;
+      if (response.statusCode !== 200) throw new Error();
 
       const newProduct = {
         userId: user.id,
@@ -52,14 +52,12 @@ export default function ProductInputForm() {
         productDescription: data.desc,
         productQuantity: data.qty,
         productImage,
-        blurhash: response.blurhash,
+        blurhash: response.payload.blurhash,
       };
       console.log(getUnixTimestamps());
       const { statusCode } = await fetchPOST("/api/products", newProduct, { component: "client" });
 
       if (statusCode !== 200) throw new Error();
-
-      if (statusCode === 200) console.log(getUnixTimestamps());
       toast({
         title: "Product added successfully.",
         position: "top-right",
@@ -69,7 +67,6 @@ export default function ProductInputForm() {
 
       return (window.location.href = "/");
     } catch (err) {
-      console.log(err);
       toast({
         title: "Product added failed.",
         position: "top-right",

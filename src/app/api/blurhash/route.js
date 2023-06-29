@@ -5,6 +5,13 @@ export async function POST(req) {
   try {
     const { productImage } = await req.json();
 
+    if (!productImage) {
+      const err = new Error("Forbidden.");
+      err.statusCode = 403;
+      err.payload = "Invalid format body JSON.";
+      throw err;
+    }
+
     const blurhash = await encodeImageToBlurhash(productImage);
 
     return myResponse(200, { blurhash }, `Blurhash returned successfully.`);
