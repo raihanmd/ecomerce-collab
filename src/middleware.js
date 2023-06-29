@@ -17,6 +17,7 @@ export async function middleware(request) {
       return myResponse(403, "Guest can't do the POST request.", "Forbidden.");
     }
     //! masi ambigu di bawah
+
     // if (authMiddleware.includes(request.nextUrl.pathname) && !request.headers.get("Authentication")) {
     //   return myResponse(403, "Authentication required.", "Forbidden.");
     // }
