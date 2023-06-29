@@ -8,9 +8,9 @@ const authMiddleware = ["/api/login", "/api/cart", "/api/checkout", "/api/order"
 export async function middleware(request) {
   const origin = request.headers.get("origin");
 
-  if (origin && !allowedOrigins.includes(origin)) {
-    return myResponse(400, "Bad request.", "Bad request.");
-  }
+  // if (origin && !allowedOrigins.includes(origin)) {
+  //   return myResponse(400, "Bad request.", "Bad request.");
+  // }
 
   if (request.nextUrl.pathname.startsWith("/api") && !request.nextUrl.pathname.startsWith("/api/auth") && request.method === "POST") {
     if (request.headers.get("API-Key") !== process.env.API_KEY) {
