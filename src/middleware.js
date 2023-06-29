@@ -3,7 +3,7 @@ import { myResponse } from "./utils/myResponse";
 
 const authMiddleware = ["/api/login", "/api/cart", "/api/checkout", "/api/order", "/api/products", "/api/wishlist", "/api/wallet"];
 
-const allowedOrigins = process.env.NODE_ENV === "production" ? ["https://www.ecomerce.raihanmd.site", "https://ecomerce.raihanmd.site"] : ["http://localhost:3000"];
+// const allowedOrigins = process.env.NODE_ENV === "production" ? ["https://www.ecomerce.raihanmd.site", "https://ecomerce.raihanmd.site"] : ["http://localhost:3000"];
 
 export async function middleware(request) {
   const origin = request.headers.get("origin");
