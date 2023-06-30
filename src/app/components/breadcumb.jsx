@@ -22,7 +22,9 @@ export default function Breadcumb() {
           </BreadcrumbItem>
           {filteredPath.map((path, index) => (
             <BreadcrumbItem key={index} isCurrentPage={index === filteredPath.length - 1}>
-              <BreadcrumbLink href={`/${path}`}>{unslugify(path)}</BreadcrumbLink>
+              <BreadcrumbLink as={Link} href={`/${path}`}>
+                {unslugify(path)}
+              </BreadcrumbLink>
             </BreadcrumbItem>
           ))}
         </Breadcrumb>

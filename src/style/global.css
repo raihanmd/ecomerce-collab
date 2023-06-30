@@ -1,5 +1,5 @@
 main.root {
-  padding-top: 10px;
+  padding: 10px 0;
   max-width: var(--chakra-sizes-7xl);
   margin: 0 auto;
 }

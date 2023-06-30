@@ -14,6 +14,7 @@ import { useUserContext } from "@/context/UserContext";
 import { generateImageName } from "@/utils/generateImageName";
 import { useCategoriesContext } from "@/context/CategoriesContext";
 import getUnixTimestamps from "@/utils/getUnixTimestamps";
+import ProductCard from "@/app/components/productCard";
 
 export default function ProductInputForm() {
   const categories = useCategoriesContext();
@@ -26,6 +27,9 @@ export default function ProductInputForm() {
   const { register, handleSubmit } = useForm();
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [previewProductImage, setPreviewProductImage] = useState(null);
+  const [previewProductPrice, setPreviewProductPrice] = useState(null);
+  const [previewProductName, setPreviewProductName] = useState(null);
 
   const onSubmitProduct = async (data) => {
     const imageProduct = generateImageName(data.image[0].name);
@@ -54,7 +58,6 @@ export default function ProductInputForm() {
         productImage,
         blurhash: response.payload.blurhash,
       };
-      console.log(getUnixTimestamps());
       const { statusCode } = await fetchPOST("/api/products", newProduct, { component: "client" });
 
       if (statusCode !== 200) throw new Error();
@@ -64,6 +67,10 @@ export default function ProductInputForm() {
         status: "success",
         isClosable: true,
       });
+
+      setPreviewProductImage(null);
+      setPreviewProductPrice(null);
+      setPreviewProductName(null);
 
       return (window.location.href = "/");
     } catch (err) {
@@ -80,8 +87,8 @@ export default function ProductInputForm() {
   };
 
   return (
-    <Flex minH={"100vh"} pt={"10"} justify={"center"}>
-      <Stack spacing={8} mx={"auto"} maxW={"lg"} px={6}>
+    <Flex maxW={"7xl"} minH={"100%"} py={"10"} justify={"center"} direction={{ base: "column-reverse", md: "row" }}>
+      <Stack spacing={8} w={"auto"} px={6} mx={{ base: "auto", md: "0" }}>
         {isError ? (
           <Alert status="error">
             <AlertIcon />
@@ -93,7 +100,7 @@ export default function ProductInputForm() {
             <Stack spacing={4}>
               <FormControl id="name" isRequired>
                 <FormLabel>Name Product</FormLabel>
-                <Input {...register("name")} type="text" name="name" />
+                <Input {...register("name")} type="text" name="name" value={previewProductName} onChange={(e) => setPreviewProductName(e.target.value)} />
               </FormControl>
               <FormControl id="description" isRequired>
                 <FormLabel>Description Product</FormLabel>
@@ -109,7 +116,7 @@ export default function ProductInputForm() {
               </FormControl>
               <FormControl id="price" isRequired>
                 <FormLabel>Price Product</FormLabel>
-                <Input {...register("price")} type="number" name="price" />
+                <Input {...register("price")} type="number" name="price" value={previewProductPrice} onChange={(e) => setPreviewProductPrice(parseFloat(e.target.value))} />
               </FormControl>
               <FormControl id="quantity" isRequired>
                 <FormLabel>Quantity Product</FormLabel>
@@ -117,7 +124,24 @@ export default function ProductInputForm() {
               </FormControl>
               <FormControl id="image" isRequired>
                 <FormLabel>Image Product</FormLabel>
-                <Input width={"full"} height={"auto"} padding={"2"} {...register("image")} type="file" name="image" accept="image/*" />
+                <Input
+                  width={"full"}
+                  height={"auto"}
+                  padding={"2"}
+                  {...register("image")}
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  alignItems={"center"}
+                  border={`2px dashed ${color.MAIN_COLOR}`}
+                  p={"50px"}
+                  _hover={{ cursor: "pointer" }}
+                  onChange={({ target: { files } }) => {
+                    if (files) {
+                      setPreviewProductImage(URL.createObjectURL(files[0]));
+                    }
+                  }}
+                />
               </FormControl>
               <Stack spacing={10} pt={2}>
                 <Button
@@ -138,6 +162,9 @@ export default function ProductInputForm() {
           </form>
         </Box>
       </Stack>
+      <Flex mx={{ base: "auto", md: "0" }} w={{ base: "210px", md: "auto" }} align={{ base: "center", md: "start" }} direction={"column"}>
+        <ProductCard products={{ payload: [{ productPrice: parseInt(previewProductPrice), productName: previewProductName, productImage: previewProductImage }] }} />
+      </Flex>
     </Flex>
   );
 }
