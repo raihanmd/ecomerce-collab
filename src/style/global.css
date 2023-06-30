@@ -1,3 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap");
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  font-family: "Fira Code", monospace;
+}
+
 main.root {
   padding: 10px 0;
   max-width: var(--chakra-sizes-7xl);
