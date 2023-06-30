@@ -45,7 +45,7 @@ function ProductCard({ products }) {
               <Flex direction={"column"} justifyContent="space-between" alignContent="center" gap={"2"} h={"5.5em"}>
                 <Flex direction={"column"} gap={"1"}>
                   <Text fontSize="xs" lineHeight="tight" whiteSpace={"normal"} overflow={"hidden"} textOverflow={"ellipsis"} display="-webkit-box" style={{ WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}>
-                    {product.productName || "Peoduct name placeholder here"}
+                    {product.productName || "Product name placeholder here"}
                   </Text>
 
                   <Rating rating={product?.productRating} />

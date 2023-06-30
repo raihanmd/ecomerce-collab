@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react";
 
-export default function Breadcumb() {
+export default function BreadcumbComponent() {
   const pathname = usePathname();
   const filteredPath = pathname.split("/").filter((segment) => segment !== "");
 
@@ -20,13 +20,13 @@ export default function Breadcumb() {
               Home
             </BreadcrumbLink>
           </BreadcrumbItem>
-          {filteredPath.map((path, index) => (
-            <BreadcrumbItem key={index} isCurrentPage={index === filteredPath.length - 1}>
-              <BreadcrumbLink as={Link} href={`/${path}`}>
-                {unslugify(path)}
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-          ))}
+          {filteredPath.map((path, index) => {
+            return (
+              <BreadcrumbItem key={index} isCurrentPage={index === filteredPath.length - 1}>
+                <BreadcrumbLink href={`/${path}`}>{unslugify(path)}</BreadcrumbLink>
+              </BreadcrumbItem>
+            );
+          })}
         </Breadcrumb>
       ) : null}
     </>
