@@ -24,7 +24,7 @@ const svgVariants = {
 function Loading() {
   return (
     <>
-      <Flex h={"100vh"} w={"full"} justify={"center"} align={"center"} p={10}>
+      <Flex h={"85vh"} w={"full"} justify={"center"} align={"center"} p={10}>
         <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 1203.000000 1203.000000" preserveAspectRatio="xMidYMid meet">
           <motion.g variants={svgVariants} initial="start" animate="finished" transform="translate(0.000000,1203.000000) scale(0.100000,-0.100000)" fill="black" stroke="none">
             <path

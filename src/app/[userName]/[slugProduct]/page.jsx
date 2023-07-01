@@ -8,9 +8,11 @@ export default async function page({ params }) {
   const detailProduct = await fetchGET(`/api/${params.userName}/${params.slugProduct}`, { component: "server" });
 
   return (
-    <Suspense fallback={<LoadingProductDetail />}>
-      <BreadcumbComponent />
-      {JSON.stringify(detailProduct.payload)};
-    </Suspense>
+    <>
+      <Suspense fallback={<LoadingProductDetail />}>
+        <BreadcumbComponent />
+        {JSON.stringify(detailProduct.payload)};
+      </Suspense>
+    </>
   );
 }

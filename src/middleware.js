@@ -27,5 +27,5 @@ export async function middleware(request) {
 }
 
 export const config = {
-  mather: "/api/:path*",
+  matcher: "/api/:path*",
 };
