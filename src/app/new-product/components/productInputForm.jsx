@@ -6,15 +6,15 @@ import { redirect } from "next/navigation";
 import { Flex, Box, FormControl, FormLabel, Input, Stack, Button, Text, useToast, Alert, AlertIcon, AlertTitle, Select } from "@chakra-ui/react";
 
 import color from "@/const/color";
+import ProductCard from "@/app/components/productCard";
 import { fetchPOST } from "@/useFetch/fetchPOST";
 import { uploadImage } from "@/firebase/uploadImage";
 import { getImageURL } from "@/firebase/getImageURL";
 import { deleteImage } from "@/firebase/deleteImage";
+import { fetchUint8ArrayPOST } from "@/useFetch/fetchUint8ArrayPOST";
 import { useUserContext } from "@/context/UserContext";
 import { generateImageName } from "@/utils/generateImageName";
 import { useCategoriesContext } from "@/context/CategoriesContext";
-import getUnixTimestamps from "@/utils/getUnixTimestamps";
-import ProductCard from "@/app/components/productCard";
 
 export default function ProductInputForm() {
   const categories = useCategoriesContext();
@@ -36,7 +36,13 @@ export default function ProductInputForm() {
     try {
       setIsLoading(true);
 
-      await uploadImage(data.image[0], imageProduct).catch((err) => {
+      const res = await fetchUint8ArrayPOST("/api/convert-image", { blobImage: data.image[0] });
+
+      console.log(res);
+
+      if (res.statusCode !== 200) throw new Error(res.message);
+
+      await uploadImage(res.payload.blobImage, imageProduct).catch((err) => {
         throw err;
       });
 
@@ -80,7 +86,8 @@ export default function ProductInputForm() {
         status: "error",
         isClosable: true,
       });
-      await deleteImage(imageProduct);
+      console.log(err);
+      // await deleteImage(imageProduct);
       setIsError(true);
       setIsLoading(false);
     }
