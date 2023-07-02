@@ -1,5 +1,6 @@
 import { fetchPOST } from "@/useFetch/fetchPOST";
 import GoogleProvider from "next-auth/providers/google";
+import GithubProvider from "next-auth/providers/github";
 import slugify from "slugify";
 
 export const authOptions = {
@@ -8,13 +9,16 @@ export const authOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
+    GithubProvider({
+      clientId: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    }),
   ],
   callbacks: {
-    async signIn(user, account, profile) {
-      const { statusCode } = await fetchPOST("/api/login", { userGoogleId: user.user.id, userEmail: user.user.email });
+    async signIn(user) {
+      const { statusCode } = await fetchPOST("/api/login", { userOAuthId: user.user.id, userEmail: user.user.email, userProvider: user.account.provider });
       if (statusCode !== 200) {
-        const createUserResponse = await fetchPOST("/api/register", { userGoogleId: user.user.id, userName: slugify(user.user.name, { lower: true }), userEmail: user.user.email });
-
+        const createUserResponse = await fetchPOST("/api/register", { userOAuthId: user.user.id, userName: slugify(user.user.name, { lower: true }), userEmail: user.user.email, userProvider: user.account.provider });
         if (createUserResponse.statusCode !== 201) return false;
       }
       return true;

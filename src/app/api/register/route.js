@@ -5,9 +5,9 @@ import { registerUser } from "@/database/user/registerUser";
 
 export async function POST(req) {
   try {
-    const { userGoogleId, userEmail, userName } = await req.json();
+    const { userOAuthId, userEmail, userName, userProvider } = await req.json();
 
-    if (!userEmail || !userName || !userGoogleId) {
+    if (!userEmail || !userName || !userOAuthId || !userProvider) {
       const err = new Error("Forbidden.");
       err.statusCode = 403;
       err.payload = "Invalid format body JSON.";
@@ -15,7 +15,7 @@ export async function POST(req) {
     }
 
     const userId = prefixId.User + getNanoid();
-    const newUser = { userId, userName, userEmail, userGoogleId };
+    const newUser = { userId, userName, userEmail, userOAuthId, userProvider };
     await registerUser(newUser);
     return myResponse(201, { isSucceed: 1 }, "Data added successfully.");
   } catch (err) {

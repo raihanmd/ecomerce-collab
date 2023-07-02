@@ -3,16 +3,16 @@ import { myResponse } from "@/utils/myResponse";
 
 export async function POST(req) {
   try {
-    const { userGoogleId, userEmail } = await req.json();
+    const { userOAuthId, userEmail, userProvider } = await req.json();
 
-    if (!userGoogleId || !userEmail) {
+    if (!userOAuthId || !userEmail || !userProvider) {
       const err = new Error("Forbidden.");
       err.statusCode = 403;
       err.payload = "Invalid format body JSON.";
       throw err;
     }
 
-    const userData = { userGoogleId, userEmail };
+    const userData = { userOAuthId, userEmail, userProvider };
 
     const validUser = await loginUser(userData);
 
