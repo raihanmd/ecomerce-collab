@@ -84,7 +84,7 @@ export default function Navbar() {
             </MenuButton>
             <MenuList color={"black"}>
               {MENU_ITEM.map((item) => (
-                <MenuItem as={Link} href={item.href}>
+                <MenuItem key={item.key} as={Link} href={item.href}>
                   <Flex w={"full"} justify={"space-between"} align={"center"}>
                     {item.label}
                     <Icon fontSize={"lg"} as={item.icon} />
@@ -121,16 +121,19 @@ export default function Navbar() {
 
 const MENU_ITEM = [
   {
+    key: 1,
     label: "My Account",
     icon: VscAccount,
     href: "/account",
   },
   {
+    key: 2,
     label: "Add product",
     icon: GrAddCircle,
     href: "/new-product",
   },
   {
+    key: 3,
     label: "Setting",
     icon: LuSettings,
     href: "/setting",

@@ -1,35 +1,26 @@
 import { myResponse } from "@/utils/myResponse";
-import { convertToMinResolutionAndWebP } from "@/utils/resizeAndConvertWEBP";
-import { NextResponse } from "next/server";
+import { convertToMinResolutionAndWebP } from "@/utils/convertToMinResolutionAndWebP";
 
 export async function POST(req) {
   try {
     const { image } = await req.json();
 
-    const convertedImage = await convertToMinResolutionAndWebP(image);
+    if (!image) {
+      const err = new Error("Forbidden.");
+      err.statusCode = 403;
+      err.payload = "Invalid format body JSON.";
+      throw err;
+    }
 
-    // return NextResponse.json(
-    //   {
-    //     statusCode: 200,
-    //     payload: convertedImage,
-    //     message: "Image successfully converted.",
-    //     metadata: {
-    //       prev: "",
-    //       next: "",
-    //       current: "",
-    //     },
-    //   },
-    //   {
-    //     status: 200,
-    //     headers: {
-    //       "Access-Control-Allow-Origin": "*",
-    //       "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
-    //       "Cache-Control": "public, s-maxage=10, stale-while-revalidate=59",
-    //       "Content-Type": "image/*",
-    //     },
-    //   }
-    // );
-    return myResponse(200, { blobImage: convertedImage }, "Image converted successfully.");
+    const uint8Array = new Uint8Array(
+      atob(image)
+        .split("")
+        .map((char) => char.charCodeAt(0))
+    );
+
+    const { blobImage, base64Image } = await convertToMinResolutionAndWebP(uint8Array);
+
+    return myResponse(200, { blobImage, base64Image }, "Image converted successfully.");
   } catch (err) {
     return myResponse(err.statusCode || 500, err.payload || "Internal server error.", err.message || "Internal server error.");
   }

@@ -4,8 +4,6 @@ import React, { useState, useEffect } from "react";
 import { Blurhash } from "react-blurhash";
 import { Box, Image } from "@chakra-ui/react";
 
-import logoBrand from "../../images/lynxshop.webp";
-
 const BlurredImage = ({ imageUrl, blurhash }) => {
   const [showBlur, setShowBlur] = useState(false);
 

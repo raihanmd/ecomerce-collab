@@ -8,7 +8,7 @@ p {
 }
 
 main.root {
-  padding: 10px 5px;
+  padding: 10px 0px;
   max-width: var(--chakra-sizes-7xl);
   margin: 0 auto;
 }

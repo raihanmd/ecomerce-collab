@@ -56,15 +56,8 @@ export default function BreadcumbComponent() {
           const isLastItem = index === filteredPath.length - 1;
 
           return (
-            <BreadcrumbItem key={index} isCurrentPage={isLastItem} id={`breadcrumb-${index}`} maxW={isLastItem ? `${lastItemMaxWidth}px` : "unset"}>
-              <Text
-                whiteSpace="nowrap"
-                overflow="hidden"
-                textOverflow={isLastItem ? "ellipsis" : "unset"}
-                maxWidth={isLastItem ? "full" : "unset"}
-                flexShrink={isLastItem ? 0 : 1}
-                _hover={{ textDecoration: isLastItem ? "none" : "underline" }}
-              >
+            <BreadcrumbItem key={index} isCurrentPage={isLastItem} id={`breadcrumb-${index}`} maxW={{ base: isLastItem ? `${lastItemMaxWidth}px` : "200px", md: "unset" }}>
+              <Text whiteSpace="nowrap" overflow="hidden" textOverflow={"ellipsis"} maxWidth={isLastItem ? "full" : "unset"} flexShrink={isLastItem ? 0 : 1} _hover={{ textDecoration: isLastItem ? "none" : "underline" }}>
                 {isLastItem ? unslugify(path) : <Link href={`/${path}`}>{unslugify(path)}</Link>}
               </Text>
             </BreadcrumbItem>

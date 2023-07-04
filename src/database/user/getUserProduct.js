@@ -1,6 +1,6 @@
 import { con } from "@/connection/db";
 
-export async function getUserPage(userName) {
+export async function getUserProduct(userName) {
   return await con
     .query(
       `SELECT   p.id as productId, 

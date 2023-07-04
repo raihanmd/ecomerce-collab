@@ -36,13 +36,13 @@ export default function ProductInputForm() {
     try {
       setIsLoading(true);
 
-      const res = await fetchUint8ArrayPOST("/api/convert-image", { blobImage: data.image[0] });
+      // const convertResponse = await fetchUint8ArrayPOST("/api/convert-image", { blobImage: data.image[0] });
 
-      console.log(res);
+      // console.log(convertResponse);
 
-      if (res.statusCode !== 200) throw new Error(res.message);
+      // if (convertResponse.statusCode !== 200) throw new Error(convertResponse.message);
 
-      await uploadImage(res.payload.blobImage, imageProduct).catch((err) => {
+      await uploadImage(data.image[0], imageProduct).catch((err) => {
         throw err;
       });
 
@@ -50,9 +50,9 @@ export default function ProductInputForm() {
         throw err;
       });
 
-      const response = await fetchPOST("/api/blurhash", { productImage }, { component: "client" });
+      const blurhashResponse = await fetchPOST("/api/blurhash", { productImage }, { component: "client" });
 
-      if (response.statusCode !== 200) throw new Error();
+      if (blurhashResponse.statusCode !== 200) throw new Error();
 
       const newProduct = {
         userId: user.id,
@@ -62,7 +62,7 @@ export default function ProductInputForm() {
         productDescription: data.desc,
         productQuantity: data.qty,
         productImage,
-        blurhash: response.payload.blurhash,
+        blurhash: blurhashResponse.payload.blurhash,
       };
       const { statusCode } = await fetchPOST("/api/products", newProduct, { component: "client" });
 
@@ -86,8 +86,7 @@ export default function ProductInputForm() {
         status: "error",
         isClosable: true,
       });
-      console.log(err);
-      // await deleteImage(imageProduct);
+      await deleteImage(imageProduct);
       setIsError(true);
       setIsLoading(false);
     }
@@ -95,7 +94,7 @@ export default function ProductInputForm() {
 
   return (
     <Flex maxW={"7xl"} minH={"100%"} py={"10"} justify={"center"} direction={{ base: "column-reverse", md: "row" }}>
-      <Stack spacing={8} w={"auto"} px={6} mx={{ base: "auto", md: "0" }}>
+      <Stack spacing={8} w={"auto"} px={6} mx={{ base: "auto", md: "0" }} mt={{ base: "5", md: "0" }}>
         {isError ? (
           <Alert status="error">
             <AlertIcon />
