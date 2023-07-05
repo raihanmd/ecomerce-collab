@@ -9,7 +9,7 @@ export default function UserPageComponent({ userPage }) {
     <Flex py={"3"} w="full" alignItems="center" justifyContent="center">
       <Flex w={"full"} shadow="sm" rounded="md" direction="column" alignItems="center" justifyContent="center">
         <Box
-          backgroundImage={`url(${userPage.userBanner || "https://images.unsplash.com/photo-1666795599746-0f62dfa29a07?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"})`}
+          backgroundImage={`url(${userPage.userBanner || "https://firebasestorage.googleapis.com/v0/b/ecomerce-bc524.appspot.com/o/banner%2Fuser-default-banner.webp?alt=media&token=e93f15f3-8df9-4b59-b08a-b6b095815b16"})`}
           backgroundSize={"cover"}
           backgroundPosition={"center"}
           backgroundRepeat={"no-repeat"}

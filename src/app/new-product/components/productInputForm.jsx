@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { redirect } from "next/navigation";
-import { Flex, Box, FormControl, FormLabel, Input, Stack, Button, Text, useToast, Alert, AlertIcon, AlertTitle, Select } from "@chakra-ui/react";
+import { Flex, Box, FormControl, FormLabel, Input, Stack, Button, Text, useToast, Alert, AlertIcon, AlertTitle, Select, VisuallyHidden, Icon, chakra } from "@chakra-ui/react";
 
 import color from "@/const/color";
 import ProductCard from "@/app/components/productCard";
@@ -30,6 +30,7 @@ export default function ProductInputForm() {
   const [previewProductImage, setPreviewProductImage] = useState(null);
   const [previewProductPrice, setPreviewProductPrice] = useState(null);
   const [previewProductName, setPreviewProductName] = useState(null);
+  const [previewProductImageName, setPreviewProductImageName] = useState(null);
 
   const onSubmitProduct = async (data) => {
     const imageProduct = generateImageName(data.image[0].name);
@@ -75,6 +76,7 @@ export default function ProductInputForm() {
       });
 
       setPreviewProductImage(null);
+      setPreviewProductImageName(null);
       setPreviewProductPrice(null);
       setPreviewProductName(null);
 
@@ -128,27 +130,60 @@ export default function ProductInputForm() {
                 <FormLabel>Quantity Product</FormLabel>
                 <Input {...register("qty")} type="number" name="qty" />
               </FormControl>
-              <FormControl id="image" isRequired>
+
+              <FormControl w={"430px"} id="image" isRequired>
                 <FormLabel>Image Product</FormLabel>
-                <Input
-                  width={"full"}
-                  height={"auto"}
-                  padding={"2"}
-                  {...register("image")}
-                  type="file"
-                  name="image"
-                  accept="image/*"
-                  alignItems={"center"}
-                  border={`2px dashed ${color.MAIN_COLOR}`}
-                  p={"50px"}
-                  _hover={{ cursor: "pointer" }}
-                  onChange={({ target: { files } }) => {
-                    if (files) {
-                      setPreviewProductImage(URL.createObjectURL(files[0]));
-                    }
-                  }}
-                />
+                <Flex mt={1} justify="center" px={6} pt={5} pb={6} borderWidth={2} borderStyle="dashed" rounded="md">
+                  <Stack spacing={1} textAlign="center">
+                    <Icon mx="auto" boxSize={12} color="gray.400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                      <path
+                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </Icon>
+                    <Flex fontSize="sm" color="gray.600" alignItems="center" justify={"center"}>
+                      <chakra.label
+                        maxW={"200px"}
+                        overflow="hidden"
+                        textOverflow={"ellipsis"}
+                        textDecor={"underline"}
+                        htmlFor="image"
+                        cursor="pointer"
+                        rounded="md"
+                        fontSize="sm"
+                        color="brand.600"
+                        pos="relative"
+                        _hover={{
+                          color: "brand.400",
+                        }}
+                      >
+                        <span>{previewProductImageName || "Upload a file"}</span>
+                        <VisuallyHidden>
+                          <Input
+                            id="image"
+                            name="image"
+                            type="file"
+                            accept="image/*"
+                            {...register("image")}
+                            onChange={({ target: { files } }) => {
+                              if (files) {
+                                setPreviewProductImageName(files[0].name);
+                                setPreviewProductImage(URL.createObjectURL(files[0]));
+                              }
+                            }}
+                          />
+                        </VisuallyHidden>
+                      </chakra.label>
+                    </Flex>
+                    <Text fontSize="xs" color="gray.500">
+                      PNG, JPG, GIF up to 3MB
+                    </Text>
+                  </Stack>
+                </Flex>
               </FormControl>
+
               <Stack spacing={10} pt={2}>
                 <Button
                   isLoading={isLoading ? true : false}
