@@ -15,7 +15,7 @@ export async function GET(req, { params }) {
       throw err;
     }
 
-    const { userImage } = await getUserDetail(userName);
+    const { userImage, userBanner, userBio, totalRating } = await getUserDetail(userName);
 
     if (!userProduct[0].productId) {
       return myResponse(200, { userName: userProduct[0].userName }, "Data retrieved successfully.");
@@ -24,6 +24,9 @@ export async function GET(req, { params }) {
     const response = {
       userName,
       userImage,
+      userBanner,
+      userBio,
+      totalRating,
       userProduct,
     };
 

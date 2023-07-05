@@ -8,6 +8,7 @@ import UserPageComponent from "./components/UserPageComponent";
 
 export default async function page({ params }) {
   const userPage = await fetchGET(`/api/${params.userName}`, { component: "server" });
+
   if (userPage.statusCode !== 200) {
     notFound();
   }
