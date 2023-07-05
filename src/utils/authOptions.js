@@ -16,15 +16,19 @@ export const authOptions = {
   ],
   callbacks: {
     async signIn(user) {
-      const { statusCode } = await fetchPOST("/api/login", { userOAuthId: user.user.id, userEmail: user.user.email, userProvider: user.account.provider });
+      const { statusCode } = await fetchPOST("/api/login", { userOAuthId: user.user.id, userEmail: user.user.email, userProvider: user.account.provider }, { component: "server" });
       if (statusCode !== 200) {
-        const createUserResponse = await fetchPOST("/api/register", {
-          userOAuthId: user.user.id,
-          userName: slugify(user.user.name, { lower: true }),
-          userEmail: user.user.email,
-          userImage: user.user.image,
-          userProvider: user.account.provider,
-        });
+        const createUserResponse = await fetchPOST(
+          "/api/register",
+          {
+            userOAuthId: user.user.id,
+            userName: slugify(user.user.name, { lower: true }),
+            userEmail: user.user.email,
+            userImage: user.user.image,
+            userProvider: user.account.provider,
+          },
+          { component: "server" }
+        );
         if (createUserResponse.statusCode !== 201) return false;
       }
       return true;
