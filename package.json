@@ -22,6 +22,7 @@
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
     "blurhash": "^2.0.5",
+    "cloudconvert": "^2.3.4",
     "dotenv": "^16.0.3",
     "encoding": "^0.1.13",
     "firebase": "^9.22.2",

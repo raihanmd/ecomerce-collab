@@ -3,6 +3,8 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { redirect } from "next/navigation";
+import { AiOutlineFileImage } from "react-icons/ai";
+import { MdDelete } from "react-icons/md";
 import { Flex, Box, FormControl, FormLabel, Input, Stack, Button, Text, useToast, Alert, AlertIcon, AlertTitle, Select, VisuallyHidden, Icon, chakra } from "@chakra-ui/react";
 
 import color from "@/const/color";
@@ -11,7 +13,6 @@ import { fetchPOST } from "@/useFetch/fetchPOST";
 import { uploadImage } from "@/firebase/uploadImage";
 import { getImageURL } from "@/firebase/getImageURL";
 import { deleteImage } from "@/firebase/deleteImage";
-import { fetchUint8ArrayPOST } from "@/useFetch/fetchUint8ArrayPOST";
 import { useUserContext } from "@/context/UserContext";
 import { generateImageName } from "@/utils/generateImageName";
 import { useCategoriesContext } from "@/context/CategoriesContext";
@@ -36,12 +37,6 @@ export default function ProductInputForm() {
     const imageProduct = generateImageName(data.image[0].name);
     try {
       setIsLoading(true);
-
-      // const convertResponse = await fetchUint8ArrayPOST("/api/convert-image", { blobImage: data.image[0] });
-
-      // console.log(convertResponse);
-
-      // if (convertResponse.statusCode !== 200) throw new Error(convertResponse.message);
 
       await uploadImage(data.image[0], imageProduct).catch((err) => {
         throw err;
@@ -133,33 +128,38 @@ export default function ProductInputForm() {
 
               <FormControl w={"430px"} id="image" isRequired>
                 <FormLabel>Image Product</FormLabel>
-                <Flex mt={1} justify="center" px={6} pt={5} pb={6} borderWidth={2} borderStyle="dashed" rounded="md">
-                  <Stack spacing={1} textAlign="center">
-                    <Icon mx="auto" boxSize={12} color="gray.400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                      <path
-                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </Icon>
+                <Flex className="testParent" mt={1} justify="center" px={6} pt={5} pb={6} borderWidth={2} borderStyle="dashed" rounded="md" position={"relative"}>
+                  <Stack spacing={1} className="test" direction={previewProductImage ? "row" : "column"} textAlign={"center"} align={"center"} justify={"baseline"}>
+                    {previewProductImage ? (
+                      <Icon as={AiOutlineFileImage} boxSize={8} />
+                    ) : (
+                      <Icon boxSize={12} color="gray.400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                        <path
+                          d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </Icon>
+                    )}
                     <Flex fontSize="sm" color="gray.600" alignItems="center" justify={"center"}>
                       <chakra.label
-                        maxW={"200px"}
-                        overflow="hidden"
-                        textOverflow={"ellipsis"}
-                        textDecor={"underline"}
-                        htmlFor="image"
-                        cursor="pointer"
-                        rounded="md"
-                        fontSize="sm"
-                        color="brand.600"
-                        pos="relative"
+                        whiteSpace={"nowrap"}
+                        maxW={"250px"}
+                        htmlFor={"image"}
+                        cursor={"pointer"}
+                        rounded={"md"}
+                        fontSize={"sm"}
+                        color={"brand.900"}
+                        pos={"relative"}
                         _hover={{
                           color: "brand.400",
+                          textDecor: "underline",
                         }}
                       >
-                        <span>{previewProductImageName || "Upload a file"}</span>
+                        <Text overflow={"hidden"} textOverflow={"ellipsis"} whiteSpace={"nowrap"}>
+                          {previewProductImageName || "Browse and upload a file"}
+                        </Text>
                         <VisuallyHidden>
                           <Input
                             id="image"
@@ -168,7 +168,16 @@ export default function ProductInputForm() {
                             accept="image/*"
                             {...register("image")}
                             onChange={({ target: { files } }) => {
-                              if (files) {
+                              console.log(files);
+                              if (files[0].name) {
+                                if (files[0].size > 1000000) {
+                                  toast({
+                                    title: "Image size too big.",
+                                    position: "top-right",
+                                    status: "error",
+                                    isClosable: true,
+                                  });
+                                }
                                 setPreviewProductImageName(files[0].name);
                                 setPreviewProductImage(URL.createObjectURL(files[0]));
                               }
@@ -177,9 +186,28 @@ export default function ProductInputForm() {
                         </VisuallyHidden>
                       </chakra.label>
                     </Flex>
-                    <Text fontSize="xs" color="gray.500">
-                      PNG, JPG, GIF up to 3MB
-                    </Text>
+                    {previewProductImage ? (
+                      <Button
+                        position={"absolute"}
+                        top={"1.5"}
+                        right={"1.5"}
+                        onClick={() => {
+                          setPreviewProductImage(null);
+                          setPreviewProductImageName(null);
+                        }}
+                        background={"red.500"}
+                        size={"xs"}
+                        rounded={"full"}
+                        p={1}
+                        _hover={{ background: "red.300" }}
+                      >
+                        <Icon as={MdDelete} color={"white"} />
+                      </Button>
+                    ) : (
+                      <Text fontSize="xs" color="gray.500">
+                        PNG, JPG, GIF up to 1MB
+                      </Text>
+                    )}
                   </Stack>
                 </Flex>
               </FormControl>
