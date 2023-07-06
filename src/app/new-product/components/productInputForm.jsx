@@ -177,6 +177,7 @@ export default function ProductInputForm() {
                                     status: "error",
                                     isClosable: true,
                                   });
+                                  return;
                                 }
                                 setPreviewProductImageName(files[0].name);
                                 setPreviewProductImage(URL.createObjectURL(files[0]));
