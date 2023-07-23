@@ -3,8 +3,8 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { redirect } from "next/navigation";
-import { AiOutlineFileImage } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
+import { AiOutlineFileImage } from "react-icons/ai";
 import { Flex, Box, FormControl, FormLabel, Input, Stack, Button, Text, useToast, Alert, AlertIcon, AlertTitle, Select, VisuallyHidden, Icon, chakra } from "@chakra-ui/react";
 
 import color from "@/const/color";
@@ -36,7 +36,9 @@ export default function ProductInputForm() {
   const onSubmitProduct = async (data) => {
     const imageProduct = generateImageName(data.image[0].name);
     try {
+      s;
       setIsLoading(true);
+      //! buat api baru lalu kirimkan state previewProductImage, lalu di proses get arraybuffer lalu olah di api
 
       await uploadImage(data.image[0], imageProduct).catch((err) => {
         throw err;
@@ -77,6 +79,7 @@ export default function ProductInputForm() {
 
       return (window.location.href = "/");
     } catch (err) {
+      console.log(err);
       toast({
         title: "Product added failed.",
         position: "top-right",
@@ -126,7 +129,7 @@ export default function ProductInputForm() {
                 <Input {...register("qty")} type="number" name="qty" />
               </FormControl>
 
-              <FormControl w={"430px"} id="image" isRequired>
+              <FormControl w={{ sm: "350px", md: "430px" }} id="image" isRequired>
                 <FormLabel>Image Product</FormLabel>
                 <Flex className="testParent" mt={1} justify="center" px={6} pt={5} pb={6} borderWidth={2} borderStyle="dashed" rounded="md" position={"relative"}>
                   <Stack spacing={1} className="test" direction={previewProductImage ? "row" : "column"} textAlign={"center"} align={"center"} justify={"baseline"}>
@@ -168,16 +171,14 @@ export default function ProductInputForm() {
                             accept="image/*"
                             {...register("image")}
                             onChange={({ target: { files } }) => {
-                              console.log(files);
                               if (files[0].name) {
                                 if (files[0].size > 1000000) {
-                                  toast({
+                                  return toast({
                                     title: "Image size too big.",
                                     position: "top-right",
                                     status: "error",
                                     isClosable: true,
                                   });
-                                  return;
                                 }
                                 setPreviewProductImageName(files[0].name);
                                 setPreviewProductImage(URL.createObjectURL(files[0]));
@@ -206,7 +207,7 @@ export default function ProductInputForm() {
                       </Button>
                     ) : (
                       <Text fontSize="xs" color="gray.500">
-                        PNG, JPG, GIF up to 1MB
+                        PNG, JPG, WEBP up to 1MB
                       </Text>
                     )}
                   </Stack>

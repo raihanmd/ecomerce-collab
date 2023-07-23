@@ -9,7 +9,7 @@ export default async function page() {
   return (
     <>
       <Suspense fallback={<LoadingProduct />}>
-        <ProductCard products={products} />
+        <ProductCard products={products.payload} />
       </Suspense>
     </>
   );

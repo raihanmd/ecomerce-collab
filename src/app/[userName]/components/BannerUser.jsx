@@ -4,7 +4,7 @@ import unslugify from "@/utils/unslugify";
 import { Flex, Heading, Stack, Box, Text, Avatar, Icon } from "@chakra-ui/react";
 import { BsStarFill } from "react-icons/bs";
 
-export default function UserPageComponent({ userPage }) {
+export default function BannerUser({ userPage }) {
   return (
     <Flex py={"3"} w="full" alignItems="center" justifyContent="center">
       <Flex w={"full"} shadow="sm" rounded="md" direction="column" alignItems="center" justifyContent="center">
@@ -32,13 +32,13 @@ export default function UserPageComponent({ userPage }) {
             alt={`Picture of ${userPage.userImage}`}
           />
         </Box>
-        <Flex gridColumn="span 8" p={{ base: "4", md: "8" }} width="full" height="full" borderRadius="lg" textAlign="left" mt={{ base: "9", md: "6" }} direction={{ base: "column", sm: "row" }}>
+        <Flex gridColumn="span 8" p={{ base: "4", md: "8" }} width="full" height="full" borderRadius="lg" textAlign="left" mt={{ base: "9", md: "6" }} direction={{ base: "column", sm: "row" }} gap={4}>
           <Flex direction={"column"} flex={"1"}>
             <Heading fontSize={{ base: "lg", sm: "2xl", md: "4xl" }} fontWeight="bold" color="gray.800">
               {unslugify(userPage.userName)}
             </Heading>
             <Stack color="gray.800" direction={{ base: "column", md: "row" }}>
-              <Text flex={"1"} fontSize={{ base: "md", sm: "lg", md: "xl" }} fontWeight="light" color="gray.800">
+              <Text flex={"1"} fontSize={{ base: "md", sm: "lg" }} fontWeight="light" color="gray.800">
                 {userPage.userBio || "Akun ini belum mempunyai bio."}
               </Text>
             </Stack>

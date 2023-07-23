@@ -4,7 +4,8 @@ import { notFound } from "next/navigation";
 import { fetchGET } from "@/useFetch/fetchGET";
 import LoadingUserPage from "./components/loadingUserPage";
 import BreadcumbComponent from "../components/breadcumb";
-import UserPageComponent from "./components/UserPageComponent";
+import BannerUser from "./components/BannerUser";
+import TabUser from "./components/TabUser";
 
 export default async function page({ params }) {
   const userPage = await fetchGET(`/api/${params.userName}`, { component: "server" });
@@ -15,9 +16,10 @@ export default async function page({ params }) {
 
   return (
     <>
-      <Suspense fallback={<LoadingUserPage />}>
+      <Suspense fdfallback={<LoadingUserPage />}>
         <BreadcumbComponent />
-        <UserPageComponent userPage={userPage.payload} />
+        <BannerUser userPage={userPage.payload} />
+        <TabUser userPage={userPage.payload} />
       </Suspense>
     </>
   );

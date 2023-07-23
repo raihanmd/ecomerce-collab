@@ -6,6 +6,7 @@ export async function getUserDetail(userName) {
       `SELECT ud.image AS userImage,
               ud.banner AS userBanner,
               ud.bio AS userBio,
+              ud.shop_description AS userShopDescription,
               AVG(r.rating) AS totalRating
         FROM user AS u
           RIGHT JOIN user_detail AS ud ON u.id = ud.id_user

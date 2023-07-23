@@ -46,7 +46,7 @@ export default function BreadcumbComponent() {
 
   return (
     <div ref={breadcrumbContainerRef}>
-      <Breadcrumb spacing="1" separator={<ChevronRightIcon color="gray.500" />} fontWeight="medium">
+      <Breadcrumb spacing="1" separator={<ChevronRightIcon color="gray.500" />} fontWeight="medium" px={2}>
         <BreadcrumbItem>
           <Text as={Link} href={"/"} _hover={{ textDecoration: "underline" }}>
             Home

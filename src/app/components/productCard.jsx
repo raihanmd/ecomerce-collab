@@ -30,7 +30,7 @@ function Rating({ rating }) {
 function ProductCard({ products }) {
   return (
     <Flex w={"full"} justifyContent="center" direction={"row"} alignContent={"start"} flexWrap={"wrap"} gap={"2"} px={"2"}>
-      {products.payload.map((product) => (
+      {products.map((product) => (
         <Link href={product?.ownedBy ? `/${product?.ownedBy}/${product?.productSlug}` : "/new-product/#"} key={product?.productId} className={"card-product"}>
           <Box bg={"white"} w={{ base: "full", sm: "48" }} h={"auto"} rounded="sm" shadow="sm" position="relative" transition={"all 100ms ease"} _hover={{ transform: "translateY(-5px)", shadow: "lg" }}>
             {productIsNew(product?.createdAt) && (
