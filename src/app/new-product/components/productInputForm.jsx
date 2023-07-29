@@ -234,7 +234,7 @@ export default function ProductInputForm() {
         </Box>
       </Stack>
       <Flex mx={{ base: "auto", md: "0" }} w={{ base: "210px", md: "auto" }} align={{ base: "center", md: "start" }} direction={"column"}>
-        <ProductCard products={[{ productPrice: parseInt(previewProductPrice), productName: previewProductName, productImage: previewProductImage }]} />
+        <ProductCard products={[{ productPrice: parseInt(previewProductPrice), productName: previewProductName, productImage: previewProductImage }]} preview={true} />
       </Flex>
     </Flex>
   );
