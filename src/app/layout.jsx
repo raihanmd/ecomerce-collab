@@ -2,6 +2,7 @@ import "@/style/global.css";
 import AuthCheck from "./components/AuthCheck";
 import { Providers } from "./providers";
 import NextAuthSessionProvider from "../providers/sessionProvider";
+import NextTopLoader from "nextjs-toploader";
 
 export const metadata = {
   title: "Lynx Shop",
@@ -14,7 +15,10 @@ export default async function RootLayout({ children }) {
       <body>
         <Providers>
           <NextAuthSessionProvider>
-            <AuthCheck>{children}</AuthCheck>
+            <AuthCheck>
+              <NextTopLoader color={"#000"} showSpinner={false} />
+              {children}
+            </AuthCheck>
           </NextAuthSessionProvider>
         </Providers>
       </body>

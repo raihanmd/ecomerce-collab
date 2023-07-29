@@ -21,8 +21,7 @@ export default function TabUser({ userPage }) {
       <TabIndicator mt="-1.5px" height="2px" bg="blue.500" borderRadius="1px" />
       <TabPanels>
         <TabPanel>
-          {" "}
-          <ProductCard products={userPage.userProduct} />{" "}
+          <ProductCard products={userPage.userProduct} />
         </TabPanel>
         <TabPanel>
           <Text>{userPage.userShopDescription || "User shop description"}</Text>
