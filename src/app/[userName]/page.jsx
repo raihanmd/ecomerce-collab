@@ -16,7 +16,7 @@ export default async function page({ params }) {
 
   return (
     <>
-      <Suspense fdfallback={<LoadingUserPage />}>
+      <Suspense fallback={<LoadingUserPage />}>
         <BreadcumbComponent />
         <BannerUser userPage={userPage.payload} />
         <TabUser userPage={userPage.payload} />

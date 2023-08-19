@@ -1,6 +1,6 @@
 "use client";
 
-import { Flex, Box, Image, Text, Skeleton } from "@chakra-ui/react";
+import { Flex, Box, Image, Skeleton } from "@chakra-ui/react";
 
 function LoadingProduct() {
   return (
@@ -16,27 +16,13 @@ function LoadingProduct() {
               <Box p={"2"}>
                 <Flex direction={"column"} justifyContent="space-between" alignContent="center" gap={"2"} h={"5em"}>
                   <Flex direction={"column"} gap={"1"}>
-                    <Skeleton>
-                      <Text h={"2.5"}>{i}</Text>
-                    </Skeleton>
-                    <Skeleton>
-                      <Text h={"2.5"}>{i}</Text>
-                    </Skeleton>
-                    <Skeleton>
-                      <Text h={"2.5"}>{i}</Text>
-                    </Skeleton>
+                    <Skeleton h={"2.5"}></Skeleton>
+                    <Skeleton h={"2.5"}></Skeleton>
+                    <Skeleton h={"2.5"}></Skeleton>
                   </Flex>
                   <Flex justifyContent={"space-between"}>
-                    <Skeleton>
-                      <Text w={"24"} h={"2"}>
-                        {i}
-                      </Text>
-                    </Skeleton>
-                    <Skeleton>
-                      <Text w={"10"} h={"2"}>
-                        {i}
-                      </Text>
-                    </Skeleton>
+                    <Skeleton w={"24"} h={"2"}></Skeleton>
+                    <Skeleton w={"24"} h={"2"}></Skeleton>
                   </Flex>
                 </Flex>
               </Box>

@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { Blurhash } from "react-blurhash";
-import { Box, Image } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
+import Image from "next/image";
 
 const BlurredImage = ({ imageUrl, blurhash }) => {
   const [showBlur, setShowBlur] = useState(false);
@@ -22,7 +23,7 @@ const BlurredImage = ({ imageUrl, blurhash }) => {
           <Blurhash hash={blurhash} width="100%" height="100%" />
         </Box>
       ) : (
-        <Image loading="lazy" src={imageUrl} alt={`Picture of ${imageUrl}`} roundedTop="sm" w="full" h="48" objectFit="cover" />
+        <Image loading="lazy" src={imageUrl} alt={`Picture of ${imageUrl}`} layout="responsive" width={300} height={192} style={{ objectFit: "cover", maxHeight: "192px", maxWidth: "300px" }} />
       )}
     </>
   );
