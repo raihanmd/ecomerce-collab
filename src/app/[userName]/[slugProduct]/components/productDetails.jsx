@@ -28,21 +28,21 @@ function Rating({ rating }) {
 export default function ProductDetails({ product }) {
   return (
     <Container maxW={"7xl"}>
-      <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={{ base: 8, md: 10 }} py={5}>
+      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={5} py={5}>
         <Flex>
-          <Image rounded={"md"} alt={`product of ${product.productName}`} src={product.productImage} fit={"cover"} align={"center"} w={"100%"} h={{ base: "100%", md: "580px" }} />
+          <Image rounded={"md"} alt={`product of ${product.productName}`} src={product.productImage} fit={"cover"} align={"center"} w={"100%"} h={{ base: "100%" }} maxH={{ md: "300px", lg: "400px" }} position={"sticky"} top={20} />
         </Flex>
         <Stack>
           <Stack spacing={2}>
-            <Heading lineHeight={1.1} fontWeight={600} fontSize={{ base: "2xl", sm: "4xl", lg: "5xl" }}>
+            <Heading lineHeight={1.1} fontWeight={600} fontSize={{ base: "2xl", sm: "4xl" }}>
               {product.productName}
             </Heading>
             <Box display={"flex"} gap={"2"} h={"20px"} alignItems={"center"}>
               <Text>{product.productRating || "0"}</Text>
               <Rating rating={product?.productRating} />
-              <Divider orientation="vertical" />
+              <Divider orientation="vertical" borderColor={"gray.200"} />
               <Text>{product.totalReviews || "0"} Penilaian</Text>
-              <Divider orientation="vertical" />
+              <Divider orientation="vertical" borderColor={"gray.200"} />
               <Text>{product.totalOrders || "0"} Terjual</Text>
             </Box>
             <Text fontSize="xl" lineHeight="tight" color={"orange.500"}>
@@ -57,23 +57,6 @@ export default function ProductDetails({ product }) {
                 Description
               </Text>
               <Text fontSize={"lg"}>{product.productDescription}</Text>
-            </Box>
-            <Box>
-              <Text fontSize={{ base: "16px", lg: "18px" }} color={"yellow.500"} fontWeight={"500"} textTransform={"uppercase"} mb={"4"}>
-                Features
-              </Text>
-
-              <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
-                <List spacing={2}>
-                  <ListItem>Chronograph</ListItem>
-                  <ListItem>Master Chronometer Certified</ListItem> <ListItem>Tachymeter</ListItem>
-                </List>
-                <List spacing={2}>
-                  <ListItem>Anti‑magnetic</ListItem>
-                  <ListItem>Chronometer</ListItem>
-                  <ListItem>Small seconds</ListItem>
-                </List>
-              </SimpleGrid>
             </Box>
             <Box>
               <Text fontSize={{ base: "16px", lg: "18px" }} color={"yellow.500"} fontWeight={"500"} textTransform={"uppercase"} mb={"4"}>
@@ -126,27 +109,31 @@ export default function ProductDetails({ product }) {
               </List>
             </Box>
           </Stack>
+        </Stack>
+        <Stack>
+          <Stack w={"full"} h={"60"} position={"sticky"} top={20} border={"1px"} rounded={"md"} p={3}>
+            <Text>Tes</Text>
+            <Button
+              rounded={"none"}
+              w={"full"}
+              mt={8}
+              size={"lg"}
+              py={"7"}
+              bg={"gray.900"}
+              color={"white"}
+              textTransform={"uppercase"}
+              _hover={{
+                transform: "translateY(2px)",
+                boxShadow: "lg",
+              }}
+            >
+              Add to cart
+            </Button>
 
-          <Button
-            rounded={"none"}
-            w={"full"}
-            mt={8}
-            size={"lg"}
-            py={"7"}
-            bg={"gray.900"}
-            color={"white"}
-            textTransform={"uppercase"}
-            _hover={{
-              transform: "translateY(2px)",
-              boxShadow: "lg",
-            }}
-          >
-            Add to cart
-          </Button>
-
-          <Stack direction="row" alignItems="center" justifyContent={"center"}>
-            <MdLocalShipping />
-            <Text>2-3 business days delivery</Text>
+            <Stack direction="row" alignItems="center" justifyContent={"center"}>
+              <MdLocalShipping />
+              <Text>2-3 business days delivery</Text>
+            </Stack>
           </Stack>
         </Stack>
       </SimpleGrid>

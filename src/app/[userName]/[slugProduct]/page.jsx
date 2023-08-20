@@ -17,6 +17,7 @@ export default async function page({ params }) {
       <Suspense fallback={<LoadingProductDetail />}>
         <BreadcumbComponent />
         <ProductDetails product={detailProduct.payload} />
+        <div style={{ marginTop: "4000px" }}></div>
       </Suspense>
     </>
   );
