@@ -41,9 +41,9 @@ const DesktopNav = () => {
 
 const DesktopSubNav = ({ name }) => {
   return (
-    <Link href={`/category/${name.toLowerCase()}`} role={"group"} display={"block"} py={2} px={3} rounded={"md"} _hover={{ bg: "blue.50" }}>
+    <Link href={`/category/${name.toLowerCase()}`} role={"group"} display={"block"} py={2} px={3} rounded={"md"} _hover={{ bg: "green.50" }}>
       <Stack direction={"row"} align={"center"} color={color.MAIN_COLOR}>
-        <Text fontSize={"sm"} transition={"all .3s ease"} _groupHover={{ color: "blue.500" }} fontWeight={200}>
+        <Text fontSize={"sm"} transition={"all .3s ease"} _groupHover={{ color: "green.500" }} fontWeight={200}>
           {name}
         </Text>
       </Stack>

@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import { Box, Container, Stack, Text, Image, Flex, Button, Heading, StackDivider, List, ListItem, Divider, Grid, Input } from "@chakra-ui/react";
+import { Box, Container, Stack, Text, Image, Flex, Button, Heading, StackDivider, List, ListItem, Divider, Grid, Input, Tabs, TabList, Tab, TabIndicator, TabPanels, TabPanel, Avatar } from "@chakra-ui/react";
 import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 
 import toRupiah from "@develoka/angka-rupiah-js";
 
 function Rating({ rating }) {
   return (
-    <Box dir={"row"} display={"flex"}>
+    <Box dir={"row"} display={"flex"} transform={"translateY(-2px)"}>
       {Array(5)
         .fill("")
         .map((_, i) => {
@@ -50,7 +50,7 @@ export default function ProductDetails({ product }) {
   return (
     <Container maxW={"7xl"}>
       <Flex direction={{ base: "column", md: "row" }} gap={{ md: 5 }} py={5}>
-        <Flex direction={"column"}>
+        <Flex direction={"column"} flex={{ md: "1" }}>
           <Flex gap={5} direction={{ base: "column", md: "row" }}>
             <Image
               rounded="md"
@@ -65,9 +65,9 @@ export default function ProductDetails({ product }) {
               position={{ base: "static", md: "sticky" }}
               top={20}
             />
-            <Stack>
+            <Stack flex={"1"}>
               <Stack spacing={2}>
-                <Heading lineHeight={1.1} fontWeight={600} fontSize={{ base: "2xl", sm: "4xl" }}>
+                <Heading lineHeight={1.1} fontWeight={600} fontSize={"2xl"}>
                   {product.productName}
                 </Heading>
                 <Box display={"flex"} gap={"2"} h={"20px"} alignItems={"center"}>
@@ -78,68 +78,36 @@ export default function ProductDetails({ product }) {
                   <Divider orientation="vertical" borderColor={"gray.200"} />
                   <Text>{product.totalOrders || "0"} Terjual</Text>
                 </Box>
-                <Text fontSize="xl" lineHeight="tight" color={"orange.500"}>
+                <Text fontSize="3xl" fontWeight={"bold"} lineHeight="tight" color={"orange.500"}>
                   {toRupiah(product.productPrice, { floatingPoint: 0 })}
                 </Text>
               </Stack>
 
-              <Stack spacing={{ base: 4, sm: 6 }} direction={"column"} divider={<StackDivider borderColor={"gray.200"} />}>
+              <Stack direction={"column"} divider={<StackDivider borderColor={"gray.200"} />}>
                 <StackDivider borderColor={"gray.200"} />
                 <Box>
-                  <Text fontSize={{ base: "16px", lg: "18px" }} color={"yellow.500"} fontWeight={"500"} textTransform={"uppercase"} mb={"4"}>
-                    Description
-                  </Text>
-                  <Text fontSize={"lg"}>{product.productDescription}</Text>
+                  <Tabs position="relative" variant="unstyled" size={"md"} colorScheme="black">
+                    <TabList borderBottom={"1px"} borderColor={"gray.200"}>
+                      <Tab fontWeight={"semibold"}>Description</Tab>
+                      <Tab fontWeight={"semibold"}>Info Penting</Tab>
+                    </TabList>
+                    <TabIndicator mt="-2px" height="2px" bg="yellow.500" borderRadius=".5px" />
+                    <TabPanels>
+                      <TabPanel>
+                        <Text>{product.productDescription}</Text>
+                      </TabPanel>
+                      <TabPanel>
+                        <Text>{product.ownerShopDescription || "User shop description"}</Text>
+                      </TabPanel>
+                    </TabPanels>
+                  </Tabs>
                 </Box>
                 <Box>
-                  <Text fontSize={{ base: "16px", lg: "18px" }} color={"yellow.500"} fontWeight={"500"} textTransform={"uppercase"} mb={"4"}>
-                    Product Details
-                  </Text>
-
-                  <List spacing={2}>
-                    <ListItem>
-                      <Text as={"span"} fontWeight={"bold"}>
-                        Between lugs:
-                      </Text>{" "}
-                      20 mm
-                    </ListItem>
-                    <ListItem>
-                      <Text as={"span"} fontWeight={"bold"}>
-                        Bracelet:
-                      </Text>{" "}
-                      leather strap
-                    </ListItem>
-                    <ListItem>
-                      <Text as={"span"} fontWeight={"bold"}>
-                        Case:
-                      </Text>{" "}
-                      Steel
-                    </ListItem>
-                    <ListItem>
-                      <Text as={"span"} fontWeight={"bold"}>
-                        Case diameter:
-                      </Text>{" "}
-                      42 mm
-                    </ListItem>
-                    <ListItem>
-                      <Text as={"span"} fontWeight={"bold"}>
-                        Dial color:
-                      </Text>{" "}
-                      Black
-                    </ListItem>
-                    <ListItem>
-                      <Text as={"span"} fontWeight={"bold"}>
-                        Crystal:
-                      </Text>{" "}
-                      Domed, scratch‑resistant sapphire crystal with anti‑reflective treatment inside
-                    </ListItem>
-                    <ListItem>
-                      <Text as={"span"} fontWeight={"bold"}>
-                        Water resistance:
-                      </Text>{" "}
-                      5 bar (50 metres / 167 feet){" "}
-                    </ListItem>
-                  </List>
+                  <Flex py={1}>
+                    <Flex>
+                      <Avatar borderRadius="full" size={"md"} src={product.ownerImage} alt={`Picture of ${product.ownerImage}`} />
+                    </Flex>
+                  </Flex>
                 </Box>
               </Stack>
             </Stack>
@@ -147,13 +115,19 @@ export default function ProductDetails({ product }) {
 
           <Flex h={"40vh"}>Komponen Reviews</Flex>
         </Flex>
-        <Stack w="sm" h={"full"} position="sticky" top={20} border="1px" p={3} rounded="md" spacing={"3"} display={{ base: "none", lg: "flex" }}>
-          <Heading w={"full"} fontSize="xl">
+        <Stack maxW="72" h={"full"} position="sticky" top={20} border="1px" p={3} rounded="md" spacing={"3"} display={{ base: "none", lg: "flex" }}>
+          <Heading w={"full"} fontSize="lg">
             Atur jumlah pemesanan
           </Heading>
+          <Flex w={"60"} align={"center"} gap={2} maxW={"64"}>
+            <Image rounded="md" alt={`product of ${product.productName}`} src={product.productImage} fit="cover" align="center" w="40px" h="40px" />
+            <Heading fontSize="sm" whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis" w="full">
+              {product.productName}
+            </Heading>
+          </Flex>
           <Flex w={"full"} align="center" gap={"2"}>
-            <Flex align="center" border={"1px"} borderColor={"blue.400"} rounded={"md"}>
-              <Button roundedRight={"none"} size="xs" onClick={handleDecrement} isDisabled={quantity <= 1} color={"blue.400"} fontSize={"md"}>
+            <Flex align="center" border={"1px"} borderColor={"black"} rounded={"md"}>
+              <Button roundedRight={"none"} size="xs" onClick={handleDecrement} isDisabled={quantity <= 1} color={"black"} fontSize={"md"}>
                 -
               </Button>
               <Input
@@ -173,13 +147,11 @@ export default function ProductDetails({ product }) {
                 _hover={{ borderColor: "none" }}
                 _focus={{ borderColor: "none", boxShadow: "none" }}
               />
-              <Button roundedLeft={"none"} size="xs" onClick={handleIncrement} isDisabled={quantity >= product.productQuantity} color={"blue.400"} fontSize={"md"}>
+              <Button roundedLeft={"none"} size="xs" onClick={handleIncrement} isDisabled={quantity >= product.productQuantity} color={"black"} fontSize={"md"}>
                 +
               </Button>
             </Flex>
-            <Text fontSize="sm" mt={1}>
-              Stok Tersedia: {product.productQuantity}
-            </Text>
+            <Text fontSize="sm">Stok Tersedia: {product.productQuantity > 100000 ? "100k+" : product.productQuantity}</Text>
           </Flex>
           <Button w={"full"}>Tambahkan ke keranjang</Button>
         </Stack>

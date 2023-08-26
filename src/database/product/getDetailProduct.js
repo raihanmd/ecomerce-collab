@@ -10,10 +10,10 @@ export async function getDetailProduct({ userName, productSlug }) {
                 p.blurhash AS productBlurhash,
                 p.description as productDescription,
                 p.quantity as productQuantity,
-                user.user_name as ownedBy,
                 AVG(r.rating) AS productRating,
                 COUNT(r.id) AS totalReviews,
-                COUNT(o.id) AS totalOrders
+                COUNT(o.id) AS totalOrders,
+                user.user_name as ownedBy
           FROM products AS p
             INNER JOIN user ON (user.id = p.id_user)
               LEFT JOIN reviews AS r ON (r.id_products = p.id)

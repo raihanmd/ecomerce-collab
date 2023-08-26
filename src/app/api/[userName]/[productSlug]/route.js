@@ -1,4 +1,5 @@
 import { getDetailProduct } from "@/database/product/getDetailProduct";
+import { getUserDetail } from "@/database/user/getUserDetail";
 import { myResponse } from "@/utils/myResponse";
 
 export async function GET(req, { params }) {
@@ -11,8 +12,11 @@ export async function GET(req, { params }) {
       err.payload = "Product not found.";
       throw err;
     }
+    const { userImage: ownerImage, userShopDescription: ownerShopDescription } = await getUserDetail(params.userName);
 
-    return myResponse(200, product, "Data successfully retrieved.");
+    const detailProduct = { ...product, ownerImage, ownerShopDescription };
+
+    return myResponse(200, detailProduct, "Data successfully retrieved.");
   } catch (err) {
     return myResponse(err.statusCode || 500, err.payload || "Internal server error.", err.message || "Internal server error.");
   }

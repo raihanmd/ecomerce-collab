@@ -46,9 +46,9 @@ export default function BreadcumbComponent() {
 
   return (
     <div ref={breadcrumbContainerRef}>
-      <Breadcrumb spacing="1" separator={<ChevronRightIcon color="gray.500" />} fontWeight="medium" px={2}>
+      <Breadcrumb spacing="1" separator={<ChevronRightIcon color="gray.500" />} fontWeight="thin" px={2}>
         <BreadcrumbItem>
-          <Text as={Link} href={"/"} _hover={{ textDecoration: "underline" }}>
+          <Text as={Link} href={"/"} _hover={{ textDecoration: "underline" }} color={"green.400"} fontWeight={"medium"}>
             Home
           </Text>
         </BreadcrumbItem>
@@ -57,7 +57,16 @@ export default function BreadcumbComponent() {
 
           return (
             <BreadcrumbItem key={index} isCurrentPage={isLastItem} id={`breadcrumb-${index}`} maxW={{ base: isLastItem ? `${lastItemMaxWidth}px` : "200px", md: "unset" }}>
-              <Text whiteSpace="nowrap" overflow="hidden" textOverflow={"ellipsis"} maxWidth={isLastItem ? "full" : "unset"} flexShrink={isLastItem ? 0 : 1} _hover={{ textDecoration: isLastItem ? "none" : "underline" }}>
+              <Text
+                whiteSpace="nowrap"
+                overflow="hidden"
+                textOverflow={"ellipsis"}
+                fontWeight={isLastItem ? "thin" : "medium"}
+                maxWidth={isLastItem ? "full" : "unset"}
+                flexShrink={isLastItem ? 0 : 1}
+                color={isLastItem ? "black" : "green.400"}
+                _hover={{ textDecoration: isLastItem ? "none" : "underline" }}
+              >
                 {isLastItem ? unslugify(path) : <Link href={`/${path}`}>{unslugify(path)}</Link>}
               </Text>
             </BreadcrumbItem>
