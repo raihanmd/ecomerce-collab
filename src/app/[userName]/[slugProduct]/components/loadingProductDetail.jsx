@@ -82,7 +82,7 @@ function LoadingProductDetail() {
                           <Skeleton w={"300px"} h={"18px"} />
                           <Skeleton w={"150px"} h={"12px"} />
                         </Flex>
-                        <Button>Follow</Button>
+                        <Skeleton w={"60px"} h={"30px"} />
                       </Flex>
                     </Flex>
                   </Box>
@@ -91,9 +91,7 @@ function LoadingProductDetail() {
             </Flex>
           </Flex>
           <Stack maxW="72" h={"full"} position="sticky" top={20} border="1px" borderColor={"gray.300"} p={3} rounded="md" spacing={"3"} display={{ base: "none", lg: "flex" }}>
-            <Heading w={"full"} fontSize="lg">
-              Atur jumlah pemesanan
-            </Heading>
+            <Skeleton w={"ful"} h={"18px"} />
             <Flex w={"60"} align={"center"} gap={2} maxW={"64"}>
               <Skeleton>
                 <Box rounded="md" w="40px" h="40px" />
@@ -105,15 +103,7 @@ function LoadingProductDetail() {
               </Skeleton>
             </Flex>
             <Flex w={"full"} align="center" gap={"2"}>
-              <Flex align="center" border={"1px"} borderColor={"gray.300"} rounded={"md"}>
-                <Button roundedRight={"none"} size="xs" color={"green.500"} fontSize={"md"}>
-                  -
-                </Button>
-                <Input border="none" padding="0" margin="0" type="number" min="0" textAlign="center" width="30px" height="auto" fontSize="sm" isRequired _hover={{ borderColor: "none" }} _focus={{ borderColor: "none", boxShadow: "none" }} />
-                <Button roundedLeft={"none"} size="xs" color={"green.500"} fontSize={"md"}>
-                  +
-                </Button>
-              </Flex>
+              <Skeleton w={"90px"} h={"25px"} />
               <Text fontSize="sm">Stok Tersedia: 100</Text>
             </Flex>
             <Flex justify={"space-between"}>

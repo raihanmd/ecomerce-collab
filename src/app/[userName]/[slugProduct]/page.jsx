@@ -1,6 +1,6 @@
 "use client";
 import { Suspense } from "react";
-import { useRouter } from "next/router";
+import { redirect } from "next/navigation";
 
 import { fetchGET } from "@/useFetch/fetchGET";
 import LoadingProductDetail from "./components/loadingProductDetail";
@@ -8,11 +8,10 @@ import BreadcumbComponent from "@/app/components/breadcumb";
 import ProductDetails from "./components/productDetails";
 
 export default async function Page({ params }) {
-  const router = useRouter()
   const detailProduct = await fetchGET(`/api/${params.userName}/${params.slugProduct}`, { component: "client" });
 
   if (detailProduct.statusCode !== 200) {
-    router.replace('/404')
+    redirect("/not-found");
     return null
   }
 
