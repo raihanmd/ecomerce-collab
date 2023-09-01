@@ -12,9 +12,9 @@ export async function GET(req, { params }) {
       err.payload = "Product not found.";
       throw err;
     }
-    const { userImage: ownerImage, userShopDescription: ownerShopDescription } = await getUserDetail(params.userName);
+    const { userImage: ownerImage, userShopDescription: ownerShopDescription, totalRating: ownerTotalRating, userProvince: ownerProvince, userCity: ownerCity } = await getUserDetail(params.userName);
 
-    const detailProduct = { ...product, ownerImage, ownerShopDescription };
+    const detailProduct = { ...product, ownerImage, ownerShopDescription, ownerProvince, ownerCity, ownerTotalRating };
 
     return myResponse(200, detailProduct, "Data successfully retrieved.");
   } catch (err) {

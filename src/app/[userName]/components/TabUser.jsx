@@ -18,7 +18,7 @@ export default function TabUser({ userPage }) {
         <Tab fontWeight={"semibold"}>Products</Tab>
         <Tab fontWeight={"semibold"}>About</Tab>
       </TabList>
-      <TabIndicator mt="-1.5px" height="2px" bg="blue.500" borderRadius="1px" />
+      <TabIndicator mt="-1.5px" height="3px" bg="green.500" borderRadius="1px" />
       <TabPanels>
         <TabPanel>
           <ProductCard products={userPage.userProduct} />

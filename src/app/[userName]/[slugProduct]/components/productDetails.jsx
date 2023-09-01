@@ -1,10 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import { Box, Container, Stack, Text, Image, Flex, Button, Heading, StackDivider, List, ListItem, Divider, Grid, Input, Tabs, TabList, Tab, TabIndicator, TabPanels, TabPanel, Avatar } from "@chakra-ui/react";
-import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
+import { Box, Container, Stack, Text, Image, Flex, Button, Heading, StackDivider, Divider, Input, Tabs, TabList, Tab, TabIndicator, TabPanels, TabPanel, Icon } from "@chakra-ui/react";
+import { BsStar, BsStarFill, BsStarHalf, BsHeart } from "react-icons/bs";
+import { SlLocationPin } from "react-icons/sl";
+import { FaShippingFast } from "react-icons/fa";
 
 import toRupiah from "@develoka/angka-rupiah-js";
+import unslugify from "@/utils/unslugify";
+import Link from "next/link";
 
 function Rating({ rating }) {
   return (
@@ -84,15 +88,14 @@ export default function ProductDetails({ product }) {
               </Stack>
 
               <Stack direction={"column"} divider={<StackDivider borderColor={"gray.200"} />}>
-                <StackDivider borderColor={"gray.200"} />
                 <Box>
                   <Tabs position="relative" variant="unstyled" size={"md"} colorScheme="black">
                     <TabList borderBottom={"1px"} borderColor={"gray.200"}>
                       <Tab fontWeight={"semibold"}>Description</Tab>
                       <Tab fontWeight={"semibold"}>Info Penting</Tab>
                     </TabList>
-                    <TabIndicator mt="-2px" height="2px" bg="yellow.500" borderRadius=".5px" />
-                    <TabPanels>
+                    <TabIndicator mt="-2px" height="3px" bg="green.500" />
+                    <TabPanels pt={1}>
                       <TabPanel>
                         <Text>{product.productDescription}</Text>
                       </TabPanel>
@@ -103,9 +106,43 @@ export default function ProductDetails({ product }) {
                   </Tabs>
                 </Box>
                 <Box>
-                  <Flex py={1}>
-                    <Flex>
-                      <Avatar borderRadius="full" size={"md"} src={product.ownerImage} alt={`Picture of ${product.ownerImage}`} />
+                  <Flex w={"full"} py={1} px={3}>
+                    <Flex w={"full"} gap={2} justify={"center"} align={"center"}>
+                      <Link href={`/${product.ownedBy}`}>
+                        <Image borderRadius="full" width={"14"} src={product.ownerImage} alt={`Picture of ${product.ownerImage}`} />
+                      </Link>
+                      <Flex flex={1} direction={"column"}>
+                        <Link href={`/${product.ownedBy}`}>
+                          <Text fontWeight={"bold"}>{unslugify(product.ownedBy)}</Text>
+                        </Link>
+                        <Flex align={"start"} gap={1}>
+                          <BsStar size={"18px"} style={{ color: "orange" }} />
+                          <Text color={"gray.500"}>
+                            <span style={{ color: "black" }}>{product.ownerTotalRating || "0"}</span> rata-rata ulasan
+                          </Text>
+                        </Flex>
+                      </Flex>
+                      <Button>Follow</Button>
+                    </Flex>
+                  </Flex>
+                </Box>
+                <Box px={"3"}>
+                  <Heading fontSize={"xl"} fontWeight={"bold"}>
+                    Pengiriman
+                  </Heading>
+                  <Flex direction={"column"} pt={"2"}>
+                    <Flex gap={"2"} align={"baseline"}>
+                      <Icon as={SlLocationPin} transform={"translateY(1px)"} />
+                      <Text>
+                        Dikirim dari <span style={{ fontWeight: "bold" }}>{product.ownerCity}</span>
+                      </Text>
+                    </Flex>
+                    <Flex gap={"2"} align={"baseline"}>
+                      <Icon as={FaShippingFast} transform={"translateY(2px)"} />
+                      <Box>
+                        <Text>Ongkir Reguler 8rb - 15rb</Text>
+                        <Text color={"gray.500"}>Estimasi tiba 1 - 4 hari</Text>
+                      </Box>
                     </Flex>
                   </Flex>
                 </Box>
@@ -115,7 +152,7 @@ export default function ProductDetails({ product }) {
 
           <Flex h={"40vh"}>Komponen Reviews</Flex>
         </Flex>
-        <Stack maxW="72" h={"full"} position="sticky" top={20} border="1px" p={3} rounded="md" spacing={"3"} display={{ base: "none", lg: "flex" }}>
+        <Stack maxW="72" h={"full"} position="sticky" top={20} border="1px" borderColor={"gray.300"} p={3} rounded="md" spacing={"3"} display={{ base: "none", lg: "flex" }}>
           <Heading w={"full"} fontSize="lg">
             Atur jumlah pemesanan
           </Heading>
@@ -126,8 +163,8 @@ export default function ProductDetails({ product }) {
             </Heading>
           </Flex>
           <Flex w={"full"} align="center" gap={"2"}>
-            <Flex align="center" border={"1px"} borderColor={"black"} rounded={"md"}>
-              <Button roundedRight={"none"} size="xs" onClick={handleDecrement} isDisabled={quantity <= 1} color={"black"} fontSize={"md"}>
+            <Flex align="center" border={"1px"} borderColor={"gray.300"} rounded={"md"}>
+              <Button roundedRight={"none"} size="xs" onClick={handleDecrement} isDisabled={quantity <= 1} color={"green.500"} fontSize={"md"}>
                 -
               </Button>
               <Input
@@ -147,13 +184,30 @@ export default function ProductDetails({ product }) {
                 _hover={{ borderColor: "none" }}
                 _focus={{ borderColor: "none", boxShadow: "none" }}
               />
-              <Button roundedLeft={"none"} size="xs" onClick={handleIncrement} isDisabled={quantity >= product.productQuantity} color={"black"} fontSize={"md"}>
+              <Button roundedLeft={"none"} size="xs" onClick={handleIncrement} isDisabled={quantity >= product.productQuantity} color={"green.500"} fontSize={"md"}>
                 +
               </Button>
             </Flex>
             <Text fontSize="sm">Stok Tersedia: {product.productQuantity > 100000 ? "100k+" : product.productQuantity}</Text>
           </Flex>
-          <Button w={"full"}>Tambahkan ke keranjang</Button>
+          <Flex justify={"space-between"}>
+            <Text color={"gray.500"}>Subtotal</Text>
+            <Flex fontSize="xl" fontWeight={"bold"} lineHeight="tight" color={"orange.500"}>
+              <Text>{toRupiah(product.productPrice * quantity, { floatingPoint: 0 })}</Text>
+            </Flex>
+          </Flex>
+          <Button w={"full"} backgroundColor={"green.500"} color={"white"} _hover={{ backgroundColor: "green.700" }} _active={{ color: "green.50" }} fontWeight={"bold"}>
+            Tambahkan ke keranjang
+          </Button>
+          <Button w={"full"} border={"1px"} borderColor={"green.500"} backgroundColor={"white"} color={"green.500"} _hover={{ color: "green.700", borderColor: "green.700" }} _active={{ background: "green.50" }} fontWeight={"bold"}>
+            Beli
+          </Button>
+          <Flex _hover={{ cursor: "pointer" }} justify={"center"} align={"center"} gap={1}>
+            <BsHeart size={"15px"} />
+            <Text fontWeight={"bold"} fontSize={"sm"}>
+              Wishlist
+            </Text>
+          </Flex>
         </Stack>
       </Flex>
     </Container>

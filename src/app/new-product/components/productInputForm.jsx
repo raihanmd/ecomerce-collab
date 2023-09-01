@@ -5,7 +5,7 @@ import { useState } from "react";
 import { redirect } from "next/navigation";
 import { MdDelete } from "react-icons/md";
 import { AiOutlineFileImage } from "react-icons/ai";
-import { Flex, Box, FormControl, FormLabel, Input, Stack, Button, Text, useToast, Alert, AlertIcon, AlertTitle, Select, VisuallyHidden, Icon, chakra } from "@chakra-ui/react";
+import { Flex, Box, FormControl, FormLabel, Input, Stack, Button, Text, useToast, Alert, AlertIcon, AlertTitle, Select, VisuallyHidden, Icon, chakra, Textarea } from "@chakra-ui/react";
 
 import color from "@/const/color";
 import ProductCard from "@/app/components/productCard";
@@ -36,9 +36,7 @@ export default function ProductInputForm() {
   const onSubmitProduct = async (data) => {
     const imageProduct = generateImageName(data.image[0].name);
     try {
-      s;
       setIsLoading(true);
-      //! buat api baru lalu kirimkan state previewProductImage, lalu di proses get arraybuffer lalu olah di api
 
       await uploadImage(data.image[0], imageProduct).catch((err) => {
         throw err;
@@ -110,7 +108,7 @@ export default function ProductInputForm() {
               </FormControl>
               <FormControl id="description" isRequired>
                 <FormLabel>Description Product</FormLabel>
-                <Input {...register("desc")} type="text" name="desc" />
+                <Textarea {...register("desc")} type="text" name="desc" />
               </FormControl>
               <FormControl id="category" isRequired>
                 <FormLabel>Category Product</FormLabel>

@@ -19,7 +19,8 @@ export async function getUserProduct(userName) {
         LEFT JOIN orders AS o ON o.id = od.id_orders
           INNER JOIN user AS u ON u.id = p.id_user
             WHERE u.user_name = '${userName}'
-              GROUP BY u.id, p.id, p.name, p.price, p.description;`
+              GROUP BY u.id, p.id, p.name, p.price, p.description
+                ORDER BY p.created_at DESC;`
     )
     .then(([rows]) => rows)
     .catch((err) => {

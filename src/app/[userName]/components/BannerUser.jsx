@@ -2,7 +2,7 @@
 
 import unslugify from "@/utils/unslugify";
 import { Flex, Heading, Stack, Box, Text, Avatar, Icon } from "@chakra-ui/react";
-import { BsStarFill } from "react-icons/bs";
+import { BsStarFill, BsDot } from "react-icons/bs";
 
 export default function BannerUser({ userPage }) {
   return (
@@ -34,9 +34,15 @@ export default function BannerUser({ userPage }) {
         </Box>
         <Flex gridColumn="span 8" p={{ base: "4", md: "8" }} width="full" height="full" borderRadius="lg" textAlign="left" mt={{ base: "9", md: "6" }} direction={{ base: "column", sm: "row" }} gap={4}>
           <Flex direction={"column"} flex={"1"}>
-            <Heading fontSize={{ base: "lg", sm: "2xl", md: "4xl" }} fontWeight="bold" color="gray.800">
-              {unslugify(userPage.userName)}
-            </Heading>
+            <Flex align={"center"}>
+              <Heading fontSize={{ base: "lg", sm: "2xl", md: "4xl" }} fontWeight="bold" color="gray.800" display={"inline"}>
+                {unslugify(userPage.userName)}
+              </Heading>
+              <Icon as={BsDot} boxSize={"7"} />
+              <Text>
+                {userPage.userCity}, {userPage.userProvince}
+              </Text>
+            </Flex>
             <Stack color="gray.800" direction={{ base: "column", md: "row" }}>
               <Text flex={"1"} fontSize={{ base: "md", sm: "lg" }} fontWeight="light" color="gray.800">
                 {userPage.userBio || "Akun ini belum mempunyai bio."}

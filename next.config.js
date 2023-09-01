@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["firebasestorage.googleapis.com"], // Daftar host gambar yang diizinkan
+    domains: ["firebasestorage.googleapis.com", "placeholder.com"], // Daftar host gambar yang diizinkan
   },
 };
 
