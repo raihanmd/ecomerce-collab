@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { Box, Container, Stack, Text, Image, Flex, Button, Heading, StackDivider, Divider, Input, Tabs, TabList, Tab, TabIndicator, TabPanels, TabPanel, Icon } from "@chakra-ui/react";
 import { BsStar, BsStarFill, BsStarHalf, BsHeart } from "react-icons/bs";
 import { SlLocationPin } from "react-icons/sl";
@@ -150,7 +150,11 @@ export default function ProductDetails({ product }) {
             </Stack>
           </Flex>
 
+          <Suspense>
+
           <Flex h={"40vh"}>Komponen Reviews</Flex>
+          </Suspense>
+          
         </Flex>
         <Stack maxW="72" h={"full"} position="sticky" top={20} border="1px" borderColor={"gray.300"} p={3} rounded="md" spacing={"3"} display={{ base: "none", lg: "flex" }}>
           <Heading w={"full"} fontSize="lg">
