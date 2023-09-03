@@ -10,6 +10,7 @@ export async function getDetailProduct({ userName, productSlug }) {
                 p.blurhash AS productBlurhash,
                 p.description as productDescription,
                 p.quantity as productQuantity,
+                p.weight as productWeight,
                 AVG(r.rating) AS productRating,
                 COUNT(r.id) AS totalReviews,
                 COUNT(o.id) AS totalOrders,

@@ -2,10 +2,10 @@ import { Suspense } from "react";
 import { notFound } from "next/navigation";
 
 import { fetchGET } from "@/useFetch/fetchGET";
-import LoadingUserPage from "./components/loadingUserPage";
 import BreadcumbComponent from "../components/breadcumb";
 import BannerUser from "./components/BannerUser";
 import TabUser from "./components/TabUser";
+import LoadingUserPage from "./loading";
 
 export default async function page({ params }) {
   const userPage = await fetchGET(`/api/${params.userName}`, { component: "server" });

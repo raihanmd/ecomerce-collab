@@ -57,6 +57,7 @@ export default function ProductInputForm() {
         productCategory: data.cat,
         productDescription: data.desc,
         productQuantity: data.qty,
+        productWeight: data.weight,
         productImage,
         blurhash: blurhashResponse.payload.blurhash,
       };
@@ -125,6 +126,10 @@ export default function ProductInputForm() {
               <FormControl id="quantity" isRequired>
                 <FormLabel>Quantity Product</FormLabel>
                 <Input {...register("qty")} type="number" name="qty" />
+              </FormControl>
+              <FormControl id="quantity" isRequired>
+                <FormLabel>Weight Product</FormLabel>
+                <Input {...register("weight")} type="number" name="weight" />
               </FormControl>
 
               <FormControl w={{ sm: "350px", md: "430px" }} id="image" isRequired>

@@ -38,7 +38,7 @@ export default function BreadcumbComponent() {
       }
     }
 
-    const lastItemMaxWidth = containerWidth - totalWidth - 70;
+    const lastItemMaxWidth = containerWidth - totalWidth - 75;
     return Math.max(lastItemMaxWidth, 0);
   };
 

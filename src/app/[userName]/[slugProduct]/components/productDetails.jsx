@@ -151,10 +151,8 @@ export default function ProductDetails({ product }) {
           </Flex>
 
           <Suspense>
-
-          <Flex h={"40vh"}>Komponen Reviews</Flex>
+            <Flex h={"40vh"}>Komponen Reviews</Flex>
           </Suspense>
-          
         </Flex>
         <Stack maxW="72" h={"full"} position="sticky" top={20} border="1px" borderColor={"gray.300"} p={3} rounded="md" spacing={"3"} display={{ base: "none", lg: "flex" }}>
           <Heading w={"full"} fontSize="lg">

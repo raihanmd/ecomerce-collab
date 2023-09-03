@@ -1,6 +1,6 @@
 import { con } from "@/connection/db";
 
-export async function editProduct({ userId, productId, productName, productPrice, productCategory, productDescription, productQuantity, productSlug }) {
+export async function editProduct({ userId, productId, productName, productPrice, productCategory, productDescription, productQuantity, productWeight, productSlug }) {
   return await con
     .getConnection()
     .then(async (connection) => {
@@ -21,7 +21,8 @@ export async function editProduct({ userId, productId, productName, productPrice
                     slug = '${productSlug}',
                     description = '${productDescription}', 
                     price = ${productPrice},
-                    quantity = ${productQuantity}
+                    quantity = ${productQuantity},
+                    weight = ${productWeight},
                 WHERE id = '${productId}' AND id_user = '${userId}'`
           )
           .then(([fields]) => {

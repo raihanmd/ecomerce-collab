@@ -1,61 +1,36 @@
 "use client";
 
-import { Flex } from "@chakra-ui/react";
-import { motion } from "framer-motion";
+import { Flex, Box, Image, Skeleton } from "@chakra-ui/react";
 
-const svgVariants = {
-  start: {
-    opacity: 0,
-    pathLength: 0,
-  },
-  finished: {
-    opacity: 1,
-    pathLength: 1,
-    transition: {
-      duration: 1,
-      repeat: Infinity,
-      ease: "easeInOut",
-      repeatType: "loop",
-      repeatDelay: 1,
-    },
-  },
-};
-
-function Loading() {
+function LoadingProduct() {
   return (
-    <>
-      <Flex h={"85vh"} w={"full"} justify={"center"} align={"center"} p={10}>
-        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 1203.000000 1203.000000" preserveAspectRatio="xMidYMid meet">
-          <motion.g variants={svgVariants} initial="start" animate="finished" transform="translate(0.000000,1203.000000) scale(0.100000,-0.100000)" fill="black" stroke="none">
-            <path
-              d="M5655 12020 c-1465 -99 -2804 -692 -3844 -1705 -1151 -1122 -1811
--2687 -1811 -4300 0 -1178 351 -2339 1005 -3326 1017 -1533 2667 -2507 4520
--2669 329 -29 787 -22 1134 16 1707 186 3251 1087 4245 2477 634 887 1009
-1910 1108 3027 16 189 16 761 0 950 -94 1050 -421 1995 -988 2851 -230 348
--452 618 -758 925 -307 306 -574 525 -925 758 -847 564 -1796 893 -2836 986
--161 15 -689 21 -850 10z m-1891 -3412 c-5 -10 -4 -10 6 -1 7 7 21 9 34 4 11
--4 82 -7 156 -7 l135 1 -7 -395 c-5 -217 -5 -1249 -2 -2292 l6 -1898 372 0
-c697 0 2367 29 2639 46 l98 6 -5 -59 c-3 -32 -8 -120 -12 -195 l-6 -138 -1753
-0 -1753 0 4 113 c16 402 26 1351 31 2965 5 1803 6 1854 24 1849 11 -3 22 -1
-25 4 8 14 16 11 8 -3z m3296 -58 c291 -24 531 -60 771 -116 102 -24 110 -28
-106 -48 -79 -342 -89 -378 -111 -372 -11 3 -104 24 -206 46 -483 103 -778 140
--1121 140 -198 0 -323 -11 -474 -41 -452 -91 -778 -360 -891 -736 -22 -74 -27
--113 -31 -244 -9 -282 37 -484 148 -645 50 -73 164 -188 270 -274 214 -172
-483 -311 949 -490 304 -117 535 -217 755 -325 344 -171 529 -295 705 -475 274
--279 389 -541 420 -960 24 -309 -28 -629 -140 -876 -78 -173 -263 -395 -422
--508 -358 -253 -827 -385 -1441 -404 -285 -9 -291 -9 -318 36 -13 21 -24 42
--25 49 -1 7 -12 26 -24 43 -12 16 -18 30 -14 30 4 0 -1 6 -12 14 -10 8 -16 18
--12 22 4 4 -1 19 -11 33 -9 14 -29 49 -43 76 l-26 50 367 0 c297 0 391 4 501
-18 286 39 501 97 671 182 123 62 168 94 258 179 197 190 294 441 308 801 12
-323 -64 594 -231 816 -212 281 -577 494 -1345 784 -427 161 -722 298 -951 440
--485 302 -703 652 -727 1165 -20 436 125 813 421 1098 134 128 260 216 431
-302 216 107 447 174 695 199 112 12 621 6 800 -9z"
-            />
-          </motion.g>
-        </svg>
-      </Flex>
-    </>
+    <Flex mt={"2"} w={"full"} justifyContent="center" direction={"row"} alignContent={"start"} flexWrap={"wrap"} gap={"2"} px={"2"}>
+      {Array(24)
+        .fill("")
+        .map((_, i) => (
+          <Box key={i} className={"card-product"}>
+            <Box bg={"white"} w={{ base: "full", sm: "48" }} h={"auto"} rounded="sm" shadow="sm" position="relative">
+              <Skeleton>
+                <Image roundedTop="sm" w={"full"} h={"48"} objectFit={"cover"} />
+              </Skeleton>
+              <Box p={"2"}>
+                <Flex direction={"column"} justifyContent="space-between" alignContent="center" gap={"2"} h={"5em"}>
+                  <Flex direction={"column"} gap={"1"}>
+                    <Skeleton h={"2.5"}></Skeleton>
+                    <Skeleton h={"2.5"}></Skeleton>
+                    <Skeleton h={"2.5"}></Skeleton>
+                  </Flex>
+                  <Flex justifyContent={"space-between"}>
+                    <Skeleton w={"24"} h={"2"}></Skeleton>
+                    <Skeleton w={"24"} h={"2"}></Skeleton>
+                  </Flex>
+                </Flex>
+              </Box>
+            </Box>
+          </Box>
+        ))}
+    </Flex>
   );
 }
 
-export default Loading;
+export default LoadingProduct;

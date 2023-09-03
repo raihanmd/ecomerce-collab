@@ -21,7 +21,7 @@ export async function GET(req) {
 
 export async function POST(req) {
   try {
-    const { userId, productName, productPrice, productCategory, productDescription, productQuantity, productImage, blurhash } = await req.json();
+    const { userId, productName, productPrice, productCategory, productDescription, productQuantity, productWeight, productImage, blurhash } = await req.json();
 
     const userWallet = await getWalletById(userId);
 
@@ -36,14 +36,14 @@ export async function POST(req) {
       productSlug = slugify(productName, { lower: true }),
       createdAt = getUnixTimestamps();
 
-    if (!userId || !productName || !productPrice || !productCategory || !productDescription || !productQuantity || !productId || !productSlug || !createdAt || !productImage || !blurhash) {
+    if (!userId || !productName || !productPrice || !productCategory || !productDescription || !productQuantity || !productWeight || !productId || !productSlug || !createdAt || !productImage || !blurhash) {
       const err = new Error("Forbidden.");
       err.statusCode = 403;
       err.payload = "Invalid format body JSON.";
       throw err;
     }
 
-    const newProduct = { productId, productName, productPrice, productCategory, productDescription, productQuantity, productSlug, userId, createdAt, productImage, blurhash };
+    const newProduct = { productId, productName, productPrice, productCategory, productDescription, productQuantity, productWeight, productSlug, userId, createdAt, productImage, blurhash };
 
     await addProduct(newProduct);
 
@@ -55,7 +55,7 @@ export async function POST(req) {
 
 export async function PUT(req) {
   try {
-    const { userId, productId, productName, productPrice, productCategory, productDescription, productQuantity } = await req.json();
+    const { userId, productId, productName, productPrice, productCategory, productDescription, productQuantity, productWeight } = await req.json();
 
     const userWallet = await getWalletById(userId);
 
@@ -68,14 +68,14 @@ export async function PUT(req) {
 
     const productSlug = slugify(productName, { lower: true });
 
-    if (!userId || !productName || !productPrice || !productCategory || !productDescription || !productQuantity || !productId || !productSlug) {
+    if (!userId || !productName || !productPrice || !productCategory || !productDescription || !productQuantity || !productWeight || !productId || !productSlug) {
       const err = new Error("Forbidden.");
       err.statusCode = 403;
       err.payload = "Invalid format body JSON.";
       throw err;
     }
 
-    const editedProduct = { userId, productId, productName, productPrice, productCategory, productDescription, productQuantity, productSlug };
+    const editedProduct = { userId, productId, productName, productPrice, productCategory, productDescription, productQuantity, productWeight, productSlug };
     await editProduct(editedProduct);
 
     return myResponse(200, { isSucceed: 1 }, `Product edited successfully.`);

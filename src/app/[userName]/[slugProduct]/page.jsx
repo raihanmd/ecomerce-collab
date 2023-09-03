@@ -1,17 +1,16 @@
-"use client";
 import { Suspense } from "react";
+import { notFound } from "next/navigation";
 
 import { fetchGET } from "@/useFetch/fetchGET";
-import LoadingProductDetail from "./components/loadingProductDetail";
 import BreadcumbComponent from "@/app/components/breadcumb";
 import ProductDetails from "./components/productDetails";
-import NotFound from "@/app/not-found";
+import LoadingProductDetail from "./loading";
 
 export default async function Page({ params }) {
-  const detailProduct = await fetchGET(`/api/${params.userName}/${params.slugProduct}`, { component: "client" });
+  const detailProduct = await fetchGET(`/api/${params.userName}/${params.slugProduct}`, { component: "server" });
 
   if (detailProduct.statusCode !== 200) {
-    return <NotFound />;
+    notFound();
   }
 
   return (
