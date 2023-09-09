@@ -132,7 +132,7 @@ export default function page() {
               <Text>Warning, do not fill it with real data identity, fill it with dummy data</Text>
               <FormControl id="province" isRequired>
                 <FormLabel>Your Province</FormLabel>
-                <Select {...register("province")} placeholder={isLoading ? "Loading..." : "Select Your Province"} onChange={handleProvinceChange} onActive={{ borderColor: "black" }} isDisabled={isLoading}>
+                <Select {...register("province")} placeholder={"Select Your Province"} onChange={handleProvinceChange} onActive={{ borderColor: "black" }}>
                   {provinces.map((province) => (
                     <option key={`province-option-${province.province_id}`} value={province.province_id}>
                       {province.province}
