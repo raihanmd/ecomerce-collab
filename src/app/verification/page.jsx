@@ -133,7 +133,7 @@ export default function page() {
               </FormControl>
               <FormControl id="city" isRequired>
                 <FormLabel>Your City</FormLabel>
-                <Select {...register("city")} placeholder="Select Your City" onActive={{ borderColor: "black" }} isDisabled={!!selectedProvince}>
+                <Select {...register("city")} placeholder="Select Your City" onActive={{ borderColor: "black" }} isDisabled={!selectedProvince}>
                   {cities.map((city) => (
                     <option key={`city-option-${city.city_id}`} value={city.city_id}>
                       {city.city_name}
