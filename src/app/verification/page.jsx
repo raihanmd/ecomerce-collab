@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { redirect } from "next/navigation";
 import { Stack, Text, FormControl, FormLabel, Select, Button, Flex, Box, useToast, Alert, AlertIcon, AlertTitle } from "@chakra-ui/react";
@@ -131,18 +131,16 @@ export default function page() {
                   ))}
                 </Select>
               </FormControl>
-              {selectedProvince && (
-                <FormControl id="city" isRequired>
-                  <FormLabel>Your City</FormLabel>
-                  <Select {...register("city")} placeholder="Select Your City" onActive={{ borderColor: "black" }}>
-                    {cities.map((city) => (
-                      <option key={`city-option-${city.city_id}`} value={city.city_id}>
-                        {city.city_name}
-                      </option>
-                    ))}
-                  </Select>
-                </FormControl>
-              )}
+              <FormControl id="city" isRequired>
+                <FormLabel>Your City</FormLabel>
+                <Select {...register("city")} placeholder="Select Your City" onActive={{ borderColor: "black" }} isDisabled={!!selectedProvince}>
+                  {cities.map((city) => (
+                    <option key={`city-option-${city.city_id}`} value={city.city_id}>
+                      {city.city_name}
+                    </option>
+                  ))}
+                </Select>
+              </FormControl>
 
               <Stack spacing={10} pt={2}>
                 <Button
