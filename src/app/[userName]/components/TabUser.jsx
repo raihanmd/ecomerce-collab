@@ -3,6 +3,8 @@
 import ProductCard from "@/app/components/productCard";
 import { Stack, Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 
+import color from "@/const/color";
+
 export default function TabUser({ userPage }) {
   if (!userPage.userProduct) {
     return (
@@ -18,7 +20,7 @@ export default function TabUser({ userPage }) {
         <Tab fontWeight={"semibold"}>Products</Tab>
         <Tab fontWeight={"semibold"}>About</Tab>
       </TabList>
-      <TabIndicator mt="-1.5px" height="3px" bg="green.500" borderRadius="1px" />
+      <TabIndicator mt="-1.5px" height="3px" bg={`${color.MAIN_COLOR}.500`} borderRadius="1px" />
       <TabPanels>
         <TabPanel>
           <ProductCard products={userPage.userProduct} />

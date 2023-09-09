@@ -11,7 +11,6 @@ import { SearchIcon } from "@chakra-ui/icons";
 import { useRef, useState } from "react";
 import { Box, Flex, Text, Button, Input, InputGroup, InputRightAddon, Menu, Avatar, MenuList, MenuItem, MenuDivider, MenuButton, Icon } from "@chakra-ui/react";
 
-import color from "@/const/color";
 import logoBrand from "@/images/lynxshop.webp";
 import DesktopNav from "./desktopNav";
 import { useUserContext } from "@/context/UserContext";
@@ -38,7 +37,7 @@ export default function Navbar() {
             <Image src={logoBrand} alt={"Logo brand"} width={40} height={40} />
           </Link>
           <Link href={"/"}>
-            <Text textAlign={{ base: "center", md: "left" }} fontFamily={"heading"} color={color.MAIN_COLOR} display={{ base: "none", md: "inline" }} fontWeight={700}>
+            <Text textAlign={{ base: "center", md: "left" }} fontFamily={"heading"} color={"black"} display={{ base: "none", md: "inline" }} fontWeight={700}>
               LynxShop
             </Text>
           </Link>
@@ -69,7 +68,7 @@ export default function Navbar() {
                 onBlur={() => setInputFocused(false)}
               />
               <InputRightAddon p={0} border="none" rounded={"md"}>
-                <Button type={"submit"} size="sm" borderLeftRadius={0} borderRightRadius={3.3} background={isInputFocused ? color.MAIN_COLOR : "gray.200"} _hover={"none"}>
+                <Button type={"submit"} size="sm" borderLeftRadius={0} borderRightRadius={3.3} background={isInputFocused ? "black" : "gray.200"} _hover={"none"}>
                   <SearchIcon color={"white"} />
                 </Button>
               </InputRightAddon>
@@ -105,7 +104,7 @@ export default function Navbar() {
             fontSize={"sm"}
             fontWeight={600}
             color={"white"}
-            bg={color.MAIN_COLOR}
+            bg={"black"}
             href={"/api/auth/signin"}
             _hover={{
               bg: "gray.800",

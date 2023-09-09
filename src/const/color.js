@@ -1,5 +1,5 @@
 const color = {
-  MAIN_COLOR: "black",
+  MAIN_COLOR: "green",
 };
 
 export default color;

@@ -4,6 +4,6 @@ export const fetchGET = async (url, options) => {
 
     return await res.json();
   } catch (error) {
-    return error;
+    throw error;
   }
 };

@@ -54,7 +54,7 @@ export default function BannerUser({ userPage }) {
               <Icon as={BsStarFill} fontSize={"md"} color={"orange"} />
               <Heading>{userPage.totalRating || "0"}</Heading>
             </Flex>
-            <Text>Rating & Ulasan</Text>
+            <Text>Rating & Reviews</Text>
           </Flex>
         </Flex>
       </Flex>

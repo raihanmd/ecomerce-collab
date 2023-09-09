@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import { Link, Popover, PopoverContent, PopoverTrigger, Stack, Text, Box } from "@chakra-ui/react";
 
-import color from "@/const/color";
 import { useCategoriesContext } from "@/context/CategoriesContext";
 
 const DesktopNav = () => {
@@ -27,7 +26,7 @@ const DesktopNav = () => {
             </Text>
           </PopoverTrigger>
           <Suspense fallback={<LoadingPopoverCategories />}>
-            <PopoverContent border={0} boxShadow={"lg"} bg={"white"} p={3} rounded={"xl"} minW={"xs"} color={color.MAIN_COLOR}>
+            <PopoverContent border={0} boxShadow={"lg"} bg={"white"} p={3} rounded={"xl"} minW={"xs"} color={"black"}>
               {categories.map((category) => (
                 <DesktopSubNav key={category.name} {...category} />
               ))}
@@ -42,7 +41,7 @@ const DesktopNav = () => {
 const DesktopSubNav = ({ name }) => {
   return (
     <Link href={`/category/${name.toLowerCase()}`} role={"group"} display={"block"} py={2} px={3} rounded={"md"} _hover={{ bg: "green.50" }}>
-      <Stack direction={"row"} align={"center"} color={color.MAIN_COLOR}>
+      <Stack direction={"row"} align={"center"} color={"black"}>
         <Text fontSize={"sm"} transition={"all .3s ease"} _groupHover={{ color: "green.500" }} fontWeight={200}>
           {name}
         </Text>
@@ -53,8 +52,8 @@ const DesktopSubNav = ({ name }) => {
 
 const LoadingPopoverCategories = () => {
   return (
-    <PopoverContent border={0} boxShadow={"lg"} bg={"white"} p={3} rounded={"xl"} minW={"xs"} color={color.MAIN_COLOR}>
-      <Stack direction={"row"} align={"center"} color={color.MAIN_COLOR} py={2} px={3} rounded={"md"}>
+    <PopoverContent border={0} boxShadow={"lg"} bg={"white"} p={3} rounded={"xl"} minW={"xs"} color={"black"}>
+      <Stack direction={"row"} align={"center"} color={"black"} py={2} px={3} rounded={"md"}>
         <Text fontSize={"sm"} transition={"all .3s ease"} fontWeight={200}>
           Loading...
         </Text>

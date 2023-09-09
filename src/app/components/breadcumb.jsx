@@ -7,6 +7,8 @@ import { ChevronRightIcon } from "@chakra-ui/icons";
 import { useEffect, useRef, useState } from "react";
 import { Breadcrumb, BreadcrumbItem, Text } from "@chakra-ui/react";
 
+import color from "@/const/color";
+
 export default function BreadcumbComponent() {
   const pathname = usePathname();
   const filteredPath = pathname.split("/").filter((segment) => segment !== "");
@@ -48,7 +50,7 @@ export default function BreadcumbComponent() {
     <div ref={breadcrumbContainerRef}>
       <Breadcrumb spacing="1" separator={<ChevronRightIcon color="gray.500" />} fontWeight="thin" px={2}>
         <BreadcrumbItem>
-          <Text as={Link} href={"/"} _hover={{ textDecoration: "underline" }} color={"green.400"} fontWeight={"medium"}>
+          <Text as={Link} href={"/"} _hover={{ textDecoration: "underline" }} color={`${color.MAIN_COLOR}.500`} fontWeight={"medium"}>
             Home
           </Text>
         </BreadcrumbItem>
@@ -64,7 +66,7 @@ export default function BreadcumbComponent() {
                 fontWeight={isLastItem ? "thin" : "medium"}
                 maxWidth={isLastItem ? "full" : "unset"}
                 flexShrink={isLastItem ? 0 : 1}
-                color={isLastItem ? "black" : "green.400"}
+                color={isLastItem ? "black" : `${color.MAIN_COLOR}.500`}
                 _hover={{ textDecoration: isLastItem ? "none" : "underline" }}
               >
                 {isLastItem ? unslugify(path) : <Link href={`/${path}`}>{unslugify(path)}</Link>}
