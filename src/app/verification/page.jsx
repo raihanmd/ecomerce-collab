@@ -23,6 +23,7 @@ export default function page() {
   const { register, handleSubmit } = useForm();
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingSubmit, setIsLoadingSubmit] = useState(false);
 
   useEffect(() => {
     const fetchProvinces = async () => {
@@ -94,6 +95,7 @@ export default function page() {
   const onSubmitValidation = async (data) => {
     try {
       setIsLoading(true);
+      setIsLoadingSubmit(true);
 
       const formData = {
         ...data,
@@ -111,6 +113,7 @@ export default function page() {
       });
       setIsError(true);
       setIsLoading(false);
+      setIsLoadingSubmit(false);
     }
   };
 
