@@ -3,10 +3,11 @@
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { redirect } from "next/navigation";
-import { Flex, Box, FormControl, FormLabel, Input, Stack, Button, Text, useToast, Alert, AlertIcon, AlertTitle, Select, VisuallyHidden, Icon, chakra, Textarea } from "@chakra-ui/react";
+import { Flex, Box, FormControl, FormLabel, Stack, Button, Text, useToast, Alert, AlertIcon, AlertTitle } from "@chakra-ui/react";
+import { AutoComplete, AutoCompleteInput, AutoCompleteItem, AutoCompleteList } from "@choc-ui/chakra-autocomplete";
 
 import { useUserContext } from "@/context/UserContext";
-import { fetchGETRajaOngkir } from "@/useFetch/fetchRajaOngkirProvince";
+import { fetchGET } from "@/useFetch/fetchGET";
 
 export default function page() {
   const user = useUserContext();
@@ -20,40 +21,53 @@ export default function page() {
   const [selectedProvince, setSelectedProvince] = useState(null);
   const [selectedCity, setSelectedCity] = useState("");
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const handleProvince = (province) => {
+    setValue("province", province);
+  };
+
+  const handleCity = (city) => {
+    setValue("city", city);
+  };
+
   useEffect(() => {
-    const fetchProvince = async () => {
+    const fetchProvinces = async () => {
       try {
-        const provinces = await fetchGETRajaOngkir({ option: "province" });
-        console.log(provinces);
-        setProvinces(provinces.rajaongkir.results);
+        const { payload } = await fetchGET("/api/rajaongkir/province", { component: "client" });
+        setProvinces(payload);
       } catch (error) {
         console.log(error);
       }
     };
-    fetchProvince();
+    fetchProvinces();
   }, []);
 
   useEffect(() => {
     if (!selectedProvince) {
       return;
     }
-    const fetchCity = async () => {
-      const cities = await fetchGETRajaOngkir({ option: selectedProvince });
-      setCities(cities.rajaongkir.results);
+
+    const fetchCities = async () => {
+      try {
+        const { payload } = await fetchGET(`/api/rajaongkir/city/${selectedProvince}`, { component: "client" });
+        setCities(payload);
+      } catch (error) {
+        console.error("Error fetching cities:", error);
+      }
     };
-    fetchCity();
+
+    fetchCities();
   }, [selectedProvince]);
 
-  const onSubmitProduct = async (data) => {
+  const onSubmitValidation = async (data) => {
     try {
       setIsLoading(true);
       console.log(data);
 
-      return (window.location.href = "/");
+      // return (window.location.href = "/");
     } catch (err) {
       toast({
         title: "Product added failed.",
@@ -76,31 +90,37 @@ export default function page() {
           </Alert>
         ) : null}
         <Box rounded={"lg"} bg={"white"} boxShadow={"lg"} p={8}>
-          <form onSubmit={handleSubmit(onSubmitProduct)}>
+          <form onSubmit={handleSubmit(onSubmitValidation)}>
             <Stack spacing={4}>
               <Text>Warning, do not fill it with real data identity, fill it with dummy data</Text>
-              <FormControl id="category" isRequired>
+              <FormControl id="province" isRequired>
                 <FormLabel>Your Province</FormLabel>
-                <Select {...register("province")} name="province" value={selectedProvince} onChange={(e) => setSelectedProvince(e.target.value)} placeholder="Select Province">
-                  <option value="">Select Province</option>
-                  {provinces.map((province) => (
-                    <option key={province.province_id} value={province.province_id}>
-                      {province.province}
-                    </option>
-                  ))}
-                </Select>
+                <AutoComplete openOnFocus>
+                  <AutoCompleteInput variant="filled" />
+                  <AutoCompleteList>
+                    {provinces.map((province) => (
+                      <AutoCompleteItem key={`option-${province.province_id}`} value={province.province_id} textTransform="capitalize" align="center">
+                        <Text ml="4">{province.province}</Text>
+                      </AutoCompleteItem>
+                    ))}
+                  </AutoCompleteList>
+                </AutoComplete>
               </FormControl>
-              <FormControl id="category" isRequired>
-                <FormLabel>Your City</FormLabel>
-                <Select {...register("city")} name="city" value={selectedCity} onChange={(e) => setSelectedCity(e.target.value)} placeholder="Select City" disabled={!selectedProvince}>
-                  <option value="">Select City</option>
-                  {cities.map((city) => (
-                    <option key={city.city_id} value={city.city_id}>
-                      {city.city_name}
-                    </option>
-                  ))}
-                </Select>
-              </FormControl>
+              {selectedProvince && (
+                <FormControl id="city" isRequired>
+                  <FormLabel>Your City</FormLabel>
+                  <AutoComplete openOnFocus>
+                    <AutoCompleteInput variant="filled" />
+                    <AutoCompleteList>
+                      {cities.map((city) => (
+                        <AutoCompleteItem key={`option-${city.city_id}`} value={city.city_id} textTransform="capitalize" align="center">
+                          <Text ml="4">{city.city}</Text>
+                        </AutoCompleteItem>
+                      ))}
+                    </AutoCompleteList>
+                  </AutoComplete>
+                </FormControl>
+              )}
 
               <Stack spacing={10} pt={2}>
                 <Button
