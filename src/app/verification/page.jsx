@@ -27,8 +27,10 @@ export default function page() {
   useEffect(() => {
     const fetchProvinces = async () => {
       try {
+        setIsLoading(true);
         const { payload } = await fetchGET("/api/rajaongkir/province", { component: "client" });
         setProvinces(payload);
+        setIsLoading(false);
       } catch (error) {
         toast({
           title: "Something went wrong.",
@@ -36,6 +38,7 @@ export default function page() {
           status: "error",
           isClosable: true,
         });
+        setIsLoading(false);
       }
     };
     fetchProvinces();
@@ -46,8 +49,10 @@ export default function page() {
 
     const fetchCities = async () => {
       try {
+        setIsLoading(true);
         const { payload } = await fetchGET(`/api/rajaongkir/city/${selectedProvince}`, { component: "client" });
         setCities(payload);
+        setIsLoading(false);
       } catch (error) {
         toast({
           title: "Something went wrong.",
@@ -55,6 +60,7 @@ export default function page() {
           status: "error",
           isClosable: true,
         });
+        setIsLoading(false);
       }
     };
 
@@ -123,7 +129,7 @@ export default function page() {
               <Text>Warning, do not fill it with real data identity, fill it with dummy data</Text>
               <FormControl id="province" isRequired>
                 <FormLabel>Your Province</FormLabel>
-                <Select {...register("province")} placeholder="Select Your Province" onChange={handleProvinceChange} onActive={{ borderColor: "black" }}>
+                <Select {...register("province")} placeholder={isLoading ? "Loading..." : "Select Your Province"} onChange={handleProvinceChange} onActive={{ borderColor: "black" }} isDisabled={isLoading}>
                   {provinces.map((province) => (
                     <option key={`province-option-${province.province_id}`} value={province.province_id}>
                       {province.province}
@@ -133,7 +139,7 @@ export default function page() {
               </FormControl>
               <FormControl id="city" isRequired>
                 <FormLabel>Your City</FormLabel>
-                <Select {...register("city")} placeholder="Select Your City" onActive={{ borderColor: "black" }} isDisabled={!selectedProvince}>
+                <Select {...register("city")} placeholder={isLoading ? "Loading..." : "Select Your City"} onActive={{ borderColor: "black" }} isDisabled={!selectedProvince || isLoading}>
                   {cities.map((city) => (
                     <option key={`city-option-${city.city_id}`} value={city.city_id}>
                       {city.city_name}
@@ -154,7 +160,7 @@ export default function page() {
                     bg: "gray.900",
                   }}
                 >
-                  Confirm my validation
+                  Confirm my verification
                 </Button>
               </Stack>
             </Stack>
