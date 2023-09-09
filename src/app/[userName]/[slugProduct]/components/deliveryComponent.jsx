@@ -5,8 +5,6 @@ import { Box, Flex, Heading, Icon } from "@chakra-ui/react";
 import { FaShippingFast } from "react-icons/fa";
 import { SlLocationPin } from "react-icons/sl";
 
-import { fetchRajaOngkir } from "@/useFetch/fetchRajaOngkir";
-
 export const DeliveryComponent = ({ origin, destination, weight }) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -14,18 +12,18 @@ export const DeliveryComponent = ({ origin, destination, weight }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const result = await fetchRajaOngkir({ origin, destination, weight });
-        if (result !== null) {
-          console.log(result);
-          setData(result);
-        }
-        setLoading(false);
-      } catch (err) {
-        console.log(err);
-        setError(err);
-        setLoading(false);
-      }
+      // try {
+      //   const result = await fetchRajaOngkir({ origin, destination, weight });
+      //   if (result !== null) {
+      //     console.log(result);
+      //     setData(result);
+      //   }
+      //   setLoading(false);
+      // } catch (err) {
+      //   console.log(err);
+      //   setError(err);
+      //   setLoading(false);
+      // }
     };
 
     fetchData();
