@@ -19,7 +19,6 @@ export default function page() {
   const [cities, setCities] = useState([]);
 
   const [selectedProvince, setSelectedProvince] = useState(null);
-  const [selectedCity, setSelectedCity] = useState(null);
 
   const { register, handleSubmit } = useForm();
   const [isError, setIsError] = useState(false);
@@ -124,7 +123,7 @@ export default function page() {
               <Text>Warning, do not fill it with real data identity, fill it with dummy data</Text>
               <FormControl id="province" isRequired>
                 <FormLabel>Your Province</FormLabel>
-                <Select {...register("province")} placeholder="Select Your Province" onChange={handleProvinceChange} value={selectedProvince} onActive={{ borderColor: "black" }}>
+                <Select {...register("province")} placeholder="Select Your Province" onChange={handleProvinceChange} onActive={{ borderColor: "black" }}>
                   {provinces.map((province) => (
                     <option key={`province-option-${province.province_id}`} value={province.province_id}>
                       {province.province}
@@ -135,7 +134,7 @@ export default function page() {
               {selectedProvince && (
                 <FormControl id="city" isRequired>
                   <FormLabel>Your City</FormLabel>
-                  <Select {...register("city")} placeholder="Select Your City" value={selectedCity} onActive={{ borderColor: "black" }}>
+                  <Select {...register("city")} placeholder="Select Your City" onActive={{ borderColor: "black" }}>
                     {cities.map((city) => (
                       <option key={`city-option-${city.city_id}`} value={city.city_id}>
                         {city.city_name}
