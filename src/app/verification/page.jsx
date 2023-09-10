@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { redirect } from "next/navigation";
-import { Stack, Text, FormControl, FormLabel, Select, Button, Flex, Box, useToast, Alert, AlertIcon, AlertTitle } from "@chakra-ui/react";
+import { Stack, Text, FormControl, FormLabel, Select, Button, Flex, Box, useToast, Alert, AlertIcon, AlertTitle, Textarea } from "@chakra-ui/react";
 
 import { useUserContext } from "@/context/UserContext";
 import { fetchGET } from "@/useFetch/fetchGET";
@@ -72,7 +72,6 @@ export default function page() {
     const selectedProvinceId = e.target.value;
 
     setSelectedProvince(selectedProvinceId);
-    setSelectedCity("");
 
     if (selectedProvinceId) {
       try {
@@ -119,17 +118,29 @@ export default function page() {
 
   return (
     <Flex maxW={"7xl"} minH={"100%"} py={"10"} justify={"center"} direction={{ base: "column-reverse", md: "row" }}>
-      <Stack spacing={8} w={"auto"} px={6} mx={{ base: "auto", md: "0" }} mt={{ base: "5", md: "0" }}>
+      <Stack spacing={8} w={{ base: "auto", sm: "md", md: "xl" }} px={6} mx={{ base: "auto", md: "0" }} mt={{ base: "5", md: "0" }}>
         {isError ? (
           <Alert status="error">
             <AlertIcon />
             <AlertTitle>An error has ocured.</AlertTitle>
           </Alert>
-        ) : null}
+        ) : (
+          <Alert status="warning">
+            <AlertIcon />
+            Do not fill it with your real data identity.
+          </Alert>
+        )}
         <Box rounded={"lg"} bg={"white"} boxShadow={"lg"} p={8}>
           <form onSubmit={handleSubmit(onSubmitValidation)}>
             <Stack spacing={4}>
-              <Text>Warning, do not fill it with real data identity, fill it with dummy data</Text>
+              <FormControl id="bio" isRequired>
+                <FormLabel>Bio</FormLabel>
+                <Textarea {...register("bio")} type="text" />
+              </FormControl>
+              <FormControl id="shopDesc" isRequired>
+                <FormLabel>Shop Description</FormLabel>
+                <Textarea {...register("shopDesc")} type="text" />
+              </FormControl>
               <FormControl id="province" isRequired>
                 <FormLabel>Your Province</FormLabel>
                 <Select {...register("province")} placeholder={"Select Your Province"} onChange={handleProvinceChange} onActive={{ borderColor: "black" }}>
@@ -153,7 +164,7 @@ export default function page() {
 
               <Stack spacing={10} pt={2}>
                 <Button
-                  isLoading={isLoading ? true : false}
+                  isLoading={isLoadingSubmit ? true : false}
                   loadingText={"Adding product..."}
                   type={"submit"}
                   size="lg"

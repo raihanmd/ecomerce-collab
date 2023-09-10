@@ -103,11 +103,23 @@ export default function page() {
             <Stack spacing={4}>
               <FormControl id="name" isRequired>
                 <FormLabel>Name Product</FormLabel>
-                <Input {...register("name")} type="text" name="name" value={previewProductName} onChange={(e) => setPreviewProductName(e.target.value)} />
+                <Input
+                  {...register("name")}
+                  type="text"
+                  name="name"
+                  value={previewProductName}
+                  onChange={(e) => {
+                    const inputValue = e.target.value;
+                    if (inputValue.length <= 255) {
+                      setPreviewProductName(inputValue);
+                    }
+                  }}
+                  maxLength={255}
+                />
               </FormControl>
               <FormControl id="description" isRequired>
                 <FormLabel>Description Product</FormLabel>
-                <Textarea {...register("desc")} type="text" name="desc" />
+                <Textarea {...register("desc")} type="text" name="desc" maxLength={65535} />
               </FormControl>
               <FormControl id="category" isRequired>
                 <FormLabel>Category Product</FormLabel>
@@ -119,15 +131,15 @@ export default function page() {
               </FormControl>
               <FormControl id="price" isRequired>
                 <FormLabel>Price Product</FormLabel>
-                <Input {...register("price")} type="number" name="price" value={previewProductPrice} onChange={(e) => setPreviewProductPrice(parseFloat(e.target.value))} />
+                <Input {...register("price")} type="number" name="price" value={previewProductPrice} onChange={(e) => setPreviewProductPrice(parseFloat(e.target.value))} max={999999999999999999} />
               </FormControl>
               <FormControl id="quantity" isRequired>
                 <FormLabel>Quantity Product</FormLabel>
-                <Input {...register("qty")} type="number" name="qty" />
+                <Input {...register("qty")} type="number" name="qty" max={999999999} />
               </FormControl>
               <FormControl id="quantity" isRequired>
                 <FormLabel>Weight Product</FormLabel>
-                <Input {...register("weight")} type="number" name="weight" />
+                <Input {...register("weight")} type="number" name="weight" max={999999999} />
               </FormControl>
 
               <FormControl w={{ sm: "350px", md: "430px" }} id="image" isRequired>
