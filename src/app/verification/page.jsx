@@ -20,8 +20,9 @@ export default function page() {
   const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
 
-  const [selectedProvince, setSelectedProvince] = useState(null);
-  const [selectedCity, setSelectedCity] = useState(null);
+  const [selectedProvinceId, setSelectedProvinceId] = useState(null);
+  const [selectedProvinceName, setSelectedProvinceName] = useState(null);
+  const [selectedCityName, setSelectedCityName] = useState(null);
 
   const { register, handleSubmit } = useForm();
   const [isError, setIsError] = useState(false);
@@ -49,12 +50,12 @@ export default function page() {
   }, []);
 
   useEffect(() => {
-    if (!selectedProvince) return;
+    if (!selectedProvinceId) return;
 
     const fetchCities = async () => {
       try {
         setIsLoading(true);
-        const { payload } = await fetchGET(`/api/rajaongkir/city/${selectedProvince}`, { component: "client" });
+        const { payload } = await fetchGET(`/api/rajaongkir/city/${selectedProvinceId}`, { component: "client" });
         setCities(payload);
         setIsLoading(false);
       } catch (error) {
@@ -69,12 +70,11 @@ export default function page() {
     };
 
     fetchCities();
-  }, [selectedProvince]);
+  }, [selectedProvinceId]);
 
   const handleProvinceChange = async (e) => {
-    const selectedProvinceId = e.target.value;
-
-    setSelectedProvince(selectedProvinceId);
+    setSelectedProvinceId(e.target.value);
+    setSelectedProvinceName(e.target.options[e.target.selectedIndex].getAttribute("data-province"));
 
     if (selectedProvinceId) {
       try {
@@ -101,15 +101,13 @@ export default function page() {
 
       const formData = {
         userId: user.id,
-        userProvince: selectedProvince,
+        userProvince: selectedProvinceName,
         userProvinceId: data.province,
-        userCity: selectedCity,
+        userCity: selectedCityName,
         userCityId: data.city,
         userBio: data.bio,
         userShopDesc: data.shopDesc,
       };
-
-      console.log(formData);
 
       const { statusCode } = await fetchPOST("/api/verification", formData, { component: "client" });
 
@@ -164,7 +162,7 @@ export default function page() {
                 <FormLabel>Your Province</FormLabel>
                 <Select {...register("province")} placeholder={"Select Your Province"} onChange={handleProvinceChange} onActive={{ borderColor: "black" }}>
                   {provinces.map((province) => (
-                    <option key={`province-option-${province.province_id}`} value={province.province_id}>
+                    <option key={`province-option-${province.province_id}`} data-province={province.province} value={province.province_id}>
                       {province.province}
                     </option>
                   ))}
@@ -172,9 +170,15 @@ export default function page() {
               </FormControl>
               <FormControl id="city" isRequired>
                 <FormLabel>Your City</FormLabel>
-                <Select {...register("city")} placeholder={isLoading ? "Loading..." : "Select Your City"} onChange={(e) => setSelectedCity(e.target.value)} onActive={{ borderColor: "black" }} isDisabled={!selectedProvince || isLoading}>
+                <Select
+                  {...register("city")}
+                  placeholder={isLoading ? "Loading..." : "Select Your City"}
+                  onChange={(e) => setSelectedCityName(e.target.options[e.target.selectedIndex].getAttribute("data-city"))}
+                  onActive={{ borderColor: "black" }}
+                  isDisabled={!selectedProvinceId || isLoading}
+                >
                   {cities.map((city) => (
-                    <option key={`city-option-${city.city_id}`} value={city.city_id}>
+                    <option key={`city-option-${city.city_id}`} value={city.city_id} data-city={city.city_name}>
                       {city.city_name}
                     </option>
                   ))}
