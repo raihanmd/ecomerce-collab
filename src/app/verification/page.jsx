@@ -3,15 +3,17 @@
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { redirect } from "next/navigation";
-import { Stack, Text, FormControl, FormLabel, Select, Button, Flex, Box, useToast, Alert, AlertIcon, AlertTitle, Textarea } from "@chakra-ui/react";
+import { Stack, FormControl, FormLabel, Select, Button, Flex, Box, useToast, Alert, AlertIcon, AlertTitle, Textarea } from "@chakra-ui/react";
 
 import { useUserContext } from "@/context/UserContext";
 import { fetchGET } from "@/useFetch/fetchGET";
+import { fetchPOST } from "@/useFetch/fetchPOST";
 
 export default function page() {
   const user = useUserContext();
 
   if (!user) return redirect("/api/auth/signin");
+  if (!!user.city || !!user.cityId) return redirect("/");
 
   const toast = useToast();
 
@@ -19,6 +21,7 @@ export default function page() {
   const [cities, setCities] = useState([]);
 
   const [selectedProvince, setSelectedProvince] = useState(null);
+  const [selectedCity, setSelectedCity] = useState(null);
 
   const { register, handleSubmit } = useForm();
   const [isError, setIsError] = useState(false);
@@ -97,12 +100,28 @@ export default function page() {
       setIsLoadingSubmit(true);
 
       const formData = {
-        ...data,
+        userId: user.id,
+        userProvince: selectedProvince,
+        userProvinceId: data.province,
+        userCity: selectedCity,
+        userCityId: data.city,
+        userBio: data.bio,
+        userShopDesc: data.shopDesc,
       };
-      console.log(formData);
-      console.log(data);
 
-      // return (window.location.href = "/");
+      console.log(formData);
+
+      const { statusCode } = await fetchPOST("/api/verification", formData, { component: "client" });
+
+      if (statusCode !== 200) throw new Error();
+      toast({
+        title: "Your account verified.",
+        position: "top-right",
+        status: "success",
+        isClosable: true,
+      });
+
+      return (window.location.href = "/account");
     } catch (err) {
       toast({
         title: "Something went srong.",
@@ -135,11 +154,11 @@ export default function page() {
             <Stack spacing={4}>
               <FormControl id="bio" isRequired>
                 <FormLabel>Bio</FormLabel>
-                <Textarea {...register("bio")} type="text" />
+                <Textarea {...register("bio")} type="text" placeholder="Some epic bio..." maxLength={50} />
               </FormControl>
               <FormControl id="shopDesc" isRequired>
                 <FormLabel>Shop Description</FormLabel>
-                <Textarea {...register("shopDesc")} type="text" />
+                <Textarea {...register("shopDesc")} type="text" placeholder="Awesome shop description..." maxLength={255} />
               </FormControl>
               <FormControl id="province" isRequired>
                 <FormLabel>Your Province</FormLabel>
@@ -153,7 +172,7 @@ export default function page() {
               </FormControl>
               <FormControl id="city" isRequired>
                 <FormLabel>Your City</FormLabel>
-                <Select {...register("city")} placeholder={isLoading ? "Loading..." : "Select Your City"} onActive={{ borderColor: "black" }} isDisabled={!selectedProvince || isLoading}>
+                <Select {...register("city")} placeholder={isLoading ? "Loading..." : "Select Your City"} onChange={(e) => setSelectedCity(e.target.value)} onActive={{ borderColor: "black" }} isDisabled={!selectedProvince || isLoading}>
                   {cities.map((city) => (
                     <option key={`city-option-${city.city_id}`} value={city.city_id}>
                       {city.city_name}

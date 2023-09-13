@@ -1,6 +1,6 @@
 const { con } = require("@/connection/db");
 
-export async function verificationUser({ userId, userProvince, userProvinceId, userCity, userCityId }) {
+export async function verificationUser({ userId, userProvince, userProvinceId, userCity, userCityId, userBio, userShopDesc }) {
   return await con
     .getConnection()
     .then(async (connection) => {
@@ -26,6 +26,23 @@ export async function verificationUser({ userId, userProvince, userProvinceId, u
             }
           }
         });
+        await connection
+          .query(
+            `UPDATE user_detail AS ud 
+              SET bio = '${userBio}', 
+                  shop_description = '${userShopDesc}'
+              WHERE id_user = '${userId}';`
+          )
+          .then(([fields]) => {
+            if (fields.affectedRows <= 0) {
+              if (fields.affectedRows <= 0) {
+                const err = new Error(`Internal server error.`);
+                err.statusCode = 500;
+                err.payload = "Failed to insert data.";
+                throw err;
+              }
+            }
+          });
         await connection.commit();
       } catch (err) {
         await connection.rollback();

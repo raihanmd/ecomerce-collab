@@ -20,10 +20,12 @@ export default async function AuthCheck({ children }) {
   }
 
   const {
-    payload: { userId },
-  } = await fetchGET(`/api/id/${slugify(session.user.name, { lower: true })}`, { component: "server" });
+    payload: { userId, userCity, userCityId },
+  } = await fetchGET(`/api/account/${slugify(session.user.name, { lower: true })}`, { component: "server" });
 
   session.user.id = userId;
+  session.user.city = userCity;
+  session.user.cityId = userCityId;
 
   return (
     <CategoriesProvider categories={categories.payload}>

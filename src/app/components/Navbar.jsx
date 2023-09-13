@@ -5,6 +5,7 @@ import Link from "next/link";
 import { BiLogOut } from "react-icons/bi";
 import { signOut } from "next-auth/react";
 import { VscAccount } from "react-icons/vsc";
+import { MdOutlineVerified } from "react-icons/md";
 import { LuSettings } from "react-icons/lu";
 import { GrAddCircle } from "react-icons/gr";
 import { SearchIcon } from "@chakra-ui/icons";
@@ -14,6 +15,7 @@ import { Box, Flex, Text, Button, Input, InputGroup, InputRightAddon, Menu, Avat
 import logoBrand from "@/images/lynxshop.webp";
 import DesktopNav from "./desktopNav";
 import { useUserContext } from "@/context/UserContext";
+import color from "@/const/color";
 
 const searchProduct = (product) => {
   console.log(product);
@@ -82,8 +84,13 @@ export default function Navbar() {
               <Avatar size={"sm"} src={user.image} alt={`Picture of ${user.name}`} />
             </MenuButton>
             <MenuList color={"black"}>
+              <MenuItem as={Link} href={user.city ? "/add-product" : "/verification"} _hover={{ background: `${color.MAIN_COLOR}.50` }} _focus={{ background: `${color.MAIN_COLOR}.50` }}>
+                <Flex w={"full"} justify={"space-between"} align={"center"}>
+                  {user.city ? "Add Product" : "Verify My Account"} <Icon fontSize={"lg"} as={user.city ? GrAddCircle : MdOutlineVerified} />
+                </Flex>
+              </MenuItem>
               {MENU_ITEM.map((item) => (
-                <MenuItem key={item.key} as={Link} href={item.href}>
+                <MenuItem key={item.key} as={Link} href={item.href} _hover={{ background: `${color.MAIN_COLOR}.50` }}>
                   <Flex w={"full"} justify={"space-between"} align={"center"}>
                     {item.label}
                     <Icon fontSize={"lg"} as={item.icon} />
@@ -91,7 +98,7 @@ export default function Navbar() {
                 </MenuItem>
               ))}
               <MenuDivider />
-              <MenuItem onClick={handleLogout}>
+              <MenuItem onClick={handleLogout} _hover={{ background: `${color.MAIN_COLOR}.50` }}>
                 <Flex w={"full"} justify={"space-between"} align={"center"}>
                   Log out <Icon fontSize={"lg"} as={BiLogOut} />
                 </Flex>
@@ -127,12 +134,6 @@ const MENU_ITEM = [
   },
   {
     key: 2,
-    label: "Add product",
-    icon: GrAddCircle,
-    href: "/new-product",
-  },
-  {
-    key: 3,
     label: "Setting",
     icon: LuSettings,
     href: "/setting",

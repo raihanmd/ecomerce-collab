@@ -3,16 +3,16 @@ import { myResponse } from "@/utils/myResponse";
 
 export async function POST(req) {
   try {
-    const { userId, userProvince, userProvinceId, userCity, userCityId } = await req.json();
+    const { userId, userProvince, userProvinceId, userCity, userCityId, userBio, userShopDesc } = await req.json();
 
-    if (!userId || !userProvince || !userProvinceId || !userCity || !userCityId) {
+    if (!userId || !userProvince || !userProvinceId || !userCity || !userCityId || !userBio || !userShopDesc) {
       const err = new Error("Forbidden.");
       err.statusCode = 403;
       err.payload = "Invalid format body JSON.";
       throw err;
     }
 
-    const verif = { userId, userProvince, userCity, userProvinceId, userCityId };
+    const verif = { userId, userProvince, userCity, userProvinceId, userCityId, userBio, userShopDesc };
 
     await verificationUser(verif);
 

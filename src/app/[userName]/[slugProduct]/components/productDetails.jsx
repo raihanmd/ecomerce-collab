@@ -11,6 +11,7 @@ import color from "@/const/color";
 import toRupiah from "@develoka/angka-rupiah-js";
 import unslugify from "@/utils/unslugify";
 import { DeliveryComponent } from "./deliveryComponent";
+import { useUserContext } from "@/context/UserContext";
 
 function Rating({ rating }) {
   return (
@@ -32,6 +33,8 @@ function Rating({ rating }) {
 }
 
 export default function ProductDetails({ product }) {
+  const user = useUserContext();
+
   const [quantity, setQuantity] = useState(1);
 
   const handleQuantityChange = (event) => {
@@ -128,7 +131,7 @@ export default function ProductDetails({ product }) {
                     </Flex>
                   </Flex>
                 </Box>
-                <DeliveryComponent origin={product.ownerCity} destination={"Jakarta"} weight={product.productWeight} />
+                <DeliveryComponent origin={product.ownerCity} destination={user.city || "Jakarta"} weight={product.productWeight} />
               </Stack>
             </Stack>
           </Flex>
