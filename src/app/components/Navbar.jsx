@@ -84,7 +84,7 @@ export default function Navbar() {
               <Avatar size={"sm"} src={user.image} alt={`Picture of ${user.name}`} />
             </MenuButton>
             <MenuList color={"black"}>
-              <MenuItem as={Link} href={user.city ? "/add-product" : "/verification"} _hover={{ background: `${color.MAIN_COLOR}.50` }} _focus={{ background: `${color.MAIN_COLOR}.50` }}>
+              <MenuItem as={Link} href={user.city ? "/new-product" : "/verification"} _hover={{ background: `${color.MAIN_COLOR}.50` }} _focus={{ background: `${color.MAIN_COLOR}.50` }}>
                 <Flex w={"full"} justify={"space-between"} align={"center"}>
                   {user.city ? "Add Product" : "Verify My Account"} <Icon fontSize={"lg"} as={user.city ? GrAddCircle : MdOutlineVerified} />
                 </Flex>
