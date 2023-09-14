@@ -1,11 +1,15 @@
 "use client";
 
 import React from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Blurhash } from "react-blurhash";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const BlurredImage = ({ imageUrl, blurhash }) => {
-  return <LazyLoadImage src={imageUrl} alt="Gambar" effect="blur" placeholder={<Blurhash hash={blurhash} width={100} height={100} />} />;
+  return (
+    <>
+      <LazyLoadImage width={300} height={192} src={imageUrl} alt="Gambar" effect="blur" placeholder={<Blurhash hash={blurhash} width={300} height={192} />} />
+    </>
+  );
 };
 
 export default BlurredImage;
