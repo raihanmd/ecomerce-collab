@@ -1,10 +1,8 @@
 "use client";
 
 import React, { Suspense, useState } from "react";
-import { Box, Container, Stack, Text, Image, Flex, Button, Heading, StackDivider, Divider, Input, Tabs, TabList, Tab, TabIndicator, TabPanels, TabPanel, Icon } from "@chakra-ui/react";
+import { Box, Container, Stack, Text, Image, Flex, Button, Heading, StackDivider, Divider, Input, Tabs, TabList, Tab, TabIndicator, TabPanels, TabPanel } from "@chakra-ui/react";
 import { BsStar, BsStarFill, BsStarHalf, BsHeart } from "react-icons/bs";
-import { SlLocationPin } from "react-icons/sl";
-import { FaShippingFast } from "react-icons/fa";
 import Link from "next/link";
 
 import color from "@/const/color";
@@ -131,7 +129,7 @@ export default function ProductDetails({ product }) {
                     </Flex>
                   </Flex>
                 </Box>
-                <DeliveryComponent origin={product.ownerCity} destination={user.city || "Jakarta"} weight={product.productWeight} />
+                <DeliveryComponent origin={product.ownerCity} destination={user?.city || "Jakarta"} weight={product.productWeight} />
               </Stack>
             </Stack>
           </Flex>

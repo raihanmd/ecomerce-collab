@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Box, Flex, Heading, Icon } from "@chakra-ui/react";
+import { Box, Flex, Heading, Icon, Text } from "@chakra-ui/react";
 import { FaShippingFast } from "react-icons/fa";
 import { SlLocationPin } from "react-icons/sl";
 
@@ -16,8 +16,8 @@ export const DeliveryComponent = ({ origin, destination, weight }) => {
     const fetchData = async () => {
       try {
         const result = await fetchPOST("/api/rajaongkir/cost", { origin, destination, weight }, { component: "client" });
-        if (result.statusCode !== 200) throw Error(result.payload);
         console.log(result);
+        if (result.statusCode !== 200) throw Error(result.payload);
         setData(result.payload);
         setLoading(false);
       } catch (err) {
@@ -38,7 +38,7 @@ export const DeliveryComponent = ({ origin, destination, weight }) => {
         <Flex gap={"2"} align={"baseline"}>
           <Icon as={SlLocationPin} transform={"translateY(1px)"} />
           <Text>
-            Deliver from <span style={{ fontWeight: "bold" }}>{product.ownerCity}</span>
+            Deliver from <span style={{ fontWeight: "bold" }}>{origin}</span>
           </Text>
         </Flex>
         <Flex gap={"2"} align={"baseline"}>
