@@ -129,7 +129,7 @@ export default function ProductDetails({ product }) {
                     </Flex>
                   </Flex>
                 </Box>
-                <DeliveryComponent origin={product.ownerCity} destination={user?.city || "Jakarta"} weight={product.productWeight} />
+                <DeliveryComponent city={product.ownerCity} origin={product.ownerCityId} destination={user?.cityId || 152} weight={product.productWeight} />
               </Stack>
             </Stack>
           </Flex>
