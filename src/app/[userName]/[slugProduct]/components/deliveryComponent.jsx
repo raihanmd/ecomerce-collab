@@ -46,7 +46,9 @@ export const DeliveryComponent = ({ city, origin, destination, weight }) => {
           <Box>
             <Text>Postage Reguler {toRupiah(`10000`, { k: true, floatingPoint: 0, useUnit: true, symbol: null })}</Text>
             <Text color={"gray.500"}>Estimated arrival 1 - 4 hari</Text>
-            {JSON.stringify(postage)}
+            {postage?.JNECost.map((item) => {})}
+            {postage?.TIKICost.map((item) => {})}
+            {postage?.POSCost.map((item) => {})}
           </Box>
         </Flex>
       </Flex>
