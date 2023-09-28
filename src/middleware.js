@@ -12,7 +12,7 @@ export async function middleware(request) {
   }
 
   if (request.nextUrl.pathname.startsWith("/api") && !request.nextUrl.pathname.startsWith("/api/auth") && request.method === "POST") {
-    if (request.headers.get("API-Key") !== process.env.API_KEY) {
+    if (request.headers.get("API-Key") !== process.env.NEXT_PUBLIC_API_KEY) {
       return myResponse(403, "Guest can't do the POST request.", "Forbidden.");
     }
   }

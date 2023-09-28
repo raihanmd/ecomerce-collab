@@ -1,4 +1,4 @@
-const { authOptions } = require("@/utils/authOptions");
+const { authOptions } = require("@/app/api/auth/[...nextauth]/authOptions");
 const { default: NextAuth } = require("next-auth/next");
 
 const handler = NextAuth(authOptions);

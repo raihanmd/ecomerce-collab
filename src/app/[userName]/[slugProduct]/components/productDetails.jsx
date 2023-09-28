@@ -10,6 +10,9 @@ import toRupiah from "@develoka/angka-rupiah-js";
 import unslugify from "@/utils/unslugify";
 import { DeliveryComponent } from "./deliveryComponent";
 import { useUserContext } from "@/context/UserContext";
+import ProductTabs from "./productTabs";
+import OwnerCard from "./ownerCard";
+import BookingCard from "./bookingCard";
 
 function Rating({ rating }) {
   return (
@@ -91,44 +94,8 @@ export default function ProductDetails({ product }) {
               </Stack>
 
               <Stack direction={"column"} divider={<StackDivider borderColor={"gray.200"} />}>
-                <Box>
-                  <Tabs position="relative" variant="unstyled" size={"md"} colorScheme="black">
-                    <TabList borderBottom={"1px"} borderColor={"gray.200"}>
-                      <Tab fontWeight={"semibold"}>Description</Tab>
-                      <Tab fontWeight={"semibold"}>Information</Tab>
-                    </TabList>
-                    <TabIndicator mt="-2px" height="3px" bg={`${color.MAIN_COLOR}.500`} />
-                    <TabPanels pt={1}>
-                      <TabPanel>
-                        <Text>{product.productDescription}</Text>
-                      </TabPanel>
-                      <TabPanel>
-                        <Text>{product.ownerShopDescription || "User shop description"}</Text>
-                      </TabPanel>
-                    </TabPanels>
-                  </Tabs>
-                </Box>
-                <Box>
-                  <Flex w={"full"} py={1} px={3}>
-                    <Flex w={"full"} gap={2} justify={"center"} align={"center"}>
-                      <Link href={`/${product.ownedBy}`}>
-                        <Image borderRadius="full" width={"14"} src={product.ownerImage} alt={`Picture of ${product.ownerImage}`} />
-                      </Link>
-                      <Flex flex={1} direction={"column"}>
-                        <Link href={`/${product.ownedBy}`}>
-                          <Text fontWeight={"bold"}>{unslugify(product.ownedBy)}</Text>
-                        </Link>
-                        <Flex align={"start"} gap={1}>
-                          <BsStar size={"18px"} style={{ color: "orange" }} />
-                          <Text color={"gray.500"}>
-                            <span style={{ color: "black" }}>{product.ownerTotalRating || "0"}</span> avg ratings
-                          </Text>
-                        </Flex>
-                      </Flex>
-                      <Button>Follow</Button>
-                    </Flex>
-                  </Flex>
-                </Box>
+                <ProductTabs product={product} />
+                <OwnerCard product={product} />
                 <DeliveryComponent city={product.ownerCity} origin={product.ownerCityId} destination={user?.cityId || 152} weight={product.productWeight} />
               </Stack>
             </Stack>
@@ -138,72 +105,7 @@ export default function ProductDetails({ product }) {
             <Flex h={"40vh"}>Komponen Reviews</Flex>
           </Suspense>
         </Flex>
-        <Stack maxW="72" h={"full"} position="sticky" top={20} border="1px" borderColor={"gray.300"} p={3} rounded="md" spacing={"3"} display={{ base: "none", lg: "flex" }}>
-          <Heading w={"full"} fontSize="lg">
-            Set the booking amount
-          </Heading>
-          <Flex w={"60"} align={"center"} gap={2} maxW={"64"}>
-            <Image rounded="md" alt={`product of ${product.productName}`} src={product.productImage} fit="cover" align="center" w="40px" h="40px" />
-            <Heading fontSize="sm" whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis" w="full">
-              {product.productName}
-            </Heading>
-          </Flex>
-          <Flex w={"full"} align="center" gap={"2"}>
-            <Flex align="center" border={"1px"} borderColor={"gray.300"} rounded={"md"}>
-              <Button roundedRight={"none"} size="xs" onClick={handleDecrement} isDisabled={quantity <= 1} color={`${color.MAIN_COLOR}.500`} fontSize={"md"}>
-                -
-              </Button>
-              <Input
-                border="none"
-                padding="0"
-                margin="0"
-                value={quantity}
-                onChange={handleQuantityChange}
-                type="number"
-                min="0"
-                max={product.productQuantity}
-                textAlign="center"
-                width="50px"
-                height="auto"
-                fontSize="sm"
-                isRequired
-                _hover={{ borderColor: "none" }}
-                _focus={{ borderColor: "none", boxShadow: "none" }}
-              />
-              <Button roundedLeft={"none"} size="xs" onClick={handleIncrement} isDisabled={quantity >= product.productQuantity} color={`${color.MAIN_COLOR}.500`} fontSize={"md"}>
-                +
-              </Button>
-            </Flex>
-            <Text fontSize="sm">In Stock: {product.productQuantity > 100000 ? "100k+" : product.productQuantity}</Text>
-          </Flex>
-          <Flex justify={"space-between"}>
-            <Text color={"gray.500"}>Subtotal</Text>
-            <Flex fontSize="xl" fontWeight={"bold"} lineHeight="tight" color={"orange.500"}>
-              <Text>{toRupiah(product.productPrice * quantity, { floatingPoint: 0 })}</Text>
-            </Flex>
-          </Flex>
-          <Button w={"full"} backgroundColor={`${color.MAIN_COLOR}.500`} color={"white"} _hover={{ backgroundColor: `${color.MAIN_COLOR}.700` }} _active={{ color: `${color.MAIN_COLOR}.50` }} fontWeight={"bold"}>
-            Add to cart
-          </Button>
-          <Button
-            w={"full"}
-            border={"1px"}
-            borderColor={`${color.MAIN_COLOR}.500`}
-            backgroundColor={"white"}
-            color={`${color.MAIN_COLOR}.500`}
-            _hover={{ color: `${color.MAIN_COLOR}.700`, borderColor: `${color.MAIN_COLOR}.700` }}
-            _active={{ background: `${color.MAIN_COLOR}.50` }}
-            fontWeight={"bold"}
-          >
-            Buy
-          </Button>
-          <Flex _hover={{ cursor: "pointer" }} justify={"center"} align={"center"} gap={1}>
-            <BsHeart size={"15px"} />
-            <Text fontWeight={"bold"} fontSize={"sm"}>
-              Wishlist
-            </Text>
-          </Flex>
-        </Stack>
+        <BookingCard product={product} quantity={quantity} handleQuantityChange={handleQuantityChange} handleIncrement={handleIncrement} handleDecrement={handleDecrement} />
       </Flex>
     </Container>
   );

@@ -7,6 +7,7 @@ import { SlLocationPin } from "react-icons/sl";
 import toRupiah from "@develoka/angka-rupiah-js";
 
 import { fetchPOST } from "@/useFetch/fetchPOST";
+import PostageModal from "./postageModal";
 
 export const DeliveryComponent = ({ city, origin, destination, weight }) => {
   const [postage, setPostage] = useState(null);
@@ -46,9 +47,7 @@ export const DeliveryComponent = ({ city, origin, destination, weight }) => {
           <Box>
             <Text>Postage Reguler {toRupiah(`10000`, { k: true, floatingPoint: 0, useUnit: true, symbol: null })}</Text>
             <Text color={"gray.500"}>Estimated arrival 1 - 4 hari</Text>
-            {postage?.JNECost.map((item) => {})}
-            {postage?.TIKICost.map((item) => {})}
-            {postage?.POSCost.map((item) => {})}
+            <PostageModal postage={postage} weight={weight} city={city} />
           </Box>
         </Flex>
       </Flex>

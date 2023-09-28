@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 
 import Navbar from "./Navbar";
 import { fetchGET } from "@/useFetch/fetchGET";
-import { authOptions } from "@/utils/authOptions";
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import { UserProvider } from "@/context/UserContext";
 import { CategoriesProvider } from "@/context/CategoriesContext";
 

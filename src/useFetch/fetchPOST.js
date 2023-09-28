@@ -1,14 +1,15 @@
 export const fetchPOST = async (url, data, options) => {
   try {
-    const res = await fetch(options?.component === "client" ? url : process.env.MAIN_URL + url, {
+    const res = await fetch(options?.component === "client" ? url : process.env.NEXT_PUBLIC_MAIN_URL + url, {
       method: "POST",
       headers: {
-        "API-Key": "JHsduh78^823njshdUYSdnwu7",
+        "API-Key": process.env.NEXT_PUBLIC_API_KEY,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     });
-    return await res.json();
+    const json = await res.json();
+    return json;
   } catch (error) {
     throw error;
   }

@@ -13,7 +13,6 @@ export async function POST(req) {
     }
 
     const userData = { userOAuthId, userEmail, userProvider };
-
     const validUser = await loginUser(userData);
 
     if (validUser === undefined) {

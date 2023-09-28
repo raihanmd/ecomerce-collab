@@ -60,10 +60,20 @@ function LoadingProductDetail() {
                             <Skeleton w={"full"} h={"18px"} />
                             <Skeleton w={"full"} h={"18px"} />
                             <Skeleton w={"full"} h={"18px"} />
+                            <Skeleton w={"full"} h={"18px"} />
+                            <Skeleton w={"full"} h={"18px"} />
+                            <Skeleton w={"full"} h={"18px"} />
+                            <Skeleton w={"full"} h={"18px"} />
+                            <Skeleton w={"full"} h={"18px"} />
                           </Flex>
                         </TabPanel>
                         <TabPanel>
                           <Flex gap={2} direction={"column"}>
+                            <Skeleton w={"full"} h={"18px"} />
+                            <Skeleton w={"full"} h={"18px"} />
+                            <Skeleton w={"full"} h={"18px"} />
+                            <Skeleton w={"full"} h={"18px"} />
+                            <Skeleton w={"full"} h={"18px"} />
                             <Skeleton w={"full"} h={"18px"} />
                             <Skeleton w={"full"} h={"18px"} />
                             <Skeleton w={"full"} h={"18px"} />
