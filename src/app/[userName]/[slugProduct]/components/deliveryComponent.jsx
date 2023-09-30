@@ -14,12 +14,17 @@ export const DeliveryComponent = ({ city, origin, destination, weight }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const [regulerPrice, setRegulerPrice] = useState(null);
+  const [etd, setEtd] = useState("...");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await fetchPOST("/api/rajaongkir/cost", { origin, destination, weight }, { component: "client" });
         if (result.statusCode !== 200) throw Error(result.payload);
         setPostage(result.payload);
+        setRegulerPrice(result.payload.POS[0].cost[0].value);
+        setEtd(result.payload.POS[0].cost[0].etd.split(" ")[0]);
         setLoading(false);
       } catch (err) {
         setError(err);
@@ -44,10 +49,12 @@ export const DeliveryComponent = ({ city, origin, destination, weight }) => {
         </Flex>
         <Flex gap={"2"} align={"baseline"}>
           <Icon as={FaShippingFast} transform={"translateY(2px)"} />
-          <Box>
-            <Text>Postage Reguler {toRupiah(`10000`, { k: true, floatingPoint: 0, useUnit: true, symbol: null })}</Text>
-            <Text color={"gray.500"}>Estimated arrival 1 - 4 hari</Text>
-            <PostageModal postage={postage} weight={weight} city={city} />
+          <Box w={"full"}>
+            <Text>Postage Regular {regulerPrice ? toRupiah(regulerPrice, { k: true, floatingPoint: 0, useUnit: true, symbol: null }) : "....."}</Text>
+            <Flex justify={"space-between"} w={"full"}>
+              <Text color={"gray.500"}>Estimated delivery {etd + " day"}</Text>
+              <PostageModal postage={postage} weight={weight} city={city} isLoading={loading} />
+            </Flex>
           </Box>
         </Flex>
       </Flex>

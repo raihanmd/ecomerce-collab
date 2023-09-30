@@ -1,7 +1,7 @@
 import slugify from "slugify";
 import { getServerSession } from "next-auth";
 
-import Navbar from "./Navbar";
+import Navbar from "./navbar";
 import { fetchGET } from "@/useFetch/fetchGET";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import { UserProvider } from "@/context/UserContext";

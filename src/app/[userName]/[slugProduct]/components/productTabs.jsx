@@ -5,19 +5,21 @@ import { Tabs, TabList, Tab, TabIndicator, TabPanels, TabPanel, Text, Button } f
 
 import color from "@/const/color";
 
+const textStyles = {
+  WebkitLineClamp: 10,
+  lineClamp: 10,
+  WebkitBoxOrient: "vertical",
+  boxOrient: "vertical",
+};
+
 function ProductTabs({ product }) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [lineCount, setLineCount] = useState(10);
+  const [showReadMoreButton, setShowReadMoreButton] = useState(false);
   const textRef = useRef(null);
 
   useEffect(() => {
-    if (textRef.current) {
-      const lineHeight = parseInt(window.getComputedStyle(textRef.current).lineHeight, 10);
-      const height = textRef.current.clientHeight;
-      const lines = Math.round(height / lineHeight);
-      setLineCount(lines);
-    }
-  }, [product.productDescription]);
+    if (textRef.current) setShowReadMoreButton(textRef.current.scrollHeight !== textRef.current.clientHeight);
+  }, []);
 
   return (
     <Tabs position="relative" variant="unstyled" size={"md"} colorScheme="black">
@@ -25,24 +27,14 @@ function ProductTabs({ product }) {
         <Tab fontWeight={"semibold"}>Description</Tab>
         <Tab fontWeight={"semibold"}>Information</Tab>
       </TabList>
+
       <TabIndicator mt="-2px" height="3px" bg={`${color.MAIN_COLOR}.500`} />
       <TabPanels pt={1}>
         <TabPanel>
-          <Text
-            ref={textRef}
-            lineHeight="tight"
-            whiteSpace={"normal"}
-            overflow={"hidden"}
-            textOverflow={"ellipsis"}
-            display="-webkit-box"
-            style={{
-              WebkitLineClamp: isExpanded ? "unset" : lineCount,
-              WebkitBoxOrient: "vertical",
-            }}
-          >
+          <Text ref={textRef} overflow={"hidden"} display="-webkit-box" style={isExpanded ? null : textStyles}>
             {product.productDescription}
           </Text>
-          {lineCount > 10 && (
+          {showReadMoreButton && (
             <Button variant={"link"} color={`${color.MAIN_COLOR}.500`} onClick={() => setIsExpanded((prev) => !prev)}>
               {isExpanded ? "Read Less" : "Read More"}
             </Button>

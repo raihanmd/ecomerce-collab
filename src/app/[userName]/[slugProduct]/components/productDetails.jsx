@@ -1,13 +1,10 @@
 "use client";
 
 import React, { Suspense, useState } from "react";
-import { Box, Container, Stack, Text, Image, Flex, Button, Heading, StackDivider, Divider, Input, Tabs, TabList, Tab, TabIndicator, TabPanels, TabPanel } from "@chakra-ui/react";
-import { BsStar, BsStarFill, BsStarHalf, BsHeart } from "react-icons/bs";
-import Link from "next/link";
+import { Box, Container, Stack, Text, Image, Flex, Heading, StackDivider, Divider } from "@chakra-ui/react";
+import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 
-import color from "@/const/color";
 import toRupiah from "@develoka/angka-rupiah-js";
-import unslugify from "@/utils/unslugify";
 import { DeliveryComponent } from "./deliveryComponent";
 import { useUserContext } from "@/context/UserContext";
 import ProductTabs from "./productTabs";
@@ -96,7 +93,7 @@ export default function ProductDetails({ product }) {
               <Stack direction={"column"} divider={<StackDivider borderColor={"gray.200"} />}>
                 <ProductTabs product={product} />
                 <OwnerCard product={product} />
-                <DeliveryComponent city={product.ownerCity} origin={product.ownerCityId} destination={user?.cityId || 152} weight={product.productWeight} />
+                <DeliveryComponent city={product.ownerCity} origin={product.ownerCityId} destination={user?.cityId || "152"} weight={product.productWeight} />
               </Stack>
             </Stack>
           </Flex>

@@ -6,7 +6,7 @@ import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 import toRupiah from "@develoka/angka-rupiah-js";
 
 import { productIsNew } from "@/utils/productIsNew";
-import BlurredImage from "./BlurredImage";
+import BlurredImage from "./blurredImage";
 
 function Rating({ rating }) {
   return (

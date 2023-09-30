@@ -3,8 +3,8 @@ import { notFound } from "next/navigation";
 
 import { fetchGET } from "@/useFetch/fetchGET";
 import BreadcumbComponent from "../components/breadcumb";
-import BannerUser from "./components/BannerUser";
-import TabUser from "./components/TabUser";
+import BannerUser from "./components/bannerUser";
+import TabUser from "./components/tabUser";
 import LoadingUserPage from "./loading";
 
 export default async function page({ params }) {

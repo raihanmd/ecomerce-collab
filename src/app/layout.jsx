@@ -1,5 +1,5 @@
 import "@/style/global.css";
-import AuthCheck from "./components/AuthCheck";
+import AuthCheck from "./components/authCheck";
 import { Providers } from "./providers";
 import NextAuthSessionProvider from "../providers/sessionProvider";
 import NextTopLoader from "nextjs-toploader";

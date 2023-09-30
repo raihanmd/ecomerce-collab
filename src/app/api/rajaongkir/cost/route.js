@@ -12,11 +12,17 @@ export async function POST(req) {
       throw err;
     }
 
-    const [{ costs: JNECosts }] = (await RajaOngkir.getJNECost({ origin, destination, weight })).rajaongkir.results;
-    const [{ costs: TIKICosts }] = (await RajaOngkir.getTIKICost({ origin, destination, weight })).rajaongkir.results;
-    const [{ costs: POSCosts }] = (await RajaOngkir.getPOSCost({ origin, destination, weight })).rajaongkir.results;
+    const [{ costs: JNE }] = (await RajaOngkir.getJNECost({ origin, destination, weight })).rajaongkir.results;
+    const [{ costs: TIKI }] = (await RajaOngkir.getTIKICost({ origin, destination, weight })).rajaongkir.results;
+    const [{ costs: POS }] = (await RajaOngkir.getPOSCost({ origin, destination, weight })).rajaongkir.results;
 
-    return myResponse(200, { JNECosts, TIKICosts, POSCosts }, "Data retrived successfully.");
+    const response = {};
+
+    if (JNE.length > 0) response.JNE = JNE;
+    if (TIKI.length > 0) response.TIKI = TIKI;
+    if (POS.length > 0) response.POS = POS;
+
+    return myResponse(200, response, "Data retrived successfully.");
   } catch (err) {
     return myResponse(err.statusCode || 500, err.payload || "Internal server error.", err.message || "Internal server error.");
   }
