@@ -5,7 +5,7 @@ import { Stack, Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs, Text } fr
 
 import color from "@/const/color";
 
-export default function TabUser({ userPage }) {
+export default function UserTab({ userPage }) {
   if (!userPage.userProduct) {
     return (
       <Stack w={"full"} h={"xl"} justify={"center"} align={"center"}>

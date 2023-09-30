@@ -21,7 +21,7 @@ const searchProduct = (product) => {
   console.log(product);
 };
 
-export default function Navbar() {
+export default function MyNavbar() {
   const user = useUserContext();
 
   const [isInputFocused, setInputFocused] = useState(false);

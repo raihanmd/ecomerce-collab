@@ -4,8 +4,8 @@ import { notFound } from "next/navigation";
 import { fetchGET } from "@/useFetch/fetchGET";
 import BreadcumbComponent from "../components/breadcumb";
 import LoadingUserPage from "./loading";
-import BannerUser from "./components/bannerUser";
-import TabUser from "./components/tabUser";
+import UserBanner from "./components/userBanner";
+import UserTab from "./components/userTab";
 
 export default async function page({ params }) {
   const userPage = await fetchGET(`/api/${params.userName}`, { component: "server" });
@@ -18,8 +18,8 @@ export default async function page({ params }) {
     <>
       <Suspense fallback={<LoadingUserPage />}>
         <BreadcumbComponent />
-        <BannerUser userPage={userPage.payload} />
-        <TabUser userPage={userPage.payload} />
+        <UserBanner userPage={userPage.payload} />
+        <UserTab userPage={userPage.payload} />
       </Suspense>
     </>
   );

@@ -5,7 +5,7 @@ import { BsStarFill, BsDot } from "react-icons/bs";
 
 import unslugify from "@/utils/unslugify";
 
-export default function BannerUser({ userPage }) {
+export default function UserBanner({ userPage }) {
   return (
     <Flex py={"3"} w="full" alignItems="center" justifyContent="center">
       <Flex w={"full"} shadow="sm" rounded="md" direction="column" alignItems="center" justifyContent="center">
