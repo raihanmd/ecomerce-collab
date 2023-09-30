@@ -1,8 +1,9 @@
 "use client";
 
-import unslugify from "@/utils/unslugify";
 import { Flex, Heading, Stack, Box, Text, Avatar, Icon } from "@chakra-ui/react";
 import { BsStarFill, BsDot } from "react-icons/bs";
+
+import unslugify from "@/utils/unslugify";
 
 export default function BannerUser({ userPage }) {
   return (

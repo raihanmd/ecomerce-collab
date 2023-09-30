@@ -5,7 +5,7 @@ import { Blurhash } from "react-blurhash";
 import { Box } from "@chakra-ui/react";
 import Image from "next/image";
 
-const BlurredImage = ({ imageUrl, blurhash }) => {
+export default BlurredImage = ({ imageUrl, blurhash }) => {
   const [showBlur, setShowBlur] = useState(false);
 
   useEffect(() => {
@@ -28,5 +28,3 @@ const BlurredImage = ({ imageUrl, blurhash }) => {
     </>
   );
 };
-
-export default BlurredImage;
