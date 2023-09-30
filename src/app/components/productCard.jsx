@@ -6,7 +6,7 @@ import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 import toRupiah from "@develoka/angka-rupiah-js";
 
 import { productIsNew } from "@/utils/productIsNew";
-import BlurredImage from "./blurredImage";
+import BlurImage from "./blurImage";
 
 function Rating({ rating }) {
   return (
@@ -52,7 +52,7 @@ const ProductContent = ({ product }) => {
         </Badge>
       )}
 
-      <BlurredImage imageUrl={product.productImage ? product.productImage : "https://placeholder.com/250x250"} blurhash={product?.productBlurhash} />
+      <BlurImage imageUrl={product.productImage ? product.productImage : "https://placeholder.com/250x250"} blurhash={product?.productBlurhash} />
 
       <Box p={"2"}>
         <Flex direction={"column"} justifyContent="space-between" alignContent="center" gap={"2"} h={"5.5em"}>

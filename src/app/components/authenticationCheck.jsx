@@ -7,7 +7,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import { UserProvider } from "@/context/UserContext";
 import { CategoriesProvider } from "@/context/CategoriesContext";
 
-export default async function AuthCheck({ children }) {
+export default async function AuthenticationCheck({ children }) {
   const categories = await fetchGET("/api/category");
   const session = await getServerSession(authOptions);
 
